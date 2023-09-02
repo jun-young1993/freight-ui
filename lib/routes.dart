@@ -1,15 +1,27 @@
 import 'package:flutter/cupertino.dart';
+import 'package:freight_ui/ui/screen/expenditure/expenditure.dart';
 import 'package:freight_ui/ui/screen/home/home.dart';
 
 import 'core/fade_page_route.dart';
+import 'ui/screen/drive/drive.dart';
+import 'ui/screen/maintenance/maintenance.dart';
+import 'ui/screen/oil/oil.dart';
 
-enum Routes { home }
+enum Routes { home, drive, expenditure, oil, maintenance }
 
 class _Paths {
-  static const String home = '/home';
+  static const String home = 'home';
+  static const String drive = 'drive';
+  static const String expenditure = 'expenditure';
+  static const String oil = 'oil';
+  static const String maintenance = 'maintenance';
 
   static const Map<Routes, String> _pathMap = {
     Routes.home: _Paths.home,
+    Routes.drive: _Paths.drive,
+    Routes.expenditure: _Paths.expenditure,
+    Routes.oil: _Paths.oil,
+    Routes.maintenance: _Paths.maintenance
   };
 
   static String of(Routes route) => _pathMap[route] ?? home;
@@ -24,6 +36,15 @@ class AppNavigator {
 
     switch (settings.name) {
       case _Paths.home:
+        return FadeRoute(page: const HomeScreen());
+      case _Paths.drive:
+        return FadeRoute(page: const DriveScreen());
+      case _Paths.expenditure:
+        return FadeRoute(page: const ExpenditureScreen());
+      case _Paths.oil:
+        return FadeRoute(page: const OilScreen());
+      case _Paths.maintenance:
+        return FadeRoute(page: const MaintenanceScreen());
       default:
         return FadeRoute(page: const HomeScreen());
     }
