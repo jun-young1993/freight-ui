@@ -1,6 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:freight_ui/routes.dart';
 
 class AppRouteMap {
+  static List<Routes> getShowMenu(){
+    return [
+      Routes.drive,
+      Routes.expenditure,
+      Routes.oil,
+      Routes.maintenance
+    ];
+  }
+
   static String getName(Routes routes){
     switch(routes){
       case Routes.home:

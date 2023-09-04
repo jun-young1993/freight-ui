@@ -3,6 +3,7 @@ import 'package:freight_ui/config/constant.dart';
 import 'package:freight_ui/config/images.dart';
 import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/routes.dart';
+import 'package:freight_ui/ui/widgets/app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,27 +22,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-        appBar: AppBar(
-          title: _buildTitle()
-        ),
-        body : Center(
+    return MainAppBar(
+      child: Center(
           child:  Column(
             children: [
               _buildImage(),
-              _buildMenus([
-                  Routes.drive,
-                  Routes.expenditure,
-                  Routes.oil,
-                  Routes.maintenance
-              ])
+              _buildMenus(AppRouteMap.getShowMenu())
           ],)
-        )
+        ),
     );
-  }
-
-  Widget _buildTitle(){
-    return Text(AppConstant.name);
   }
 
   Widget _buildImage(){
