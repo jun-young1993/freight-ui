@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context){
     return MainAppView(
+      goBack: false,
       child: Center(
           child:  Column(
             children: [

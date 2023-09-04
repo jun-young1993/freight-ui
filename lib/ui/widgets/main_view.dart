@@ -1,32 +1,46 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:freight_ui/config/constant.dart';
 import 'package:freight_ui/routes.dart';
 
 class MainAppView extends StatelessWidget {
+  final Widget child;
+  final bool goBack;
+
   const MainAppView({
     super.key, 
-    required this.child
+    required this.child, 
+    this.goBack = true
   });
   
-  final Widget child;
   
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_left_sharp), onPressed: () { 
-          AppNavigator.pop();
-         },),
+        leading: _buildGoBack(),
         title: _buildTitle()
       ),
       body : child
     );
   }
 
-    Widget _buildTitle(){
-      return Text(AppConstant.name);
+  Widget? _buildGoBack(){
+    if(goBack){
+      return IconButton(
+          icon: Icon(Icons.arrow_left_sharp), 
+          onPressed: () { 
+            AppNavigator.pop();
+          },
+        );
     }
+  }
+
+  Widget _buildTitle(){
+    return Text(AppConstant.name);
+  }
 
   
 }
