@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:freight_ui/config/constant.dart';
 import 'package:freight_ui/routes.dart';
 
 class FreightApp extends StatelessWidget {
@@ -16,7 +17,7 @@ class FreightApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      title : "freight",
+      title : AppConstant.name,
       builder: (context, child) {
         if(child == null) return const SizedBox.shrink();
 
