@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:freight_ui/config/constant.dart';
+import 'package:freight_ui/routes.dart';
 
-class MainAppBar extends StatelessWidget {
-  const MainAppBar({
+class MainAppView extends StatelessWidget {
+  const MainAppView({
     super.key, 
     required this.child
   });
@@ -14,6 +15,9 @@ class MainAppBar extends StatelessWidget {
     
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(icon: Icon(Icons.arrow_left_sharp), onPressed: () { 
+          AppNavigator.pop();
+         },),
         title: _buildTitle()
       ),
       body : child

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freight_ui/routes.dart';
+import 'package:freight_ui/ui/widgets/main_view.dart';
 
 class DriveScreen extends StatefulWidget {
   const DriveScreen({super.key});
@@ -16,19 +17,9 @@ class _DriveScreenState extends State<DriveScreen> {
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            TextButton(
-              onPressed: () => {
-                AppNavigator.pop()
-              },
-              child: const Text('뒤로가기'),
-            ),
-            const Text('운행일지 UI')
-          ],
-        ),
+    return MainAppView(
+      child: Center(
+        child: Text('뒤로가기'),
       )
     );
   }
