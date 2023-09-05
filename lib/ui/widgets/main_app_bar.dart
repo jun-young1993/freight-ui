@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:freight_ui/config/main_app_bar.dart';
 import 'package:freight_ui/routes.dart';
 import 'package:freight_ui/utills/size.dart';
 
-const double mainAppbarPadding = 28;
+const double mainAppbarPadding = MainAppBarConfig.mainAppBarPadding;
 
 
 class MainSliverAppBar extends SliverAppBar{
@@ -15,7 +16,7 @@ class MainSliverAppBar extends SliverAppBar{
       double expandedFontSize = 30,
       IconData leadingIconData = Icons.arrow_back,
       void Function()? onLeadingPress = AppNavigator.pop,
-      void Function()? onTrailingPress,
+      List<Widget>? tailActions,
       required BuildContext context, Color? color, Color? backgroundColor})
       : super(
           centerTitle: true,
@@ -32,14 +33,15 @@ class MainSliverAppBar extends SliverAppBar{
               color: Theme.of(context).textTheme.bodyLarge!.color,
             ),
           ),
-          actions: [
+          actions: tailActions ?? [],
+          // [
             // IconButton(
             //   padding: EdgeInsets.symmetric(horizontal: mainAppbarPadding),
             //   icon: Icon(Icons.favorite_border_outlined,
             //       color: Theme.of(context).textTheme.bodyLarge!.color),
             //   onPressed: onTrailingPress,
             // ),
-          ],
+          // ],
           flexibleSpace: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
               final safeAreaTop = MediaQuery.of(context).padding.top;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freight_ui/config/main_app_bar.dart';
 import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/routes.dart';
 import 'package:freight_ui/states/drive/drive_bloc.dart';
