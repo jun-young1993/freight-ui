@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/ui/screen/expenditure/expenditure.dart';
 import 'package:freight_ui/ui/screen/home/home.dart';
 
@@ -33,7 +34,7 @@ class AppNavigator {
   static Route onGenerateRoute(RouteSettings settings) {
 
     print("generate Route settings name ${settings.name}");
-
+    
     switch (settings.name) {
       case _Paths.home:
         return FadeRoute(page: const HomeScreen());

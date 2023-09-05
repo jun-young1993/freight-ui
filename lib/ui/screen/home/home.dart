@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:freight_ui/config/constant.dart';
+import 'package:freight_ui/config/images.dart';
+import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/routes.dart';
+import 'package:freight_ui/ui/widgets/main_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,35 +18,54 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  void _onSelectMenu(Routes routeName){
-    AppNavigator.push(routeName);
-  }
+
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-        body : Center(
-            child: Column(
-              children: <Widget>[
-                TextButton(
-                    onPressed: () => _onSelectMenu(Routes.drive),
-                    child: const Text('운행일지')
-                ),
-                TextButton(
-                    onPressed: () => _onSelectMenu(Routes.expenditure),
-                    child: const Text('지출내역')
-                ),
-                TextButton(
-                    onPressed: () => _onSelectMenu(Routes.oil),
-                    child: const Text('주유 내역')
-                ),
-                TextButton(
-                    onPressed: () => _onSelectMenu(Routes.maintenance),
-                    child: const Text('정비 내역')
-                ),
-              ],
-            )
-        )
+    return MainAppView(
+      goBack: false,
+      child: Center(
+          child:  Column(
+            children: [
+              _buildImage(),
+              _buildMenus(AppRouteMap.getShowMenu())
+          ],)
+        ),
     );
+  }
+
+  Widget _buildImage(){
+    return Container(
+      child: Image(image: AppImages.main),
+    );
+  }
+
+  Widget _buildMenus(List<Routes> routes){
+    return Container(
+      child: GridView.count(
+            shrinkWrap: true,
+            primary: false,
+            padding: const EdgeInsets.all(20),
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            crossAxisCount: 2,
+            children:routes.map((Routes route) => _buildMenu(route)).toList(),
+      ) 
+    );
+  }
+
+  Widget _buildMenu(Routes route){
+    return Container(
+      // padding: const EdgeInsets.all(8),
+      child: TextButton(
+          onPressed: () => _onSelectMenu(route),
+          child: Text(AppRouteMap.getName(route))
+      ),
+    );
+    
+  }
+
+  void _onSelectMenu(Routes route){
+    AppNavigator.push(route);
   }
 }

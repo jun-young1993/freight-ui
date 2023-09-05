@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/routes.dart';
+import 'package:freight_ui/ui/widgets/main_app_bar.dart';
+import 'package:freight_ui/ui/widgets/main_view.dart';
 
+part 'sections/drive_grid.dart';
 class DriveScreen extends StatefulWidget {
   const DriveScreen({super.key});
 
@@ -17,19 +21,13 @@ class _DriveScreenState extends State<DriveScreen> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            TextButton(
-              onPressed: () => {
-                AppNavigator.pop()
-              },
-              child: const Text('뒤로가기'),
-            ),
-            const Text('운행일지 UI')
-          ],
-        ),
+      body: Stack(
+        fit: StackFit.expand, 
+        children: [
+          _DriveGrid()
+        ],
       )
     );
+
   }
 }
