@@ -14,6 +14,7 @@ class DriveState {
   final List<Drive> data;
   final int selectedIndex;
   final int page;
+  final bool canLoadMore;
   final Exception? error;
 
   const DriveState._({
@@ -21,6 +22,7 @@ class DriveState {
     this.data = const [],
     this.selectedIndex = 0,
     this.page = 0,
+    this.canLoadMore = true,
     this.error
   });
 
@@ -32,11 +34,20 @@ class DriveState {
     );
   }
 
+  DriveState asLoadSuccess(List<Drive> data, {bool canLoadMore = true}) {
+    return copyWith(
+      status: DriveStateStatus.loadSuccess,
+      data: data,
+      page: 1,
+      canLoadMore: canLoadMore
+    );
+  }
+
   DriveState asLoadFailure(Exception e){
     return copyWith(
       status: DriveStateStatus.loadFailure,
       error: e
-    )
+    );
   }
 
 
@@ -45,6 +56,7 @@ class DriveState {
     List<Drive>? data,
     int? selectedIndex,
     int? page,
+    bool? canLoadMore,
     Exception? error
   }) {
     return DriveState._(
@@ -52,6 +64,7 @@ class DriveState {
         data: data ?? this.data,
         selectedIndex: selectedIndex ?? this.selectedIndex,
         page: page ?? this.page,
+        canLoadMore: canLoadMore ?? this.canLoadMore,
         error: error ?? this.error
     );
   }

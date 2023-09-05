@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:freight_ui/domain/dto/drive.dart';
 import 'package:freight_ui/domain/entities/drive.dart';
 
@@ -8,9 +10,7 @@ abstract class DriveRepository {
 }
 
 class DriveDefaultRepository extends DriveRepository {
-  DriveDefaultRepository()
-
-
+  DriveDefaultRepository();
 
   @override
   Future<Drive> create(DriveDto dto) async {
@@ -23,18 +23,16 @@ class DriveDefaultRepository extends DriveRepository {
 
   @override
   Future<List<Drive>> get() async {
-    return [
-      Drive(
+    final List<Drive> data = [];
+    for(var index= 0; index<100; index++){
+      
+      data.add(const Drive(
       description: 'test', 
       endDate: '20210102', 
       startDate: '20210101'
-    ),
-    Drive(
-      description: 'test2', 
-      endDate: '20210102', 
-      startDate: '20210101'
-    )
-    ];
+    ));
+    }
+    return data;
   }
 
   @override
@@ -44,4 +42,5 @@ class DriveDefaultRepository extends DriveRepository {
       endDate: '20210102', 
       startDate: '20210101'
     );
-  }}
+  }
+}
