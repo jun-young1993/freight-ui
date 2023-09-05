@@ -13,6 +13,7 @@ class MainSliverAppBar extends SliverAppBar{
       String title = "", //AppConstants.name,
       double height = kToolbarHeight + mainAppbarPadding * 2,
       double expandedFontSize = 30,
+      IconData leadingIconData = Icons.arrow_back,
       void Function()? onLeadingPress = AppNavigator.pop,
       void Function()? onTrailingPress,
       required BuildContext context, Color? color, Color? backgroundColor})
@@ -27,7 +28,7 @@ class MainSliverAppBar extends SliverAppBar{
             padding: EdgeInsets.symmetric(horizontal: mainAppbarPadding),
             onPressed: onLeadingPress,
             icon: Icon(
-              Icons.arrow_back,
+              leadingIconData,
               color: Theme.of(context).textTheme.bodyLarge!.color,
             ),
           ),
