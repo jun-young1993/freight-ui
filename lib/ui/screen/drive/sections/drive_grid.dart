@@ -63,7 +63,7 @@ class _DriveGridState extends State<_DriveGrid> {
         showDialog(
           context: context, 
           builder: (BuildContext context) {
-            var startDate;
+            
             return SfDateRangePicker(
               backgroundColor: AppColors.white,
               selectionMode: DateRangePickerSelectionMode.range,

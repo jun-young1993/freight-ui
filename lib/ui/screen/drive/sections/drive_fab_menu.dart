@@ -70,7 +70,12 @@ class _DriveFabMenuState extends State<_DriveFabMenu> with SingleTickerProviderS
                     '추가하기',
                     Icons.add,
                     onPress: () => onPress((){
-                      
+                      showDialog(
+                        context: context,
+                        builder: (_){
+                          return _buildFrom();
+                        }
+                      );
                       
                     }),
                   )
@@ -78,5 +83,9 @@ class _DriveFabMenuState extends State<_DriveFabMenu> with SingleTickerProviderS
               )
         )
     );
+  }
+
+  Widget _buildFrom(){
+    return const _DriveForm();
   }
 }

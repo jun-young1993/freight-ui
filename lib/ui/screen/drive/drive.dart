@@ -20,6 +20,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 part 'sections/drive_grid.dart';
 part 'sections/drive_fab_menu.dart';
+part 'sections/drive_form.dart';
 
 class DriveScreen extends StatefulWidget {
   const DriveScreen({super.key});
@@ -43,7 +44,7 @@ class _DriveScreenState extends State<DriveScreen> {
           fit: StackFit.expand, 
           children: [
             _DriveGrid(),
-            _DriveFabMenu()
+            _DriveFabMenu(),
           ],
         ),
     );
