@@ -11,6 +11,11 @@ class _DriveGrid extends StatefulWidget {
 class _DriveGridState extends State<_DriveGrid> {
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
 
+  PickerDateRange pickerDateRange = new PickerDateRange(
+    SearchDate(SearchDateType.start),
+    SearchDate(SearchDateType.end)
+  );
+
 
   DriveBloc get driveBloc => context.read<DriveBloc>();
 
@@ -32,17 +37,7 @@ class _DriveGridState extends State<_DriveGrid> {
               // Text(AppRouteMap.getName(Routes.drive)),
               title : AppRouteMap.getName(Routes.drive),
               context: context,
-              tailActions: [
-
-                IconButton(
-                  padding: EdgeInsets.symmetric(horizontal: MainAppBarConfig.mainAppBarPadding),
-                  icon: Icon(Icons.date_range,
-                      color: Theme.of(context).textTheme.bodyLarge!.color),
-                  onPressed: (){
-
-                  },
-                ),
-              ],
+              tailActions: _buildHeaderActions(context)
             ),
       ],
       body: DriveStateStatusSelector((status) {
@@ -57,6 +52,76 @@ class _DriveGridState extends State<_DriveGrid> {
         
       })
     );
+  }
+
+  Widget _buildDatePicker(BuildContext context){
+    return  IconButton(
+      padding: EdgeInsets.symmetric(horizontal: MainAppBarConfig.mainAppBarPadding),
+      icon: Icon(Icons.date_range,
+      color: Theme.of(context).textTheme.bodyLarge!.color),
+      onPressed: (){
+        showDialog(
+          context: context, 
+          builder: (BuildContext context) {
+            var startDate;
+            return SfDateRangePicker(
+              backgroundColor: AppColors.white,
+              selectionMode: DateRangePickerSelectionMode.range,
+              showActionButtons: true,
+              onCancel: () => {
+                Navigator.pop(context)
+              },
+              onSelectionChanged: (DateRangePickerSelectionChangedArgs rangeDate) {
+                
+                //  rangeDate - 
+                // PickerDateRange#40037(startDate: 2023-09-14 00:00:00.000, endDate: null)
+                // PickerDateRange#9a9aa(startDate: 2023-09-05 00:00:00.000, endDate: 2023-09-14 00:00:00.000)
+                // if(rangeDate.startDate != null){
+
+                // }
+                if(rangeDate.value.endDate != null){
+                  pickerDateRange = PickerDateRange(
+                    SearchDate(
+                      SearchDateType.start, 
+                      dateTime: rangeDate.value.startDate
+                    ), 
+                    SearchDate(
+                      SearchDateType.end, 
+                      dateTime: rangeDate.value.endDate
+                    )
+                  );
+                }
+                
+
+                
+              },
+              onSubmit: (p0)  {
+                Navigator.pop(context);
+              },
+              // onSubmit: () => {
+              //   // return Navigator.pop(context);
+              // },
+            );     
+          }
+        );
+      },
+    );
+    // SfDateRangePicker();
+  }
+  
+
+  List<Widget> _buildHeaderActions(BuildContext context) {
+    return [
+      _buildDatePicker(context)
+                // IconButton(
+                //   padding: EdgeInsets.symmetric(horizontal: MainAppBarConfig.mainAppBarPadding),
+                //   icon: Icon(Icons.date_range,
+                //       color: Theme.of(context).textTheme.bodyLarge!.color),
+                //   onPressed: (){
+
+                //   },
+                // ),
+    ];
   }
 
   Widget _buildGrid() {
