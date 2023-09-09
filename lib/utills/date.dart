@@ -17,3 +17,7 @@ DateTime SearchDate(SearchDateType type, { DateTime? dateTime }){
     (type == SearchDateType.start) ? 0 : 59,
   );
 }
+
+// DateTime CurrentDateTime(){
+//
+// }
