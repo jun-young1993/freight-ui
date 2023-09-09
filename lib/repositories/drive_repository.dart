@@ -15,9 +15,16 @@ class DriveDefaultRepository extends DriveRepository {
   @override
   Future<Drive> create(DriveDto dto) async {
     return const Drive(
-      description: 'test', 
-      endDate: '20210102', 
-      startDate: '20210101'
+        loadingDate: "20210101",
+        loadingPlace: "test",
+        unLoadingDate: "20210101",
+        unLoadingPlace: "test2",
+        loadingRatio: 100,
+        transportationDate: "20210101",
+        transportationType: "11톤",
+        unitCost: 100000,
+        extra: "test 데티어"
+
     );
   }
 
@@ -27,9 +34,15 @@ class DriveDefaultRepository extends DriveRepository {
     for(var index= 0; index<100; index++){
       
       data.add(const Drive(
-      description: 'test', 
-      endDate: '20210102', 
-      startDate: '20210101'
+          loadingDate: "20210101",
+          loadingPlace: "test",
+          unLoadingDate: "20210101",
+          unLoadingPlace: "test2",
+          loadingRatio: 100,
+          transportationDate: "20210101",
+          transportationType: "11톤",
+          unitCost: 100000,
+          extra: "test 데티어"
     ));
     }
     return data;
@@ -38,9 +51,15 @@ class DriveDefaultRepository extends DriveRepository {
   @override
   Future<Drive> update(Drive drive) async {
         return const Drive(
-      description: 'test', 
-      endDate: '20210102', 
-      startDate: '20210101'
+            loadingDate: "20210101",
+            loadingPlace: "test",
+            unLoadingDate: "20210101",
+            unLoadingPlace: "test2",
+            loadingRatio: 100,
+            transportationDate: "20210101",
+            transportationType: "11톤",
+            unitCost: 100000,
+            extra: "test 데티어"
     );
   }
 }

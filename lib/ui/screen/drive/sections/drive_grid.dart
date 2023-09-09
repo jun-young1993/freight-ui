@@ -129,10 +129,10 @@ class _DriveGridState extends State<_DriveGrid> {
 
       slivers : [
         SliverPadding(
-          padding: EdgeInsets.all(2),
+          padding: const EdgeInsets.all(2),
           sliver: DriveCountSelector((driveCount) {
             return SliverGrid(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1,
                   mainAxisSpacing: 10.0,
                   crossAxisSpacing: 10.0,
@@ -145,7 +145,7 @@ class _DriveGridState extends State<_DriveGrid> {
                     return Container(
                       alignment: Alignment.center,
                       color: Colors.teal[100 * (index % 9)],
-                      child: Text('grid item $index ${drive.description} ${drive.startDate} - ${drive.endDate}'),
+                      child: Text('grid item $index ${drive.extra} ${drive.loadingDate} - ${drive.unLoadingDate}'),
                     );
                   });
                 },
