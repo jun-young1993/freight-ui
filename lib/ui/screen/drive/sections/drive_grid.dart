@@ -11,7 +11,7 @@ class _DriveGrid extends StatefulWidget {
 class _DriveGridState extends State<_DriveGrid> {
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
 
-  PickerDateRange pickerDateRange = new PickerDateRange(
+  PickerDateRange pickerDateRange = PickerDateRange(
     SearchDate(SearchDateType.start),
     SearchDate(SearchDateType.end)
   );
@@ -23,7 +23,7 @@ class _DriveGridState extends State<_DriveGrid> {
   void initState() {
     super.initState();
 
-    driveBloc.add(DriveLoadStarted());
+    driveBloc.add(const DriveLoadStarted());
   }
 
 

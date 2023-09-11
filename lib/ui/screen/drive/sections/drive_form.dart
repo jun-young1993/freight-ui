@@ -13,6 +13,8 @@ class _DriveFormState extends State<_DriveForm> {
   TextEditingController loadDateInput = TextEditingController();
   TextEditingController unLoadDateInput = TextEditingController();
 
+  
+  DriveBloc get driveBloc => context.read<DriveBloc>();
 
   // loadDateInput.text = currentDate;
   // unLoadDateInput.text = currentDate;
@@ -114,6 +116,33 @@ class _DriveFormState extends State<_DriveForm> {
                         // if (_formKey.currentState!.validate()) {
                         //   // Process data.
                         // }
+                            // DriveDto driveDto = new DriveDto(
+                                // loadingDate: loadDateInput.text, 
+                                // loadingPlace: loadDateInput.text, 
+                                // unLoadingDate: loadDateInput.text, 
+                                // unLoadingPlace: loadDateInput.text, 
+                                // loadingRatio: 100, 
+                                // transportationDate: loadDateInput.text, 
+                                // transportationType: loadDateInput.text, 
+                                // unitCost: 100, 
+                                // extra: loadDateInput.text
+                            //   );
+                            
+                          driveBloc.add(
+                            const DriveCreated(
+                              DriveDto(
+                                loadingDate: '20210808', 
+                                loadingPlace: '20210808', 
+                                unLoadingDate: '20210808', 
+                                unLoadingPlace: '20210808', 
+                                loadingRatio: 100, 
+                                transportationDate: '20210808', 
+                                transportationType: '20210808', 
+                                unitCost: 100, 
+                                extra: '20210808'
+                              )
+                            )
+                          );
                         },
                         icon: const Icon(Icons.add)
                       ),

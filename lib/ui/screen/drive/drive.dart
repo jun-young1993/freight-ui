@@ -7,6 +7,8 @@ import 'package:freight_ui/config/colors.dart';
 import 'package:freight_ui/config/main_app_bar.dart';
 import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/core/extensions/animation.dart';
+import 'package:freight_ui/domain/dto/drive.dart';
+import 'package:freight_ui/domain/entities/drive.dart';
 import 'package:freight_ui/routes.dart';
 import 'package:freight_ui/states/drive/drive_bloc.dart';
 import 'package:freight_ui/states/drive/drive_event.dart';
