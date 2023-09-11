@@ -1,11 +1,23 @@
 class Drive {
-  const Drive({
-    required this.startDate,
-    required this.endDate,
-    required this.description
-  });
+  final String loadingDate;
+  final String loadingPlace;
+  final String unLoadingDate;
+  final String unLoadingPlace;
+  final int loadingRatio;
+  final String transportationDate;
+  final String transportationType;
+  final int unitCost;
+  final String extra;
 
-  final String startDate;
-  final String endDate;
-  final String description;
+  const Drive({
+    required this.loadingDate,
+    required this.loadingPlace,
+    required this.unLoadingDate,
+    required this.unLoadingPlace,
+    required this.loadingRatio,
+    required this.transportationDate,
+    required this.transportationType,
+    required this.unitCost,
+    required this.extra
+  });
 }

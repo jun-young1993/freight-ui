@@ -33,20 +33,23 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
               NestedScrollView(
               key: _scrollKey,
-              
               headerSliverBuilder: (_, __) => [
                     MainSliverAppBar(
+                      leadingIconData: Icons.home,
+                      onLeadingPress: (){},
                       title: AppRouteMap.getName(Routes.home),
                       context: context,
                     )
               ],
               body : Center(
-                child: Column(
-                  children: [
-                    _buildImage(),
-                    _buildMenus(AppRouteMap.getShowMenu())
-                  ],
-                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _buildImage(),
+                      _buildMenus(AppRouteMap.getShowMenu())
+                    ],
+                  ),
+                )
               )
             )
         ],
