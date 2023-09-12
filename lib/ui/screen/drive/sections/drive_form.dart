@@ -9,10 +9,21 @@ class _DriveForm extends StatefulWidget {
 
 class _DriveFormState extends State<_DriveForm> {
   final _formKey = GlobalKey<_DriveFormState>();
-  String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
-  TextEditingController loadDateInput = TextEditingController();
-  TextEditingController unLoadDateInput = TextEditingController();
-
+  // String _currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  // final TextEditingController _loadDateInput = TextEditingController();
+  // final TextEditingController _unLoadDateInput = TextEditingController();
+  final Map<String,TextEditingController> _formController = {
+    "loadingDate": TextEditingController(text: CurrentDate('yyyy-MM-dd')),
+    "loadingPlace": TextEditingController(),
+    "unLoadingDate": TextEditingController(text: CurrentDate('yyyy-MM-dd')),
+    "unLoadingPlace": TextEditingController(),
+    "loadingRatio": TextEditingController(),
+    "transportationCosts": TextEditingController(),
+    "transportationDate": TextEditingController(text: CurrentDate('yyyy-MM-dd')),
+    "transportationType": TextEditingController(),
+    "unitCost": TextEditingController(),
+    "extra": TextEditingController(), 
+  };
   
   DriveBloc get driveBloc => context.read<DriveBloc>();
 
@@ -20,9 +31,15 @@ class _DriveFormState extends State<_DriveForm> {
   // unLoadDateInput.text = currentDate;
   @override
   void initState(){
-    loadDateInput.text = currentDate;
-    unLoadDateInput.text = currentDate;
     super.initState();
+  }
+
+  @override
+  void dispose(){
+    _formController.forEach((_, value) { 
+      value.dispose();
+    });
+    super.dispose();
   }
 
   @override
@@ -39,7 +56,7 @@ class _DriveFormState extends State<_DriveForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 DatePickerField(
-                  controller: loadDateInput,
+                  controller: _formController['loadingDate'],
                   context: context,
                   labelText: "상차일",
                   onSelected: (selectedDate){
@@ -49,12 +66,13 @@ class _DriveFormState extends State<_DriveForm> {
                   },
                 ),
                 TextFormField(
+                  controller: _formController['loadingPlace'],
                   decoration: const InputDecoration(
                       labelText: '상차지'
                   ),
                 ),
                 DatePickerField(
-                  controller: unLoadDateInput,
+                  controller: _formController['unLoadingDate'],
                   context: context,
                   labelText: "하차일",
                   onSelected: (selectedDate){
@@ -64,11 +82,13 @@ class _DriveFormState extends State<_DriveForm> {
                   },
                 ),
                 TextFormField(
+                  controller: _formController['unLoadingPlace'],
                   decoration: const InputDecoration(
                       labelText: '하차지'
                   ),
                 ),
                 TextFormField(
+                  controller: _formController['loadingRatio'],
                   keyboardType: TextInputType.number,
                   inputFormatters: [],
                   decoration: const InputDecoration(
@@ -76,6 +96,7 @@ class _DriveFormState extends State<_DriveForm> {
                   ),
                 ),
                 TextFormField(
+                  controller: _formController['transportationCosts'],
                   keyboardType: TextInputType.number,
                   inputFormatters: [],
                   decoration: const InputDecoration(
@@ -83,7 +104,7 @@ class _DriveFormState extends State<_DriveForm> {
                   ),
                 ),
                 DatePickerField(
-                  controller: unLoadDateInput,
+                  controller: _formController['transportationDate'],
                   context: context,
                   labelText: "운행 날짜",
                   onSelected: (selectedDate){
@@ -93,13 +114,21 @@ class _DriveFormState extends State<_DriveForm> {
                   },
                 ),
                 TextFormField(
+                  controller: _formController['transportationType'],
                   decoration: const InputDecoration(
                       labelText: '운송 품'
                   ),
                 ),
                 TextFormField(
+                  controller: _formController['unitCost'],
                   decoration: const InputDecoration(
                       labelText: '운송 품목별 단가'
+                  ),
+                ),
+                TextFormField(
+                  controller: _formController['extra'],
+                  decoration: const InputDecoration(
+                      labelText: '비고'
                   ),
                 ),
                 Padding(
@@ -116,33 +145,11 @@ class _DriveFormState extends State<_DriveForm> {
                         // if (_formKey.currentState!.validate()) {
                         //   // Process data.
                         // }
-                            // DriveDto driveDto = new DriveDto(
-                                // loadingDate: loadDateInput.text, 
-                                // loadingPlace: loadDateInput.text, 
-                                // unLoadingDate: loadDateInput.text, 
-                                // unLoadingPlace: loadDateInput.text, 
-                                // loadingRatio: 100, 
-                                // transportationDate: loadDateInput.text, 
-                                // transportationType: loadDateInput.text, 
-                                // unitCost: 100, 
-                                // extra: loadDateInput.text
-                            //   );
-                            
-                          driveBloc.add(
-                            const DriveCreated(
-                              DriveDto(
-                                loadingDate: '20210808', 
-                                loadingPlace: '20210808', 
-                                unLoadingDate: '20210808', 
-                                unLoadingPlace: '20210808', 
-                                loadingRatio: 100, 
-                                transportationDate: '20210808', 
-                                transportationType: '20210808', 
-                                unitCost: 100, 
-                                extra: '20210808'
-                              )
-                            )
-                          );
+                          Map<String, dynamic> jsonMap = {};
+                          _formController.forEach((key, controller) => jsonMap[key] = controller.text);
+                          
+                          driveBloc.add(DriveCreated(DriveDto.fromJson(jsonMap)));
+                          AppNavigator.pop();
                         },
                         icon: const Icon(Icons.add)
                       ),
