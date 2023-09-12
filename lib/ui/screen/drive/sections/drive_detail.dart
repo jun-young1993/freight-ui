@@ -28,26 +28,31 @@ class DriveDetail extends StatelessWidget {
                 context: context,
               ),
           ],
-          body: Column(
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text('상차날짜:'),
-                      Text('상차날짜:')
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text('하차날짜')
-                    ],
-                  )
-                ],
-              )
-            ],
+          body: Padding(
+            padding: const EdgeInsets.only(left: 30, right: 30),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("상차 날짜: ${drive.loadingDate}"),
+                    Text("하차 날짜: ${drive.unLoadingDate}")
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("상차지: ${drive.loadingPlace}"),
+                    Text("하차지: ${drive.unLoadingPlace}")
+                  ],
+                ),
+
+              ],
+            ),
+
+
           ),
         ),
       );

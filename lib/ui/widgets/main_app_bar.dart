@@ -67,11 +67,11 @@ class MainSliverAppBar extends SliverAppBar{
                     Padding(
                       padding: const EdgeInsets.only(top: kToolbarHeight / 3),
                       child: Transform.translate(
+                        offset: Offset(dx, constraints.maxHeight - kToolbarHeight),
                         child: Text(
                           title,
                           style: currentTextStyle,
                         ),
-                        offset: Offset(dx, constraints.maxHeight - kToolbarHeight),
                       ),
                     ),
                   ],

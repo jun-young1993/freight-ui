@@ -5,7 +5,7 @@ import 'package:freight_ui/domain/entities/drive.dart';
 class DriveCard extends StatelessWidget {
   final Drive drive;
   final void Function()? onPress;
-  const DriveCard({
+  const DriveCard({super.key,
     required this.drive, this.onPress
   });
 
