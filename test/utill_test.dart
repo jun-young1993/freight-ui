@@ -20,8 +20,7 @@ void main() {
       expect(SearchDate(SearchDateType.start, dateTime: parseDateTime).toString(), equals("2023-09-14 00:00:00.000"));
 
     });
-
-
+    
 
   });
 }

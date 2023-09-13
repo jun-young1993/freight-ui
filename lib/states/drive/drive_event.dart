@@ -15,3 +15,7 @@ class DriveCreated extends DriveEvent {
   const DriveCreated(this.drive);
 }
 
+class DriveExcelDownload extends DriveEvent {
+  const DriveExcelDownload();
+}
+

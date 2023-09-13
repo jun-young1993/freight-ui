@@ -13,6 +13,8 @@ class _DriveFabMenuState extends State<_DriveFabMenu> with SingleTickerProviderS
 
   bool _isFabMenuVisible = false;
 
+  DriveBloc get driveBloc => context.read<DriveBloc>();
+
   @override
   void initState() {
     _fabController = AnimationController(
@@ -78,7 +80,15 @@ class _DriveFabMenuState extends State<_DriveFabMenu> with SingleTickerProviderS
                       );
                       
                     }),
+                  ),
+                  FabItemData(
+                    '엑셀 다운로드',
+                    Icons.add,
+                    onPress: () => onPress((){
+                      driveBloc.add(const DriveExcelDownload());
+                    }),
                   )
+
                 ]
               )
         )
