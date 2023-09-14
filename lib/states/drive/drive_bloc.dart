@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freight_ui/domain/dto/drive.dart';
 import 'package:freight_ui/repositories/drive_repository.dart';
@@ -12,6 +9,7 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
   DriveBloc(this._driveRepository) : super(const DriveState.initial()) {
     on<DriveLoadStarted>(_onLoadStarted);
     on<DriveCreated>(_onCreated);
+    on<DriveExcelDownload>(_onExcelDownload);
   }
 
   void _onLoadStarted(DriveLoadStarted event, Emitter<DriveState> emit) async {
@@ -40,5 +38,14 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
     }
   }
 
+  void _onExcelDownload(DriveExcelDownload event, Emitter<DriveState> emit) async {
+    try{
+      emit(state.asLoading());
+      print('drive download');
+      emit(state.asLoadSuccess(state.data, canLoadMore: false));
+    } on Exception catch (e) {
+      emit(state.asLoadFailure(e));
+    }
+  }
   
 }

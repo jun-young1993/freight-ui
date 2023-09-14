@@ -27,6 +27,7 @@ class _DriveGridState extends State<_DriveGrid> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
@@ -45,7 +46,7 @@ class _DriveGridState extends State<_DriveGrid> {
         print('[DriveStateStatusSelector ] ${status}');
         switch(status){
           case DriveStateStatus.loadSuccess:
-            return _buildGrid();
+            return _buildGrid(context);
           default:
             return Container();
         }
@@ -56,7 +57,7 @@ class _DriveGridState extends State<_DriveGrid> {
 
   Widget _buildDatePicker(BuildContext context){
     return  IconButton(
-      padding: EdgeInsets.symmetric(horizontal: MainAppBarConfig.mainAppBarPadding),
+      padding: const EdgeInsets.symmetric(horizontal: MainAppBarConfig.mainAppBarPadding),
       icon: Icon(Icons.date_range,
       color: Theme.of(context).textTheme.bodyLarge!.color),
       onPressed: (){
@@ -124,7 +125,21 @@ class _DriveGridState extends State<_DriveGrid> {
     ];
   }
 
-  Widget _buildGrid() {
+  void _onCardPress(Drive drive, context){
+        showDialog(
+          context: context, 
+          builder: (BuildContext context) {
+            
+            return DriveDetail(drive: drive);
+          }
+        );
+    // print("onUserPress userId ${user.id}");
+    // userBloc.add(UserSelectChanged(id: user.id));
+    // print("onUserPress User ${user}");
+    // AppNavigator.push(Routes.userInfo, user);
+  }
+
+  Widget _buildGrid(BuildContext context) {
     return CustomScrollView(
 
       slivers : [
@@ -145,7 +160,11 @@ class _DriveGridState extends State<_DriveGrid> {
                     return Container(
                       alignment: Alignment.center,
                       color: Colors.teal[100 * (index % 9)],
-                      child: Text('grid item $index ${drive.extra} ${drive.loadingDate} - ${drive.unLoadingDate}'),
+                      child: DriveCard(
+                        drive: drive,
+                        onPress: () => _onCardPress(drive,context),
+                      )
+                      // Text('grid item $index ${drive.extra} ${drive.loadingDate} - ${drive.unLoadingDate}'),
                     );
                   });
                 },

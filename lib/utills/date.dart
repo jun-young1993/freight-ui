@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 enum SearchDateType {start, end}
 
 
@@ -18,6 +20,6 @@ DateTime SearchDate(SearchDateType type, { DateTime? dateTime }){
   );
 }
 
-// DateTime CurrentDateTime(){
-//
-// }
+String CurrentDate(String format) {
+  return DateFormat(format).format(DateTime.now());
+}
