@@ -43,10 +43,14 @@ class _DriveGridState extends State<_DriveGrid> {
       ],
       body: DriveStateStatusSelector((status) {
         // ignore: avoid_print
+        
         print('[DriveStateStatusSelector ] ${status}');
         switch(status){
           case DriveStateStatus.loadSuccess:
             return _buildGrid(context);
+          case DriveStateStatus.loadFailure:
+            _showErrorSnackBar(context);
+            return Container();
           default:
             return Container();
         }
@@ -110,6 +114,32 @@ class _DriveGridState extends State<_DriveGrid> {
     // SfDateRangePicker();
   }
   
+  void _showErrorSnackBar(BuildContext context){
+    Future.delayed(Duration.zero, () {
+          ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            // action: SnackBarAction(
+            //   label: 'Action',
+            //   onPressed: () {
+            //     // Code to execute.
+            //   },
+            // ),
+            backgroundColor: AppColors.red,
+            content: const Text('Awesome SnackBar!'),
+            duration: const Duration(milliseconds: 1500),
+            width: 280.0, // Width of the SnackBar.
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8.0, // Inner padding for SnackBar content.
+            ),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+      );
+    });
+  
+  }
 
   List<Widget> _buildHeaderActions(BuildContext context) {
     return [
