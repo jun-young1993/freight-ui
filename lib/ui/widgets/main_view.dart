@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:freight_ui/config/constant.dart';
 import 'package:freight_ui/routes.dart';
