@@ -5,7 +5,12 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:freight_ui/config/colors.dart';
+import 'package:freight_ui/config/images.dart';
+import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/routes.dart';
+import 'package:path/path.dart';
 
 class SimpleLoginScreen extends StatefulWidget {
   /// Callback for when this form is submitted successfully. Parameters are (email, password)
@@ -19,6 +24,10 @@ class SimpleLoginScreen extends StatefulWidget {
 class _SimpleLoginScreenState extends State<SimpleLoginScreen> {
   late String email, password;
   String? emailError, passwordError;
+
+  final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
+
+
   Function(String? email, String? password)? get onSubmitted =>
       widget.onSubmitted;
 
@@ -75,108 +84,87 @@ class _SimpleLoginScreenState extends State<SimpleLoginScreen> {
     // }
   }
 
+  void guest() {
+    print(dotenv.get('GUEST_TOKEN'));
+    AppNavigator.push(Routes.home);
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+    double titleSize = screenHeight * 0.1;
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: ListView(
-          children: [
-            SizedBox(height: screenHeight * .12),
-            const Text(
-              'Welcome,',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: screenHeight * .01),
-            Text(
-              'Sign in to continue!',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.black.withOpacity(.6),
-              ),
-            ),
-            SizedBox(height: screenHeight * .12),
-            InputField(
-              onChanged: (value) {
-                setState(() {
-                  email = value;
-                });
-              },
-              labelText: 'Email',
-              errorText: emailError,
-              keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
-              autoFocus: true,
-            ),
-            SizedBox(height: screenHeight * .025),
-            InputField(
-              onChanged: (value) {
-                setState(() {
-                  password = value;
-                });
-              },
-              onSubmitted: (val) => submit(),
-              labelText: 'Password',
-              errorText: passwordError,
-              obscureText: true,
-              textInputAction: TextInputAction.next,
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Forgot Password?',
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: screenHeight * .075,
-            ),
-            FormButton(
-              text: 'Log In',
-              onPressed: submit,
-            ),
-            SizedBox(
-              height: screenHeight * .15,
-            ),
-            TextButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const SimpleRegisterScreen(),
-                ),
-              ),
-              child: RichText(
-                text: const TextSpan(
-                  text: "I'm a new user, ",
-                  style: TextStyle(color: Colors.black),
-                  children: [
-                    TextSpan(
-                      text: 'Sign Up',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
+      body: Stack(
+        children: [
+              SingleChildScrollView(
+              child : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildImage(context),
+                  _buildTitle(context),
+                   SizedBox(
+                      height: screenHeight * 0.07,
                     ),
-                  ],
-                ),
-              ),
+                    _buildButton(context,'GUEST',guest),
+                    SizedBox(
+                      height: screenHeight * 0.07,
+                    ),
+                    _buildButton(context,'LOG IN',submit),
+                    SizedBox(
+                      height: screenHeight * 0.07,
+                    ),
+                    _buildButton(context,'SIGN UP',submit),
+                ],
+              )       
             )
-          ],
-        ),
+        ]      
       ),
     );
   }
+
+  Widget _buildImage(BuildContext context){
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Container(
+      padding: EdgeInsets.all(screenHeight * 0.03),
+      alignment: Alignment.center,
+      child: const Image(image: AppImages.truck),
+    );
+  }
+
+  Widget _buildTitle(BuildContext context){
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Container(
+      alignment: Alignment.center,
+      child: Title(
+        color: AppColors.black, 
+        child: Text(
+          style: TextStyle(fontSize: screenHeight * 0.05),
+          AppRouteMap.getName(Routes.simpleLogin)
+        )
+      ),
+    );
+    
+  }
+
+  Widget _buildButton(BuildContext context, title, VoidCallback onPressed){
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Container(
+      padding: EdgeInsets.all(screenHeight * 0.0001),
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: AppColors.beige,
+          textStyle: const TextStyle(fontSize: 20),
+          padding: EdgeInsets.all(screenHeight * 0.05),
+        ),
+        child: Text(title),
+      )
+    );
+  }
 }
+
 
 class SimpleRegisterScreen extends StatefulWidget {
   /// Callback for when this form is submitted successfully. Parameters are (email, password)
