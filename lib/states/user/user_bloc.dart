@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freight_ui/repositories/user_repository.dart';
+import 'package:freight_ui/routes.dart';
 import 'package:freight_ui/states/user/user_event.dart';
 import 'package:freight_ui/states/user/user_state.dart';
 
@@ -13,7 +14,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   void _onUserLogin(UserLogin event, Emitter<UserState> emit) async {
     try{
       emit(state.asLogin());
-
+      AppNavigator.push(Routes.home);
       emit(state.asLoginSuccess());
     } on Exception catch (e) {
       emit(state.asLoginFailure(e));
@@ -23,7 +24,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   void _onGuestLogin(GuestLogin event, Emitter<UserState> emit) async {
     try{
       emit(state.asLogin());
-
+        AppNavigator.push(Routes.home);
       emit(state.asLoginSuccess());
     } on Exception catch (e) {
       emit(state.asLoginFailure(e));
