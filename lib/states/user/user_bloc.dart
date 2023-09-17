@@ -14,7 +14,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   void _onUserLogin(UserLogin event, Emitter<UserState> emit) async {
     try{
       emit(state.asLogin());
-      AppNavigator.push(Routes.home);
+      // AppNavigator.push(Routes.home);
       emit(state.asLoginSuccess());
     } on Exception catch (e) {
       emit(state.asLoginFailure(e));
@@ -24,7 +24,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   void _onGuestLogin(GuestLogin event, Emitter<UserState> emit) async {
     try{
       emit(state.asLogin());
-        AppNavigator.push(Routes.home);
+      await AppNavigator.push(Routes.home);
+
       emit(state.asLoginSuccess());
     } on Exception catch (e) {
       emit(state.asLoginFailure(e));

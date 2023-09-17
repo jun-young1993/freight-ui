@@ -17,17 +17,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
 
-
   @override
   void initState() {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context){
-
     return Scaffold(
       body: Stack(
         children: [
@@ -55,24 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       )
     );
-
-
-      // goBack: false,
-      // child: SingleChildScrollView(
-      //   child: Center(
-      //     child:  Column(
-      //       children: [
-      //         _buildImage(),
-      //         _buildMenus(AppRouteMap.getShowMenu())
-      //     ],)
-      //   ),
-      // )
-    // );
   }
 
   Widget _buildImage(){
     return Container(
-      child: Image(image: AppImages.main),
+      child: const Image(image: AppImages.truck),
     );
   }
 

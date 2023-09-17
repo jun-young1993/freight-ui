@@ -11,9 +11,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DriveBloc extends Bloc<DriveEvent, DriveState> {
-
   final DriveRepository _driveRepository;
-
   DriveBloc(this._driveRepository) : super(const DriveState.initial()) {
     on<DriveLoadStarted>(_onLoadStarted);
     on<DriveCreated>(_onCreated);
