@@ -9,6 +9,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(this._userRepository) : super(const UserState.initial()) {
     on<UserLogin>(_onUserLogin);
     on<GuestLogin>(_onGuestLogin);
+    on<SignUp>(_onSignUp);
   }
 
   void _onUserLogin(UserLogin event, Emitter<UserState> emit) async {
@@ -34,7 +35,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   void _onSignUp(SignUp envet, Emitter<UserState> emit) async {
     try{
-      await AppNavigator.push(Routes.home);
+      await AppNavigator.push(Routes.signUp);
     } on Exception catch (e) {
 
     }

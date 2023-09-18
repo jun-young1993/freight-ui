@@ -9,8 +9,7 @@ class UserAuthLogin extends StatefulWidget {
 class _UserAuthLoginState extends State<UserAuthLogin> {
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
 
-  @override
-  BuildContext get context => super.context;
+
   UserBloc get userBloc => context.read<UserBloc>();
 
 
@@ -26,7 +25,7 @@ class _UserAuthLoginState extends State<UserAuthLogin> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _buildImage(),
+                const MainBackImage(),
                 _buildTitle(),
                 _buildForm(),
                 _buildLogin()
@@ -65,20 +64,6 @@ class _UserAuthLoginState extends State<UserAuthLogin> {
     );
   }
 
-  Widget _buildImage(){
-    double screenHeight = MediaQuery.of(context).size.height;
-    return Container(
-      height: screenHeight * 0.15,
-      padding: EdgeInsets.all(screenHeight * 0.03),
-      alignment: Alignment.topLeft,
-      child: GestureDetector(
-        onTap: () => AppNavigator.pop(),
-        child: const Image(image: AppImages.truck),
-      )
-
-    );
-  }
-
   Widget _buildTitle(){
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
@@ -104,11 +89,11 @@ class _UserAuthLoginState extends State<UserAuthLogin> {
           SizedBox(
             height: screenHeight * 0.03,
           ),
-          _buildLoginInputField('ID'),
+          UserInputField(label: 'ID'),
           SizedBox(
             height: screenHeight * 0.03,
           ),
-          _buildLoginInputField('PW'),
+          UserInputField(label: 'PW',)
 
         ],
       )
@@ -116,37 +101,6 @@ class _UserAuthLoginState extends State<UserAuthLogin> {
 
   }
 
-  Widget _buildLoginInputField(String label){
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: screenWidth * 0.15,
-          child: Text(
-              style: TextStyle(
-                  fontSize: screenHeight * 0.05, color: AppColors.black
-              ),
-              label
-          ),
-        ),
-        SizedBox(
-          width: screenWidth * 0.1,
-        ),
-        Expanded(
-          child: TextFormField(
-            decoration: InputDecoration(
-                border: OutlineInputBorder()
-            ),
-          ),
-        ),
-        SizedBox(
-          width: screenWidth * 0.05,
-        ),
 
-      ],
-    );
-  }
   
 }

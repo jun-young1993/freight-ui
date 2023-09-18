@@ -28,6 +28,10 @@ class _UserLoginState extends State<_UserLogin> {
     userBloc.add(const GuestLogin());
   }
 
+  void signUp() {
+    userBloc.add(const SignUp());
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -50,7 +54,7 @@ class _UserLoginState extends State<_UserLogin> {
             SizedBox(
               height: screenHeight * 0.07,
             ),
-            _buildButton(context,'SIGN UP',userLogin),
+            _buildButton(context,'SIGN UP',signUp),
           ],
         )
     );

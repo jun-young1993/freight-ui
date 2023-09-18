@@ -14,7 +14,8 @@ enum Routes {
   oil,
   maintenance,
   simpleLogin,
-  authLogin
+  authLogin,
+  signUp
 }
 
 class _Paths {
@@ -25,6 +26,7 @@ class _Paths {
   static const String maintenance = 'maintenance';
   static const String simpleLogin = 'simpleLogin';
   static const String authLogin = 'authLogin';
+  static const String signUp = 'signUp';
 
   static const Map<Routes, String> _pathMap = {
     Routes.home: _Paths.home,
@@ -33,7 +35,8 @@ class _Paths {
     Routes.oil: _Paths.oil,
     Routes.maintenance: _Paths.maintenance,
     Routes.simpleLogin: _Paths.simpleLogin,
-    Routes.authLogin: _Paths.authLogin
+    Routes.authLogin: _Paths.authLogin,
+    Routes.signUp: _Paths.signUp
   };
 
   static String of(Routes route) => _pathMap[route] ?? home;
@@ -61,6 +64,8 @@ class AppNavigator {
         return FadeRoute(page: const UserScreen());
       case _Paths.authLogin:
         return FadeRoute(page: const UserAuthLogin());
+      case _Paths.signUp:
+        return FadeRoute(page: const UserSignUp());
       default:
         return FadeRoute(page: const UserScreen());
     }
