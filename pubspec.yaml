@@ -42,6 +42,9 @@ dependencies:
   excel: ^2.1.0
   path_provider: ^2.1.1
   path: ^1.8.3
+  flutter_secure_storage: ^9.0.0
+  flutter_dotenv: ^5.1.0
+  flutter_svg: ^2.0.7
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +65,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
+    - .env
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

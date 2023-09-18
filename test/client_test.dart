@@ -8,10 +8,10 @@ import 'package:test/test.dart';
 void main() {
   group('freight client', (){
     test('should get drive to request ', () async {
-      // final freightClient = FreightClient();
-      // final response = await freightClient.get('/api/v1/operate');
-      // print(response.statusCode);
-      // print(response.body);
+      final freightClient = FreightClient();
+      final response = await freightClient.get('/api/v1/operate');
+      print(response.statusCode);
+      print(response.body);
     });
     
 

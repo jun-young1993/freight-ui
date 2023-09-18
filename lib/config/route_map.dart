@@ -7,7 +7,8 @@ class AppRouteMap {
       Routes.drive,
       Routes.expenditure,
       Routes.oil,
-      Routes.maintenance
+      Routes.maintenance,
+      Routes.simpleLogin
     ];
   }
 
@@ -23,6 +24,8 @@ class AppRouteMap {
         return '주유 내역';
       case Routes.maintenance:
         return '정비 내역';
+      case Routes.simpleLogin:
+        return '화물 일지';
       default :
         return 'no name';
     }

@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/ui/screen/expenditure/expenditure.dart';
 import 'package:freight_ui/ui/screen/home/home.dart';
-import 'package:freight_ui/ui/screen/simple_login/simple_login.dart';
-
+import 'package:freight_ui/ui/screen/user/user.dart';
 import 'core/fade_page_route.dart';
 import 'ui/screen/drive/drive.dart';
 import 'ui/screen/maintenance/maintenance.dart';
@@ -50,9 +48,9 @@ class AppNavigator {
       case _Paths.maintenance:
         return FadeRoute(page: const MaintenanceScreen());
       case _Paths.simpleLogin:
-        return FadeRoute(page: const SimpleLoginScreen());
+        return FadeRoute(page: const UserScreen());
       default:
-        return FadeRoute(page: const SimpleLoginScreen());
+        return FadeRoute(page: const UserScreen());
     }
   }
 
