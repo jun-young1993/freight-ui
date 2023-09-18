@@ -20,13 +20,11 @@ class _UserLoginState extends State<_UserLogin> {
     super.initState();
   }
 
-  void submit() {
-    // 임시
-    AppNavigator.push(Routes.home);
-
+  void userLogin() {
+    userBloc.add(const UserLogin());
   }
 
-  void guest() {
+  void guestLogin() {
     userBloc.add(const GuestLogin());
   }
 
@@ -44,15 +42,15 @@ class _UserLoginState extends State<_UserLogin> {
             SizedBox(
               height: screenHeight * 0.07,
             ),
-            _buildButton(context,'GUEST',guest),
+            _buildButton(context,'GUEST',guestLogin),
             SizedBox(
               height: screenHeight * 0.07,
             ),
-            _buildButton(context,'LOG IN',submit),
+            _buildButton(context,'LOG IN',userLogin),
             SizedBox(
               height: screenHeight * 0.07,
             ),
-            _buildButton(context,'SIGN UP',submit),
+            _buildButton(context,'SIGN UP',userLogin),
           ],
         )
     );

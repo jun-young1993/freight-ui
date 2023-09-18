@@ -8,6 +8,8 @@ import 'package:freight_ui/states/user/user_bloc.dart';
 import 'package:freight_ui/states/user/user_event.dart';
 
 part 'sections/user_login.dart';
+part 'sections/user_auth_login.dart';
+part 'sections/user_sign_up.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});

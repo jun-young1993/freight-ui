@@ -7,7 +7,15 @@ import 'ui/screen/drive/drive.dart';
 import 'ui/screen/maintenance/maintenance.dart';
 import 'ui/screen/oil/oil.dart';
 
-enum Routes { home, drive, expenditure, oil, maintenance, simpleLogin }
+enum Routes {
+  home,
+  drive,
+  expenditure,
+  oil,
+  maintenance,
+  simpleLogin,
+  authLogin
+}
 
 class _Paths {
   static const String home = 'home';
@@ -16,6 +24,7 @@ class _Paths {
   static const String oil = 'oil';
   static const String maintenance = 'maintenance';
   static const String simpleLogin = 'simpleLogin';
+  static const String authLogin = 'authLogin';
 
   static const Map<Routes, String> _pathMap = {
     Routes.home: _Paths.home,
@@ -23,7 +32,8 @@ class _Paths {
     Routes.expenditure: _Paths.expenditure,
     Routes.oil: _Paths.oil,
     Routes.maintenance: _Paths.maintenance,
-    Routes.simpleLogin: _Paths.simpleLogin
+    Routes.simpleLogin: _Paths.simpleLogin,
+    Routes.authLogin: _Paths.authLogin
   };
 
   static String of(Routes route) => _pathMap[route] ?? home;
@@ -49,6 +59,8 @@ class AppNavigator {
         return FadeRoute(page: const MaintenanceScreen());
       case _Paths.simpleLogin:
         return FadeRoute(page: const UserScreen());
+      case _Paths.authLogin:
+        return FadeRoute(page: const UserAuthLogin());
       default:
         return FadeRoute(page: const UserScreen());
     }
