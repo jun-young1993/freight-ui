@@ -6,8 +6,12 @@ import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/routes.dart';
 import 'package:freight_ui/states/user/user_bloc.dart';
 import 'package:freight_ui/states/user/user_event.dart';
+import 'package:freight_ui/ui/widgets/main_back_image.dart';
+import 'package:freight_ui/ui/widgets/user_input_field.dart';
 
 part 'sections/user_login.dart';
+part 'sections/user_auth_login.dart';
+part 'sections/user_sign_up.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});

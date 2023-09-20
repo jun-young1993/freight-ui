@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freight_ui/config/texts.dart';
 import 'package:freight_ui/routes.dart';
 
 class AppRouteMap {
@@ -7,8 +8,7 @@ class AppRouteMap {
       Routes.drive,
       Routes.expenditure,
       Routes.oil,
-      Routes.maintenance,
-      Routes.simpleLogin
+      Routes.maintenance
     ];
   }
 
@@ -25,7 +25,7 @@ class AppRouteMap {
       case Routes.maintenance:
         return '정비 내역';
       case Routes.simpleLogin:
-        return '화물 일지';
+        return AppText.freightRequest;
       default :
         return 'no name';
     }
