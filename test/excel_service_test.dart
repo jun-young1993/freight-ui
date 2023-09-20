@@ -17,17 +17,17 @@ void main() {
       // final response = await freightClient.get('/api/v1/operate');
       // print(response.statusCode);
       // print(response.body);
-      final excelService = ExcelService();
-      final Excel excel = excelService.create();
-      final Sheet sheet = excel['Sheet1'];
+//       final excelService = ExcelService();
+//       final Excel excel = excelService.create();
+//       final Sheet sheet = excel['Sheet1'];
       
-      sheet.appendRow(['Flutter', 'till', 'Eternity']);
-      var fileBytes = excel.save();
-      var directory = await getApplicationDocumentsDirectory();
-print(directory);
-    File(join('$directory/output_file_name.xlsx'))
-      ..createSync(recursive: true)
-      ..writeAsBytesSync(fileBytes!);
+//       sheet.appendRow(['Flutter', 'till', 'Eternity']);
+//       var fileBytes = excel.save();
+//       var directory = await getApplicationDocumentsDirectory();
+// print(directory);
+//     File(join('$directory/output_file_name.xlsx'))
+//       ..createSync(recursive: true)
+      // ..writeAsBytesSync(fileBytes!);
 
     });
     
