@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:freight_ui/config/colors.dart';
 import 'package:freight_ui/config/constant.dart';
 import 'package:freight_ui/config/images.dart';
 import 'package:freight_ui/config/route_map.dart';
+import 'package:freight_ui/config/texts.dart';
 import 'package:freight_ui/routes.dart';
 import 'package:freight_ui/ui/widgets/main_app_bar.dart';
 import 'package:freight_ui/ui/widgets/main_view.dart';
@@ -17,62 +19,73 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
 
-
   @override
   void initState() {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context){
-
     return Scaffold(
       body: Stack(
         children: [
-              NestedScrollView(
-              key: _scrollKey,
-              headerSliverBuilder: (_, __) => [
-                    MainSliverAppBar(
-                      leadingIconData: Icons.home,
-                      onLeadingPress: (){},
-                      title: AppRouteMap.getName(Routes.home),
-                      context: context,
-                    )
-              ],
-              body : Center(
+          Center(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      _buildImage(),
+                      // _buildImage(),
+                      _buildTitle(),
                       _buildMenus(AppRouteMap.getShowMenu())
                     ],
                   ),
                 )
               )
-            )
         ],
+        // children: [
+        //       NestedScrollView(
+        //       key: _scrollKey,
+        //       headerSliverBuilder: (_, __) => [
+        //             MainSliverAppBar(
+        //               leadingIconData: Icons.home,
+        //               onLeadingPress: (){},
+        //               title: AppRouteMap.getName(Routes.home),
+        //               context: context,
+        //             )
+        //       ],
+        //       body : Center(
+        //         child: SingleChildScrollView(
+        //           child: Column(
+        //             children: [
+        //               // _buildImage(),
+        //               _buildMenus(AppRouteMap.getShowMenu())
+        //             ],
+        //           ),
+        //         )
+        //       )
+        //     )
+        // ],
       )
     );
+  }
 
-
-      // goBack: false,
-      // child: SingleChildScrollView(
-      //   child: Center(
-      //     child:  Column(
-      //       children: [
-      //         _buildImage(),
-      //         _buildMenus(AppRouteMap.getShowMenu())
-      //     ],)
-      //   ),
-      // )
-    // );
+  Widget _buildTitle(){
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Container(
+      color: AppColors.white,
+      alignment: Alignment.center,
+      child: Title(
+        color: AppColors.black,
+        child: Text(
+          style: TextStyle(fontSize: screenHeight * 0.05, color: AppColors.black),
+          AppText.freightRequest
+        )
+      )
+    );
   }
 
   Widget _buildImage(){
     return Container(
-      child: Image(image: AppImages.main),
+      child: const Image(image: AppImages.truck),
     );
   }
 
@@ -91,11 +104,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildMenu(Routes route){
+    double screenHeight = MediaQuery.of(context).size.height;
     return Container(
       padding: const EdgeInsets.all(8),
+      decoration: const BoxDecoration(
+        color: AppColors.black
+      ),
       child: TextButton(
           onPressed: () => _onSelectMenu(route),
-          child: Text(AppRouteMap.getName(route))
+          child: Text(
+            style: TextStyle(
+              color: AppColors.white,
+              fontSize: screenHeight * 0.03
+            ),
+            AppRouteMap.getName(route)
+          )
       ),
     );
     

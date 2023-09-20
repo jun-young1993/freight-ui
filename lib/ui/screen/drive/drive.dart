@@ -19,8 +19,6 @@ import 'package:freight_ui/ui/widgets/form/date_picker_field.dart';
 import 'package:freight_ui/ui/widgets/main_app_bar.dart';
 import 'package:freight_ui/utills/date.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-
-
 part 'sections/drive_grid.dart';
 part 'sections/drive_fab_menu.dart';
 part 'sections/drive_form.dart';
