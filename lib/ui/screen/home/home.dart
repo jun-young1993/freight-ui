@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freight_ui/config/colors.dart';
 import 'package:freight_ui/config/constant.dart';
 import 'package:freight_ui/config/images.dart';
 import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/config/texts.dart';
+import 'package:freight_ui/domain/entities/user.dart';
 import 'package:freight_ui/routes.dart';
+import 'package:freight_ui/states/user/user_bloc.dart';
+import 'package:freight_ui/states/user/user_event.dart';
+import 'package:freight_ui/states/user/user_selector.dart';
 import 'package:freight_ui/ui/widgets/main_app_bar.dart';
 import 'package:freight_ui/ui/widgets/main_view.dart';
 
@@ -19,9 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
 
+  UserBloc get userBloc => context.read<UserBloc>();
+  
   @override
   void initState() {
     super.initState();
+
+    userBloc.add(const UserStateEvent());
   }
 
   @override
@@ -33,6 +42,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      UserEntityStateSelector(
+                        builder: (User user) {
+                          print('user entity state selector');
+                          return Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(user.name),
+                          );
+                        }
+                      ),
                       // _buildImage(),
                       _buildTitle(),
                       _buildMenus(AppRouteMap.getShowMenu())

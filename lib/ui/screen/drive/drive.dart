@@ -31,7 +31,6 @@ class DriveScreen extends StatefulWidget {
 }
 
 class _DriveScreenState extends State<DriveScreen> {
-  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
