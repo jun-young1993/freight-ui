@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
-    test('expenditure post list test ', () async {
+    test('expenditure post  test ', () async {
       final url =Uri.parse('http://158.180.82.177:3000/api/v1/spend');
       final Map<String,String> headers = {
         'Authorization': 
