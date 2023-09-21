@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _buildTitle(),
                 _buildMenus(AppRouteMap.getShowMenu()),
                 SizedBox(
-                  height: screenHeight * 0.08,
+                  height: screenHeight * 0.03,
                 ),
                 _buildYear()
               ],
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildMenu(Routes route){
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(6),
       decoration: const BoxDecoration(
         color: AppColors.black
       ),
