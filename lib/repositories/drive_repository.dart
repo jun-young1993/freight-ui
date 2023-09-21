@@ -28,7 +28,7 @@ class DriveDefaultRepository extends DriveRepository {
   Future<List<Drive>> get() async {
     final List<Drive> data = [];
     for(var index= 0; index<100; index++){
-      
+
       data.add(const Drive(
           loadingDate: "20210101",
           loadingPlace: "test",
