@@ -65,25 +65,32 @@ class _DriveCard extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(
           top: screenHeight * 0.015,
-          left: 10
+          left: 10,
+          right: 10,
         ),
         // padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 _buildDateText(drive.loadingDate),
                 const Text('/', textAlign: TextAlign.center,),
                 _buildDateText(drive.unLoadingDate),
-                // Text(drive.unLoadingDate),
-                // Center(child: Text("${drive.loadingDate} - ${drive.unLoadingDate}"),),
-                // Center(child: Text("${drive.loadingPlace} - ${drive.unLoadingPlace}"),),
-                // Center(child: Text(drive.extra),),
-                // Center(child: Text(drive.transportationCosts.toString()),),
               ],
             ),
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Text(drive.loadingPlace),
+                const Text('/', textAlign: TextAlign.center,),
+                Text(drive.unLoadingPlace),
+              ],
+            ),
+            _buildDateText(drive.transportationDate),
+            Text(drive.transportationType),
+            Text(drive.unitCost.toString())
           ],
         )
       ),
