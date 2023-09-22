@@ -10,7 +10,7 @@ class _DriveGrid extends StatefulWidget {
 
 class _DriveGridState extends State<_DriveGrid> {
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
-
+  String? _headerText = '';
   PickerDateRange pickerDateRange = PickerDateRange(
     SearchDate(SearchDateType.start),
     SearchDate(SearchDateType.end)
@@ -30,88 +30,128 @@ class _DriveGridState extends State<_DriveGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      key: _scrollKey,
-      headerSliverBuilder: (_, __) => [
-            MainSliverAppBar(
-              // height: 200.0,
-              // Text(AppRouteMap.getName(Routes.drive)),
-              title : AppRouteMap.getName(Routes.drive),
-              context: context,
-              tailActions: _buildHeaderActions(context)
-            ),
-      ],
-      body: DriveStateStatusSelector((status) {
-        // ignore: avoid_print
+    double screenHeight = MediaQuery.of(context).size.height;
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _buildHeader(),
+          _buildGrid()
+        ]
+      ),
+    );
+    // return NestedScrollView(
+    //   key: _scrollKey,
+    //   headerSliverBuilder: (_, __) => [
+    //         MainSliverAppBar(
+    //           // height: 200.0,
+    //           // Text(AppRouteMap.getName(Routes.drive)),
+    //           title : AppRouteMap.getName(Routes.drive),
+    //           context: context,
+    //           tailActions: _buildHeaderActions(context)
+    //         ),
+    //   ],
+    //   body: DriveStateStatusSelector((status) {
+    //     // ignore: avoid_print
         
-        print('[DriveStateStatusSelector ] ${status}');
-        switch(status){
-          case DriveStateStatus.loadSuccess:
-            return _buildGrid(context);
-          case DriveStateStatus.loadFailure:
-            _showErrorSnackBar(context);
-            return Container();
-          default:
-            return Container();
-        }
+    //     print('[DriveStateStatusSelector ] ${status}');
+    //     switch(status){
+    //       case DriveStateStatus.loadSuccess:
+    //         return _buildGrid(context);
+    //       case DriveStateStatus.loadFailure:
+    //         _showErrorSnackBar(context);
+    //         return Container();
+    //       default:
+    //         return Container();
+    //     }
         
-      })
+    //   })
+    // );
+  }
+
+  Widget _buildHeader(){
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Center(
+            child: Padding(
+              padding: EdgeInsets.all(screenHeight * 0.04),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildHeaderButton(
+                    const Icon(Icons.add),
+                    (){}
+                  ),
+                  _buildDatePicker(),
+                  _buildHeaderButton(
+                    const Image(image: AppImages.excel,),
+                    (){}
+                  )
+                ],
+              ),
+            )
+          );
+  }
+
+
+  Widget _buildHeaderButton(Widget icon, VoidCallback callback){
+    double screenHeight = MediaQuery.of(context).size.height;
+    return SizedBox(
+      width: screenHeight * 0.1,
+      height: screenHeight * 0.1,
+      child: IconButton(
+        icon: icon,
+        onPressed: callback,
+      ),
     );
   }
 
-  Widget _buildDatePicker(BuildContext context){
-    return  IconButton(
-      padding: const EdgeInsets.symmetric(horizontal: MainAppBarConfig.mainAppBarPadding),
-      icon: Icon(Icons.date_range,
-      color: Theme.of(context).textTheme.bodyLarge!.color),
-      onPressed: (){
-        showDialog(
+  Widget _buildDatePicker(){
+   double screenHeight = MediaQuery.of(context).size.height;
+    return Container(
+      // width: double.infinity,
+      decoration: BoxDecoration(
+          border: Border.all()
+      ),
+      child: TextButton(
+          onPressed: () {
+            _showDatePicker();
+          },
+          child: Text(
+            style: TextStyle(
+              color: AppColors.black,
+              fontSize: screenHeight * 0.04
+            ),
+            CurrentDate('yyyy-MM')
+          )
+      ),
+    );
+    // SfDateRangePicker();
+  }
+
+
+  void _showDatePicker(){
+      showDialog(
           context: context, 
           builder: (BuildContext context) {
             
             return SfDateRangePicker(
+              
               backgroundColor: AppColors.white,
-              selectionMode: DateRangePickerSelectionMode.range,
-              showActionButtons: true,
-              onCancel: () => {
-                Navigator.pop(context)
-              },
-              onSelectionChanged: (DateRangePickerSelectionChangedArgs rangeDate) {
-                
-                //  rangeDate - 
-                // PickerDateRange#40037(startDate: 2023-09-14 00:00:00.000, endDate: null)
-                // PickerDateRange#9a9aa(startDate: 2023-09-05 00:00:00.000, endDate: 2023-09-14 00:00:00.000)
-                // if(rangeDate.startDate != null){
-
-                // }
-                if(rangeDate.value.endDate != null){
-                  pickerDateRange = PickerDateRange(
-                    SearchDate(
-                      SearchDateType.start, 
-                      dateTime: rangeDate.value.startDate
-                    ), 
-                    SearchDate(
-                      SearchDateType.end, 
-                      dateTime: rangeDate.value.endDate
-                    )
-                  );
+              view: DateRangePickerView.year,
+              showNavigationArrow: true,
+              onViewChanged: (DateRangePickerViewChangedArgs rageDate) {
+                // print(rageDate.view);
+                print(rageDate.visibleDateRange);
+                if(rageDate.view == DateRangePickerView.month){
+                  AppNavigator.pop();
                 }
-                
+              },
 
-                
-              },
-              onSubmit: (p0)  {
-                Navigator.pop(context);
-              },
               // onSubmit: () => {
               //   // return Navigator.pop(context);
               // },
             );     
           }
         );
-      },
-    );
-    // SfDateRangePicker();
   }
   
   void _showErrorSnackBar(BuildContext context){
@@ -141,9 +181,9 @@ class _DriveGridState extends State<_DriveGrid> {
   
   }
 
-  List<Widget> _buildHeaderActions(BuildContext context) {
+  List<Widget> _buildHeaderActions() {
     return [
-      _buildDatePicker(context)
+      _buildDatePicker()
                 // IconButton(
                 //   padding: EdgeInsets.symmetric(horizontal: MainAppBarConfig.mainAppBarPadding),
                 //   icon: Icon(Icons.date_range,
@@ -169,42 +209,48 @@ class _DriveGridState extends State<_DriveGrid> {
     // AppNavigator.push(Routes.userInfo, user);
   }
 
-  Widget _buildGrid(BuildContext context) {
-    return CustomScrollView(
-
-      slivers : [
-        SliverPadding(
-          padding: const EdgeInsets.all(2),
-          sliver: DriveCountSelector((driveCount) {
-            return SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0,
-                  childAspectRatio: 4.0,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (_, index) {
-                  
-                  return DriveSelector(index, (drive, _) {
-                    return Container(
-                      alignment: Alignment.center,
-                      color: Colors.teal[100 * (index % 9)],
-                      child: DriveCard(
-                        drive: drive,
-                        onPress: () => _onCardPress(drive,context),
-                      )
-                      // Text('grid item $index ${drive.extra} ${drive.loadingDate} - ${drive.unLoadingDate}'),
-                    );
-                  });
-                },
-                childCount : driveCount
-              )
-            );
-          })
-        )
-      ]
+  Widget _buildGrid() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    return SizedBox(
+      height: screenHeight * 0.7,
+      width: screenWidth * 0.97,
+      child: CustomScrollView(
+        slivers : [
+          SliverPadding(
+            padding: const EdgeInsets.all(2),
+            sliver: DriveCountSelector((driveCount) {
+              return SliverGrid(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    mainAxisSpacing: 10.0,
+                    crossAxisSpacing: 10.0,
+                    childAspectRatio: 4.0,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (_, index) {
+                    
+                    return DriveSelector(index, (drive, _) {
+                      return Container(
+                        alignment: Alignment.center,
+                        // color: Colors.teal[100 * (index % 9)],
+                        child: DriveCard(
+                          drive: drive,
+                          onPress: () => _onCardPress(drive,context),
+                        )
+                        // Text('grid item $index ${drive.extra} ${drive.loadingDate} - ${drive.unLoadingDate}'),
+                      );
+                    });
+                  },
+                  childCount : driveCount
+                )
+              );
+            })
+          )
+        ]
+      ),
     );
+
   }
   
 }

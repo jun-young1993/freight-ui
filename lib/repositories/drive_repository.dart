@@ -29,14 +29,14 @@ class DriveDefaultRepository extends DriveRepository {
     final List<Drive> data = [];
     for(var index= 0; index<100; index++){
       
-      data.add(const Drive(
-          loadingDate: "20210101",
+      data.add(Drive(
+          loadingDate: DateTime.now(),
           loadingPlace: "test",
-          unLoadingDate: "20210101",
+          unLoadingDate: DateTime.now(),
           unLoadingPlace: "test2",
           loadingRatio: 100,
           transportationCosts: 100,
-          transportationDate: "20210101",
+          transportationDate: DateTime.now(),
           transportationType: "11톤",
           unitCost: 100000,
           extra: 'test 데티어 index'
