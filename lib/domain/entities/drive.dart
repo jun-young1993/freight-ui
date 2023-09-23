@@ -1,13 +1,13 @@
 import 'package:freight_ui/domain/dto/drive.dart';
 
 class Drive {
-  final String loadingDate;
+  final DateTime loadingDate;
   final String loadingPlace;
-  final String unLoadingDate;
+  final DateTime unLoadingDate;
   final String unLoadingPlace;
   final int loadingRatio;
   final int transportationCosts;
-  final String transportationDate;
+  final DateTime transportationDate;
   final String transportationType;
   final int unitCost;
   final String extra;

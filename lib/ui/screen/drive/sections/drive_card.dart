@@ -5,8 +5,10 @@ import 'package:freight_ui/domain/entities/drive.dart';
 class DriveCard extends StatelessWidget {
   final Drive drive;
   final void Function()? onPress;
-  const DriveCard({super.key,
-    required this.drive, this.onPress
+  const DriveCard({
+    super.key,
+    required this.drive, 
+    this.onPress
   });
 
 
@@ -14,11 +16,12 @@ class DriveCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constrains) {
-        const Color color = AppColors.lightBlue;
+        const Color color = AppColors.whiteGrey;
 
         return Container(
               decoration: BoxDecoration(
               color:  color,
+              border: Border.all(),
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
@@ -56,22 +59,45 @@ class _DriveCard extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Center(child: Text("${drive.loadingDate} - ${drive.unLoadingDate}"),),
-            Center(child: Text("${drive.loadingPlace} - ${drive.unLoadingPlace}"),),
-            // Center(child: Text(drive.extra),),
-            // Center(child: Text(drive.transportationCosts.toString()),),
-          ],
+        padding: EdgeInsets.only(
+          top: screenHeight * 0.015,
+          left: 10,
+          right: 10,
         ),
+        // padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                _buildDateText(drive.loadingDate),
+                const Text('/', textAlign: TextAlign.center,),
+                _buildDateText(drive.unLoadingDate),
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Text(drive.loadingPlace),
+                const Text('/', textAlign: TextAlign.center,),
+                Text(drive.unLoadingPlace),
+              ],
+            ),
+            _buildDateText(drive.transportationDate),
+            Text(drive.transportationType),
+            Text(drive.unitCost.toString())
+          ],
+        )
       ),
     );
   }
 
+  Widget _buildDateText(DateTime driveProperty){
+   return Text("${driveProperty.month.toString()}월 ${driveProperty.day.toString()}일");
+  }
 }
