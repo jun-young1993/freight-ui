@@ -26,6 +26,7 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
       emit(state.asLoadSuccess(data, canLoadMore: false));
       
     } on Exception catch (e) {
+      print(e);
       emit(state.asLoadFailure(e));
     }
   }
@@ -35,8 +36,8 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
       emit(state.asLoading());
 
       final DriveDto driveDto = event.drive;
-      final drive = await _driveRepository.create(driveDto);
-      state.data.insert(0,drive);
+      // final drive = await _driveRepository.create(driveDto);
+      // state.data.insert(0,drive);
       emit(state.asLoadSuccess(state.data, canLoadMore: false));
 
     } on Exception catch (e) {

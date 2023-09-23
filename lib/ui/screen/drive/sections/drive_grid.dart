@@ -34,6 +34,7 @@ class _DriveGridState extends State<_DriveGrid> {
     return SingleChildScrollView(
       child: Column(
         children: [
+
           _buildHeader(),
           _buildGrid()
         ]
@@ -70,9 +71,10 @@ class _DriveGridState extends State<_DriveGrid> {
 
   Widget _buildHeader(){
     double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Center(
             child: Padding(
-              padding: EdgeInsets.all(screenHeight * 0.04),
+              padding: EdgeInsets.all(screenHeight * 0.07),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -80,7 +82,9 @@ class _DriveGridState extends State<_DriveGrid> {
                     const Icon(Icons.add),
                     (){}
                   ),
+                  SizedBox(width: screenWidth * 0.07),
                   _buildDatePicker(),
+                  SizedBox(width: screenWidth * 0.07),
                   _buildHeaderButton(
                     const Image(image: AppImages.excel,),
                     (){}
@@ -95,8 +99,8 @@ class _DriveGridState extends State<_DriveGrid> {
   Widget _buildHeaderButton(Widget icon, VoidCallback callback){
     double screenHeight = MediaQuery.of(context).size.height;
     return SizedBox(
-      width: screenHeight * 0.1,
-      height: screenHeight * 0.1,
+      width: screenHeight * 0.05,
+      height: screenHeight * 0.05,
       child: IconButton(
         icon: icon,
         onPressed: callback,
@@ -118,7 +122,7 @@ class _DriveGridState extends State<_DriveGrid> {
           child: Text(
             style: TextStyle(
               color: AppColors.black,
-              fontSize: screenHeight * 0.04
+              fontSize: screenHeight * 0.03
             ),
             CurrentDate('yyyy-MM')
           )

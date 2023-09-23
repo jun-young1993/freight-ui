@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:excel/excel.dart';
+import 'package:freight_ui/core/freight_client.dart';
 import 'package:freight_ui/domain/dto/drive.dart';
 import 'package:freight_ui/domain/entities/drive.dart';
 import 'package:freight_ui/services/excel_service.dart';
@@ -9,8 +11,8 @@ import 'package:path_provider/path_provider.dart';
 
 abstract class DriveRepository {
   Future<List<Drive>> get();
-  Future<Drive> update(Drive drive);
-  Future<Drive> create(DriveDto dto);
+  // Future<Drive> update(Drive drive);
+  // Future<Drive> create(DriveDto dto);
   Future<bool> downExcel(
     // List<Drive>? drives
     );
@@ -19,36 +21,45 @@ abstract class DriveRepository {
 class DriveDefaultRepository extends DriveRepository {
   DriveDefaultRepository();
 
-  @override
-  Future<Drive> create(DriveDto dto) async {
-    return Drive.fromDto(dto);
-  }
+  final _freightClient = FreightClient();
+
+  // @override
+  // Future<Drive> create(DriveDto dto) async {
+  //   // return Drive.fromDto(dto);
+  // }
 
   @override
   Future<List<Drive>> get() async {
-    final List<Drive> data = [];
-    for(var index= 0; index<100; index++){
-      
-      data.add(Drive(
-          loadingDate: DateTime.now(),
-          loadingPlace: "test",
-          unLoadingDate: DateTime.now(),
-          unLoadingPlace: "test2",
-          loadingRatio: 100,
-          transportationCosts: 100,
-          transportationDate: DateTime.now(),
-          transportationType: "11톤",
-          unitCost: 100000,
-          extra: 'test 데티어 index'
-    ));
-    }
-    return data;
+
+    final response =
+    await _freightClient.get('/api/v1/operate',
+        queryParameters: {
+          "date": "2023-09-14"
+        }
+    );
+
+    final int statusCode = response.statusCode;
+    final List<Drive> result = [];
+
+    if((statusCode == HttpStatus.ok) || (statusCode == HttpStatus.noContent)){
+
+      final Map<String, dynamic> body = json.decode(
+          utf8.decode(response.bodyBytes)
+      );
+
+      final List<dynamic> data = body['data'];
+      for(var item in data){
+        result.add(Drive.fromJson(item));
+      }
+    };
+
+    return result;
   }
 
-  @override
-  Future<Drive> update(Drive drive) async {
-        return drive;
-  }
+  // @override
+  // Future<Drive> update(Drive drive) async {
+  //       return drive;
+  // }
 
   @override
   Future<bool> downExcel(

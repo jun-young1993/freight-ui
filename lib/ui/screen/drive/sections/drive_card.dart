@@ -48,7 +48,7 @@ class DriveCard extends StatelessWidget {
       }
     );
   }}
-  
+
 
 class _DriveCard extends StatelessWidget {
   final Drive drive;
@@ -56,44 +56,52 @@ class _DriveCard extends StatelessWidget {
   const _DriveCard({
     required this.drive
   });
-  
+
   @override
   Widget build(BuildContext context) {
+
+    return _buildDriveCard(context);
+  }
+  Widget _buildDriveCard(BuildContext context){
     double screenHeight = MediaQuery.of(context).size.height;
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(
-        padding: EdgeInsets.only(
-          top: screenHeight * 0.015,
-          left: 10,
-          right: 10,
-        ),
-        // padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                _buildDateText(drive.loadingDate),
-                const Text('/', textAlign: TextAlign.center,),
-                _buildDateText(drive.unLoadingDate),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Text(drive.loadingPlace),
-                const Text('/', textAlign: TextAlign.center,),
-                Text(drive.unLoadingPlace),
-              ],
-            ),
-            _buildDateText(drive.transportationDate),
-            Text(drive.transportationType),
-            Text(drive.unitCost.toString())
-          ],
-        )
+          padding: EdgeInsets.only(
+            top: screenHeight * 0.015,
+            left: 10,
+            right: 10,
+          ),
+          // padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
+          child:_buildDriveRow()
       ),
+    );
+  }
+
+  Widget _buildDriveRow(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            _buildDateText(drive.loadingDate),
+            const Text('/', textAlign: TextAlign.center,),
+            _buildDateText(drive.unLoadingDate),
+          ],
+        ),
+        Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Text(drive.loadingPlace),
+            const Text('/', textAlign: TextAlign.center,),
+            Text(drive.unLoadingPlace),
+          ],
+        ),
+        _buildDateText(drive.transportationDate),
+        Text(drive.transportationType),
+        Text(drive.unitCost.toString())
+      ],
     );
   }
 
