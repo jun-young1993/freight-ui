@@ -80,7 +80,9 @@ class _DriveGridState extends State<_DriveGrid> {
                 children: [
                   _buildHeaderButton(
                     const Icon(Icons.add),
-                    (){}
+                    (){
+
+                    }
                   ),
                   SizedBox(width: screenWidth * 0.07),
                   _buildDatePicker(),
@@ -131,7 +133,6 @@ class _DriveGridState extends State<_DriveGrid> {
     // SfDateRangePicker();
   }
 
-
   void _showDatePicker(){
       showDialog(
           context: context, 
@@ -149,10 +150,6 @@ class _DriveGridState extends State<_DriveGrid> {
                   AppNavigator.pop();
                 }
               },
-
-              // onSubmit: () => {
-              //   // return Navigator.pop(context);
-              // },
             );     
           }
         );
@@ -162,12 +159,6 @@ class _DriveGridState extends State<_DriveGrid> {
     Future.delayed(Duration.zero, () {
           ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            // action: SnackBarAction(
-            //   label: 'Action',
-            //   onPressed: () {
-            //     // Code to execute.
-            //   },
-            // ),
             backgroundColor: AppColors.red,
             content: const Text('Awesome SnackBar!'),
             duration: const Duration(milliseconds: 1500),
@@ -188,14 +179,6 @@ class _DriveGridState extends State<_DriveGrid> {
   List<Widget> _buildHeaderActions() {
     return [
       _buildDatePicker()
-                // IconButton(
-                //   padding: EdgeInsets.symmetric(horizontal: MainAppBarConfig.mainAppBarPadding),
-                //   icon: Icon(Icons.date_range,
-                //       color: Theme.of(context).textTheme.bodyLarge!.color),
-                //   onPressed: (){
-
-                //   },
-                // ),
     ];
   }
 
@@ -207,10 +190,6 @@ class _DriveGridState extends State<_DriveGrid> {
             return DriveDetail(drive: drive);
           }
         );
-    // print("onUserPress userId ${user.id}");
-    // userBloc.add(UserSelectChanged(id: user.id));
-    // print("onUserPress User ${user}");
-    // AppNavigator.push(Routes.userInfo, user);
   }
 
   Widget _buildGrid() {

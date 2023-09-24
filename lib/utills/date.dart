@@ -23,6 +23,6 @@ DateTime SearchDate(SearchDateType type, { DateTime? dateTime }){
 /**
  * params format yyyy-MM-dd
  */
-String CurrentDate(String format) {
-  return DateFormat(format).format(DateTime.now());
+String CurrentDate(String format, { DateTime? dateTime }) {
+  return DateFormat(format).format(dateTime ?? DateTime.now());
 }
