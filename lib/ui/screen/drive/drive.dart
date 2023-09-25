@@ -18,6 +18,7 @@ import 'package:freight_ui/ui/screen/drive/sections/drive_detail.dart';
 import 'package:freight_ui/ui/widgets/animated_overlay.dart';
 import 'package:freight_ui/ui/widgets/fab.dart';
 import 'package:freight_ui/ui/widgets/form/date_picker_field.dart';
+import 'package:freight_ui/ui/widgets/loader.dart';
 import 'package:freight_ui/ui/widgets/main_app_bar.dart';
 import 'package:freight_ui/utills/date.dart';
 import 'package:intl/intl.dart';

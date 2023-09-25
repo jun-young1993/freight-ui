@@ -21,6 +21,7 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
   void _onLoadStarted(DriveLoadStarted event, Emitter<DriveState> emit) async {
     try{
       emit(state.asLoading());
+      
       final data = await _driveRepository.get();
       // inspect(data);
       emit(state.asLoadSuccess(data, canLoadMore: false));

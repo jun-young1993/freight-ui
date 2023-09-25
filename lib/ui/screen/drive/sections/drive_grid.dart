@@ -36,37 +36,20 @@ class _DriveGridState extends State<_DriveGrid> {
         children: [
 
           _buildHeader(),
-          _buildGrid()
+          DriveStateStatusSelector((status) {
+            print(status);
+            switch(status) {
+              case DriveStateStatus.loading:
+                return const Loader();
+              case DriveStateStatus.loadSuccess:
+                return _buildGrid();
+              default:
+                return Container();
+            }
+          }),
         ]
       ),
     );
-    // return NestedScrollView(
-    //   key: _scrollKey,
-    //   headerSliverBuilder: (_, __) => [
-    //         MainSliverAppBar(
-    //           // height: 200.0,
-    //           // Text(AppRouteMap.getName(Routes.drive)),
-    //           title : AppRouteMap.getName(Routes.drive),
-    //           context: context,
-    //           tailActions: _buildHeaderActions(context)
-    //         ),
-    //   ],
-    //   body: DriveStateStatusSelector((status) {
-    //     // ignore: avoid_print
-        
-    //     print('[DriveStateStatusSelector ] ${status}');
-    //     switch(status){
-    //       case DriveStateStatus.loadSuccess:
-    //         return _buildGrid(context);
-    //       case DriveStateStatus.loadFailure:
-    //         _showErrorSnackBar(context);
-    //         return Container();
-    //       default:
-    //         return Container();
-    //     }
-        
-    //   })
-    // );
   }
 
   Widget _buildHeader(){
@@ -186,7 +169,6 @@ class _DriveGridState extends State<_DriveGrid> {
         showDialog(
           context: context, 
           builder: (BuildContext context) {
-            
             return DriveDetail(drive: drive);
           }
         );
