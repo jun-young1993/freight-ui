@@ -1,7 +1,17 @@
-part of '../drive.dart';
+// part of '../drive.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freight_ui/domain/entities/drive.dart';
+import 'package:freight_ui/states/drive/drive_bloc.dart';
+import 'package:freight_ui/utills/date.dart';
 
 class _DriveForm extends StatefulWidget {
-  const _DriveForm({super.key});
+  final Drive? drive;
+  const _DriveForm({
+    super.key,
+    this.drive
+  });
 
   @override
   _DriveFormState createState() => _DriveFormState();
@@ -9,6 +19,7 @@ class _DriveForm extends StatefulWidget {
 
 class _DriveFormState extends State<_DriveForm> {
   final _formKey = GlobalKey<_DriveFormState>();
+  Drive? get drive => widget.drive;
   // String _currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
   // final TextEditingController _loadDateInput = TextEditingController();
   // final TextEditingController _unLoadDateInput = TextEditingController();
@@ -45,126 +56,63 @@ class _DriveFormState extends State<_DriveForm> {
   @override
   Widget build(BuildContext context){
 
+    double screenHeight = MediaQuery.of(context).size.height;
 
+    return Container(
+      child: Column(
+        children: [
+          const ContainerTitle(title: '상세조회'),
+              Container(
+                padding: EdgeInsets.all(screenHeight * 0.02),
+                child: Text("TODAY: ${CurrentDate("yyyy-MM-dd", dateTime: drive!.createdAt)}"),
+              ),
+              Container(
+                padding: EdgeInsets.all(screenHeight * 0.02),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("상차 날짜: ${CurrentDate("yyyy-MM-dd", dateTime: drive!.loadingDate)}"),
+                    Text("하차 날짜: ${CurrentDate("yyyy-MM-dd", dateTime: drive!.unLoadingDate)}"),
+                  ]
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(screenHeight * 0.02),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("*상차지: ${drive!.loadingPlace}"),
+                    Text("*하차 날짜: ${drive!.unLoadingPlace}"),
+                  ]
+                ),
+              ),
+              _buildBorderText('운송 품목:', drive!.transportationType),
+              _buildBorderText('품목 단가:', drive!.transportationCosts.toString()),
+              _buildBorderText('운반비:', drive!.unitCost.toString()),
+        ]
+      ),
+    );
+  }
 
-    return AlertDialog(
-      content: Stack(
-        children: <Widget>[
-          Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                DatePickerField(
-                  controller: _formController['loadingDate'],
-                  context: context,
-                  labelText: "상차일",
-                  onSelected: (selectedDate){
-                    // setState(() {
-                    //   loadDateInput.text = selectedDate;
-                    // });
-                  },
-                ),
-                TextFormField(
-                  controller: _formController['loadingPlace'],
-                  decoration: const InputDecoration(
-                      labelText: '상차지'
-                  ),
-                ),
-                DatePickerField(
-                  controller: _formController['unLoadingDate'],
-                  context: context,
-                  labelText: "하차일",
-                  onSelected: (selectedDate){
-                    // setState(() {
-                    //   unLoadDateInput.text = selectedDate;
-                    // });
-                  },
-                ),
-                TextFormField(
-                  controller: _formController['unLoadingPlace'],
-                  decoration: const InputDecoration(
-                      labelText: '하차지'
-                  ),
-                ),
-                TextFormField(
-                  controller: _formController['loadingRatio'],
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [],
-                  decoration: const InputDecoration(
-                      labelText: '요율'
-                  ),
-                ),
-                TextFormField(
-                  controller: _formController['transportationCosts'],
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [],
-                  decoration: const InputDecoration(
-                      labelText: '운반비'
-                  ),
-                ),
-                DatePickerField(
-                  controller: _formController['transportationDate'],
-                  context: context,
-                  labelText: "운행 날짜",
-                  onSelected: (selectedDate){
-                    // setState(() {
-                    //   unLoadDateInput.text = selectedDate;
-                    // });
-                  },
-                ),
-                TextFormField(
-                  controller: _formController['transportationType'],
-                  decoration: const InputDecoration(
-                      labelText: '운송 품'
-                  ),
-                ),
-                TextFormField(
-                  controller: _formController['unitCost'],
-                  decoration: const InputDecoration(
-                      labelText: '운송 품목별 단가'
-                  ),
-                ),
-                TextFormField(
-                  controller: _formController['extra'],
-                  decoration: const InputDecoration(
-                      labelText: '비고'
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    // crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      IconButton(
-                          onPressed: (){
-                        // Validate will return true if the form is valid, or false if
-                        // the form is invalid.
-                        // if (_formKey.currentState!.validate()) {
-                        //   // Process data.
-                        // }
-                          Map<String, dynamic> jsonMap = {};
-                          _formController.forEach((key, controller) => jsonMap[key] = controller.text);
-                          
-                          driveBloc.add(DriveCreated(DriveDto.fromJson(jsonMap)));
-                          AppNavigator.pop();
-                        },
-                        icon: const Icon(Icons.add)
-                      ),
-                      const IconButton(
-                          onPressed: AppNavigator.pop,
-                          icon: Icon(Icons.cancel)
-                      )
-                    ],
-                  )
-                ),
-              ],
-            ),
-          )
-        ],
-      )
+  
+  Widget _buildBorderText( String title, String text ) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Padding(
+      padding: EdgeInsets.all(screenHeight * 0.01),
+      child: Container(
+        padding: EdgeInsets.all(screenHeight * 0.05),
+        // height: screenHeight * 0.05,
+        decoration: BoxDecoration(
+          border: Border.all(width: 2.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title),
+            Text(text)
+          ],
+        ),
+      ),
     );
   }
 }

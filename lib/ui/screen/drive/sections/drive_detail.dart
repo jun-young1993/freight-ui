@@ -5,6 +5,7 @@ import 'package:freight_ui/domain/entities/drive.dart';
 import 'package:freight_ui/routes.dart';
 import 'package:freight_ui/ui/widgets/container_title.dart';
 import 'package:freight_ui/ui/widgets/main_app_bar.dart';
+import 'package:freight_ui/screen/drive/sections/drive_form';
 import 'package:freight_ui/utills/date.dart';
 
 class DriveDetail extends StatefulWidget {
@@ -35,34 +36,7 @@ class _DriveDetailState extends State<DriveDetail> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const ContainerTitle(title: '상세조회'),
-              Container(
-                padding: EdgeInsets.all(screenHeight * 0.02),
-                child: Text("TODAY: ${CurrentDate("yyyy-MM-dd", dateTime: drive!.createdAt)}"),
-              ),
-              Container(
-                padding: EdgeInsets.all(screenHeight * 0.02),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("상차 날짜: ${CurrentDate("yyyy-MM-dd", dateTime: drive!.loadingDate)}"),
-                    Text("하차 날짜: ${CurrentDate("yyyy-MM-dd", dateTime: drive!.unLoadingDate)}"),
-                  ]
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(screenHeight * 0.02),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("*상차지: ${drive!.loadingPlace}"),
-                    Text("*하차 날짜: ${drive!.unLoadingPlace}"),
-                  ]
-                ),
-              ),
-              _buildBorderText('운송 품목:', drive!.transportationType),
-              _buildBorderText('품목 단가:', drive!.transportationCosts.toString()),
-              _buildBorderText('운반비:', drive!.unitCost.toString()),
+              _DriveForm(),
               Center(
                 child: Row(
                   children: [
