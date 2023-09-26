@@ -57,22 +57,23 @@ class _DriveFormState extends State<DriveForm> {
   Widget build(BuildContext context){
 
     double screenHeight = MediaQuery.of(context).size.height;
-
-    return Container(
-      child: Column(
-        children: [
-          const ContainerTitle(title: '운행일지 신규등록'),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Form(
+          child: Column(
+            children: [
+              const ContainerTitle(title: '운행일지 신규등록'),
               Container(
                 padding: EdgeInsets.all(screenHeight * 0.02),
-                child: Text("TODAY: ${CurrentDate("yyyy-MM-dd", dateTime: drive!.createdAt)}"),
+                child: Text("TODAY: ${CurrentDate("yyyy-MM-dd")}"),
               ),
               Container(
                 padding: EdgeInsets.all(screenHeight * 0.02),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("상차 날짜: ${CurrentDate("yyyy-MM-dd", dateTime: drive!.loadingDate)}"),
-                    Text("하차 날짜: ${CurrentDate("yyyy-MM-dd", dateTime: drive!.unLoadingDate)}"),
+                    _buildFormField("상차날짜:"),
+                    _buildFormField("하차날짜:"),
                   ]
                 ),
               ),
@@ -81,29 +82,38 @@ class _DriveFormState extends State<DriveForm> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("*상차지: ${drive!.loadingPlace}"),
-                    Text("*하차 날짜: ${drive!.unLoadingPlace}"),
+                    _buildFormField("*상차지:"),
+                    _buildFormField("*하차지:")
                   ]
                 ),
               ),
-              _buildBorderText('운송 품목:', drive!.transportationType),
-              _buildBorderText('품목 단가:', drive!.transportationCosts.toString()),
-              _buildBorderText('운반비:', drive!.unitCost.toString()),
-        ]
-      ),
+              _buildBorderText('운송 품목:'),
+              _buildBorderText('품목 단가:'),
+              _buildBorderText('운반비:'),
+            ]
+          ),
+        )
+      )
     );
   }
-  Widget _buildFormField(String title, String text) {
-    return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(title),
-            Text(text)
-          ],
+
+
+  Widget _buildFormField(String title, {TextEditingController? textController}) {
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(title),
+          TextFormField(
+            
+            controller: textController,
+          )
+        ],
+      )
     );
   }
   
-  Widget _buildBorderText( String title, String text ) {
+  Widget _buildBorderText( String title, {TextEditingController? textController }) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: EdgeInsets.all(screenHeight * 0.01),
@@ -113,7 +123,7 @@ class _DriveFormState extends State<DriveForm> {
         decoration: BoxDecoration(
           border: Border.all(width: 2.0),
         ),
-        child: _buildFormField(title, text)
+        child: _buildFormField(title, textController: textController)
       ),
     );
   }
