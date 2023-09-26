@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freight_ui/domain/dto/expenditure.dart';
-import 'package:freight_ui/routes.dart';
 import 'package:freight_ui/services/expenditure_service.dart';
+import 'package:freight_ui/ui/widgets/form/calendar_year_month.dart';
 
 class ExpenditureScreen extends StatefulWidget {
   const ExpenditureScreen({super.key});
@@ -31,7 +31,8 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
   Future<void> loadExpenditureList() async {
     try {
       final expenditureService = ExpenditureService();
-      final result = await expenditureService.getExpenditureList(1, 10, '2023-09-01');
+      final result =
+          await expenditureService.getExpenditureList(1, 10, '2023-09-01');
       setState(() {
         expenditureList = result;
       });
@@ -42,32 +43,32 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text('지출 내역'),
-          // 햄버거 버튼 추가 
-          leading: Builder( 
+          // 햄버거 버튼 추가
+          leading: Builder(
             builder: (BuildContext context) {
-              return IconButton(
-                icon: Icon(Icons.menu), // 햄버거 아이콘
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
+              return (Text(''));
             },
           ),
         ),
-      body: Center(
-        child: Column(
-          children: expenditureList
-            .map((e) => Card(
-              child: Text(e.paymentDate),
-            ))
-            .toList(),
-        ),
-      )
-    );
-
+        body: Column(
+          children: [
+              SimpleCalendar(),
+              Expanded(
+                child: ListView(
+                children: expenditureList
+                    .map((e) => Card(
+                          child: Text(e.paymentDate),
+                        ))
+                    .toList(),
+                )
+              )
+          ],
+        ));
   }
+  
 }
+
