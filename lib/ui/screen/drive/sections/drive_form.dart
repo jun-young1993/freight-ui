@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freight_ui/domain/entities/drive.dart';
 import 'package:freight_ui/states/drive/drive_bloc.dart';
+import 'package:freight_ui/ui/widgets/container_title.dart';
 import 'package:freight_ui/utills/date.dart';
 
-class _DriveForm extends StatefulWidget {
+class DriveForm extends StatefulWidget {
   final Drive? drive;
-  const _DriveForm({
+  const DriveForm({
     super.key,
     this.drive
   });
@@ -17,7 +18,7 @@ class _DriveForm extends StatefulWidget {
   _DriveFormState createState() => _DriveFormState();
 }
 
-class _DriveFormState extends State<_DriveForm> {
+class _DriveFormState extends State<DriveForm> {
   final _formKey = GlobalKey<_DriveFormState>();
   Drive? get drive => widget.drive;
   // String _currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
