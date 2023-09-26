@@ -10,7 +10,6 @@ import 'package:freight_ui/utills/date.dart';
 class DriveForm extends StatefulWidget {
   final Drive? drive;
   const DriveForm({
-    super.key,
     this.drive
   });
 
@@ -62,7 +61,7 @@ class _DriveFormState extends State<DriveForm> {
     return Container(
       child: Column(
         children: [
-          const ContainerTitle(title: '상세조회'),
+          const ContainerTitle(title: '운행일지 신규등록'),
               Container(
                 padding: EdgeInsets.all(screenHeight * 0.02),
                 child: Text("TODAY: ${CurrentDate("yyyy-MM-dd", dateTime: drive!.createdAt)}"),
@@ -94,7 +93,15 @@ class _DriveFormState extends State<DriveForm> {
       ),
     );
   }
-
+  Widget _buildFormField(String title, String text) {
+    return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title),
+            Text(text)
+          ],
+    );
+  }
   
   Widget _buildBorderText( String title, String text ) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -106,13 +113,7 @@ class _DriveFormState extends State<DriveForm> {
         decoration: BoxDecoration(
           border: Border.all(width: 2.0),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(title),
-            Text(text)
-          ],
-        ),
+        child: _buildFormField(title, text)
       ),
     );
   }

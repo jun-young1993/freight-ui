@@ -63,9 +63,7 @@ class _DriveGridState extends State<_DriveGrid> {
                 children: [
                   _buildHeaderButton(
                     const Icon(Icons.add),
-                    (){
-
-                    }
+                    () => _onAddPress()
                   ),
                   SizedBox(width: screenWidth * 0.07),
                   _buildDatePicker(),
@@ -163,6 +161,15 @@ class _DriveGridState extends State<_DriveGrid> {
     return [
       _buildDatePicker()
     ];
+  }
+
+  void _onAddPress(){
+    showDialog(
+          context: context, 
+          builder: (BuildContext context) {
+            return const DriveForm();
+          }
+        );
   }
 
   void _onCardPress(Drive drive, context){
