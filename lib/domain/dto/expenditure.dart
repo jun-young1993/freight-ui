@@ -7,6 +7,8 @@ class ExpenditureDto {
   final String extra;
   final String createdAt;
   final String delYn;
+  final int totalCount;
+  final int totalMount;
 
   const ExpenditureDto({
     required this.id,
@@ -16,7 +18,9 @@ class ExpenditureDto {
     required this.paymentDetail,
     required this.extra,
     required this.createdAt,
-    required this.delYn
+    required this.delYn,
+    required this.totalCount,
+    required this.totalMount,
   });
 
   factory ExpenditureDto.fromJson(Map<String, dynamic> json) {
@@ -29,6 +33,8 @@ class ExpenditureDto {
     extra: json['extra'] as String? ?? '',
     createdAt: json['createdAt'] as String? ?? '',
     delYn: json['delYn'] as String? ?? '',
+    totalCount: json['totalCount'] as int? ?? 0,
+    totalMount: json['totalMount'] as int? ?? 0,
   );
   }
 

@@ -21,6 +21,9 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
     7. 수정 - 페이지 - 삭제 버튼 추가.
   */
   List<ExpenditureDto> expenditureList = [];
+  int itemCount = 30; // 전체 아이템 수
+  int itemsPerPage = 10; // 페이지 당 아이템 수
+  int currentPage = 0; // 현재 페이지
 
   @override
   void initState() {
@@ -35,6 +38,7 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
           await expenditureService.getExpenditureList(1, 10, '2023-09-01');
       setState(() {
         expenditureList = result;
+        itemCount = result.totalMount;
       });
       print(' result : $result.data ');
     } catch (e) {
@@ -52,20 +56,81 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
             builder: (BuildContext context) {
               return (Text(''));
             },
-          ),
+          ), 
         ),
         body: Column(
           children: [
-              SimpleCalendar(),
-              Expanded(
-                child: ListView(
-                children: expenditureList
-                    .map((e) => Card(
-                          child: Text(e.paymentDate),
-                        ))
-                    .toList(),
-                )
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(onPressed: () {
+                    print('추가 버튼 눌렀습니다.');
+                  }, icon: Icon(Icons.add),),
+                  SimpleCalendar(),
+                  InkWell(
+                    onTap: () {
+                      print(' 엑셀 버튼 눌러씃ㅂ니다');
+                    },
+                    child: Image.asset('assets/images/excel-24.png'),
+                  )
+                ],
+            ),
+            Expanded(
+              child: ListView(
+              children: expenditureList
+                  .map((e) => Card(
+                        child: Text(e.paymentDate),
+                      ))
+                  .toList(),
               )
+            ),
+            // Todo 
+            // 총 57건 / 총 금액 
+            // 처음으로 버튼 
+            // 왼쪽 화살표 페이징 오른쪽 화살표
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black), // 테두리 스타일
+                          borderRadius: BorderRadius.circular(10.0), // 박스 모서리 둥글게
+                        ),
+                    child: Column(
+                      children:[
+                        Text('총 00건'),
+                        Text('총 12887원 ')
+                      ]
+                    )
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(16.0), // 버튼 패딩
+                    ),
+                    onPressed: () {
+                      // 아이콘을 클릭했을 때 수행할 동작을 여기에 추가하세요.
+                      // 예: 새 항목 추가 또는 다른 기능 수행
+                    },
+                    child: Text('처음으로'), // 버튼 텍스트
+                  ),
+                ],
+            ),
+            //Todo
+            // 페이징
+            Column(
+              children: [
+                Expanded(
+                  child: PageView.builder(
+                    itemCount: pages.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      
+                    },
+                  )
+                  )
+              ],
+            )
+
           ],
         ));
   }
