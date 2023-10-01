@@ -36,9 +36,12 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
       final expenditureService = ExpenditureService();
       final result =
           await expenditureService.getExpenditureList(1, 10, '2023-09-01');
+
+      
+
       setState(() {
-        expenditureList = result;
-        itemCount = result.totalMount;
+        expenditureList = result.datas;
+        itemCount = result.totalCount;
       });
       print(' result : $result.data ');
     } catch (e) {
@@ -122,7 +125,7 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
               children: [
                 Expanded(
                   child: PageView.builder(
-                    itemCount: pages.length,
+                    itemCount: itemCount,
                     itemBuilder: (BuildContext context, int index) {
                       
                     },
