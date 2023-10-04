@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freight_ui/config/constant.dart';
 import 'package:freight_ui/domain/entities/drive.dart';
 import 'package:freight_ui/states/drive/drive_bloc.dart';
 import 'package:freight_ui/ui/widgets/container_title.dart';
@@ -72,8 +73,8 @@ class _DriveFormState extends State<DriveForm> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildFormField("상차날짜:"),
-                    _buildFormField("하차날짜:"),
+                    _buildFormField("상차날짜"),
+                    _buildFormField("하차날짜"),
                   ]
                 ),
               ),
@@ -82,14 +83,23 @@ class _DriveFormState extends State<DriveForm> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildFormField("*상차지:"),
-                    _buildFormField("*하차지:")
+                    _buildFormField("*상차지"),
+                    _buildFormField("*하차지")
                   ]
                 ),
               ),
-              _buildBorderText('운송 품목:'),
-              _buildBorderText('품목 단가:'),
-              _buildBorderText('운반비:'),
+              Container(
+                height: AppConstant.textFieldHeight,
+                padding: EdgeInsets.all(screenHeight * 0.02),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      _buildFormField('운송 품목'),
+                      _buildFormField('품목 단가'),
+                      _buildFormField('운반비'),
+                    ]
+                ),
+              ),
             ]
           ),
         )
@@ -100,31 +110,22 @@ class _DriveFormState extends State<DriveForm> {
 
   Widget _buildFormField(String title, {TextEditingController? textController}) {
     return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(title),
-          TextFormField(
-            
-            controller: textController,
-          )
-        ],
-      )
+        child: TextFormField(
+          decoration: InputDecoration(label: Text(title)),
+          controller: textController,
+        )
     );
   }
   
   Widget _buildBorderText( String title, {TextEditingController? textController }) {
     double screenHeight = MediaQuery.of(context).size.height;
-    return Padding(
-      padding: EdgeInsets.all(screenHeight * 0.01),
-      child: Container(
-        padding: EdgeInsets.all(screenHeight * 0.05),
-        // height: screenHeight * 0.05,
-        decoration: BoxDecoration(
-          border: Border.all(width: 2.0),
-        ),
-        child: _buildFormField(title, textController: textController)
-      ),
-    );
+    return Container(
+          padding: EdgeInsets.all(screenHeight * 0.05),
+          // height: screenHeight * 0.05,
+          decoration: BoxDecoration(
+            border: Border.all(width: 0.01),
+          ),
+          child: _buildFormField(title, textController: textController)
+      );
   }
 }
