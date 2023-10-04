@@ -29,6 +29,7 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
 
   final NumberPaginatorController _controller = NumberPaginatorController();
   final expenditureService = ExpenditureService();
+  String targetDate = '2023-09-01';
 
   @override
   void initState() {
@@ -37,10 +38,14 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
     loadPagingList(currentPage);
   }
 
+  void changeDate(String date) {
+    this.targetDate = date;
+  }
+
   void loadPagingList(int currentPage) async {
     print(' current page : ${currentPage}');
     try {
-      var result = await expenditureService.getExpenditureList(currentPage, itemsPerPage, '2023-09-01');
+      var result = await expenditureService.getExpenditureList(currentPage, itemsPerPage, targetDate);
       double _itemsPerpage = (result.totalCount/itemsPerPage);
       itemsPerPage = _itemsPerpage.ceil();
       setState(() {
@@ -74,6 +79,9 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
                   IconButton(onPressed: () {
                     print('추가 버튼 눌렀습니다.');
                   }, icon: Icon(Icons.add),),
+                  
+                  // 달력으로 선택해서 날짜 변경시. 
+                  // 요청 날짜도 변경되도록..
                   SimpleCalendar(),
                   InkWell(
                     onTap: () {
