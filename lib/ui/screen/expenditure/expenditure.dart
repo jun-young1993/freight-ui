@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:freight_ui/domain/dto/expenditure.dart';
+import 'package:freight_ui/domain/dto/paging.dart';
 import 'package:freight_ui/services/expenditure_service.dart';
 import 'package:freight_ui/ui/widgets/form/calendar_year_month.dart';
+import 'package:flutter/material.dart';
+import 'package:number_paginator/number_paginator.dart';
 
 class ExpenditureScreen extends StatefulWidget {
   const ExpenditureScreen({super.key});
@@ -20,32 +23,34 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
     6. 상세 페이지 X ? -> 수정 / 삭제 페이지로 넘어 가기 힘듦.
     7. 수정 - 페이지 - 삭제 버튼 추가.
   */
-  List<ExpenditureDto> expenditureList = [];
-  int itemCount = 30; // 전체 아이템 수
+  PagingDto<ExpenditureDto> pagingDto = PagingDto();
   int itemsPerPage = 10; // 페이지 당 아이템 수
-  int currentPage = 0; // 현재 페이지
+  int currentPage = 1;
+
+  final NumberPaginatorController _controller = NumberPaginatorController();
+  final expenditureService = ExpenditureService();
 
   @override
   void initState() {
     super.initState();
-    loadExpenditureList();
+    // loadExpenditureList();
+    loadPagingList(currentPage);
   }
 
-  Future<void> loadExpenditureList() async {
+  void loadPagingList(int currentPage) async {
+    print(' current page : ${currentPage}');
     try {
-      final expenditureService = ExpenditureService();
-      final result =
-          await expenditureService.getExpenditureList(1, 10, '2023-09-01');
-
-      
-
+      var result = await expenditureService.getExpenditureList(currentPage, itemsPerPage, '2023-09-01');
+      double _itemsPerpage = (result.totalCount/itemsPerPage);
+      itemsPerPage = _itemsPerpage.ceil();
       setState(() {
-        expenditureList = result.datas;
-        itemCount = result.totalCount;
+        pagingDto.datas = result.datas;
+        pagingDto.totalCount = result.totalCount;
+        pagingDto.totalMount = result.totalMount;
       });
-      print(' result : $result.data ');
+
     } catch (e) {
-      print('Error: $e');
+      print("error!!!! : $e" );
     }
   }
 
@@ -80,9 +85,9 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
             ),
             Expanded(
               child: ListView(
-              children: expenditureList
+              children: pagingDto.datas
                   .map((e) => Card(
-                        child: Text(e.paymentDate),
+                        child: Text(e.paymentDetail),
                       ))
                   .toList(),
               )
@@ -102,8 +107,8 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
                         ),
                     child: Column(
                       children:[
-                        Text('총 00건'),
-                        Text('총 12887원 ')
+                        Text('총 ${pagingDto.totalCount} 건'),
+                        Text('총 ${pagingDto.totalMount} 원 ')
                       ]
                     )
                   ),
@@ -120,23 +125,24 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
                 ],
             ),
             //Todo
-            // 페이징
-            Column(
-              children: [
-                Expanded(
-                  child: PageView.builder(
-                    itemCount: itemCount,
-                    itemBuilder: (BuildContext context, int index) {
-                      
-                    },
-                  )
-                  )
-              ],
-            )
-
+            //페이징
+            NumberPaginator(
+              controller: _controller, 
+              numberPages: itemsPerPage,
+              onPageChange: (int index) {
+                setState(() {
+                  currentPage = index+1; 
+                });
+                // 페이지가 변경됐으므로, 리스트도 새로 받아와야 한다.
+                loadPagingList(currentPage);
+              },
+            ),
           ],
         ));
+        
   }
   
+  
 }
+
 
