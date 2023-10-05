@@ -53,9 +53,9 @@ class _DriveDetailState extends State<DriveDetail> {
       );
   }
 
-  Widget _buildActionButton( String title, VoidCallback onPressd) {
+  Widget _buildActionButton( String title, VoidCallback onPressed) {
     return TextButton(
-      onPressed: onPressd, 
+      onPressed: onPressed,
       child: Text(title)
     );
   }
