@@ -3,16 +3,19 @@ import 'package:freight_ui/domain/dto/expenditure.dart';
 import 'package:freight_ui/domain/dto/paging.dart';
 import 'package:freight_ui/services/expenditure_service.dart';
 import 'package:freight_ui/ui/widgets/form/calendar_year_month.dart';
+import 'package:intl/intl.dart';
 import 'package:number_paginator/number_paginator.dart';
 
 class ExpenditureScreen extends StatefulWidget {
   const ExpenditureScreen({super.key});
 
   @override
-  State<StatefulWidget> createState() => _ExpenditureScreenState();
+  State<StatefulWidget> createState() => ExpenditureScreenState();
+
+  
 }
 
-class _ExpenditureScreenState extends State<ExpenditureScreen> { 
+class ExpenditureScreenState extends State<ExpenditureScreen> { 
   /*
     1. 메인 화면 달력 선택 appBar
     2. 달 선택에 따른 검색 초기화.
@@ -29,34 +32,58 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
 
   final NumberPaginatorController _controller = NumberPaginatorController();
   final expenditureService = ExpenditureService();
-  String targetDate = '2023-09-01';
+  static String targetDate = '2023-09-01';
 
   @override
   void initState() {
     super.initState();
-    // loadExpenditureList();
     loadPagingList(currentPage);
   }
 
-  void changeDate(String date) {
-    this.targetDate = date;
+  void changeDate(String selectedDate) {
+    targetDate = selectedDate;
+    print(' targetDate :: ${targetDate} , / seeeee :: ${selectedDate}');
+    currentPage = 1;
   }
 
   void loadPagingList(int currentPage) async {
-    print(' current page : ${currentPage}');
     try {
       var result = await expenditureService.getExpenditureList(currentPage, itemsPerPage, targetDate);
+
       double _allPages =  ((result.totalCount-1) / itemsPerPage) +1;
       allPages = _allPages.ceil();
 
-      setState(() {
+      setState((){
         pagingDto.datas = result.datas; 
         pagingDto.totalCount = result.totalCount;
         pagingDto.totalMount = result.totalMount;
       });
-
     } catch (e) {
-      print("error!!!! : $e" );
+      print(" 목록 불러오기에 실패했습니다!! ");
+      print("error!!!! : ${e}" );
+    }
+  }
+
+  Future refreshPagingList(int currentPage) async {
+    try {
+      var result = await expenditureService.getExpenditureList(currentPage, itemsPerPage, targetDate);
+
+      if (result.datas.isEmpty) {
+        print(' 데이터가 존재 하지 않습니다. ');
+        pagingDto.datas = [];
+        pagingDto.totalCount = 0;
+        pagingDto.totalMount = 0;
+        return;
+      } 
+
+      // setState((){
+      pagingDto.datas = result.datas; 
+      pagingDto.totalCount = result.totalCount;
+      pagingDto.totalMount = result.totalMount;
+      // });
+    } catch (e) {
+      print(" 페이지 갱신 실패 ");
+      print("[ERROR] $e" );
     }
   }
 
@@ -79,12 +106,7 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
                   IconButton(onPressed: () {
                     print('추가 버튼 눌렀습니다.');
                   }, icon: Icon(Icons.add),),
-                  /* Todo
-                   달력으로 선택해서 날짜 변경시. 
-                   요청 날짜도 변경되도록..
-                  */
                   SimpleCalendar(),
-
                   InkWell(
                     onTap: () {
                       print(' 엑셀 버튼 눌러씃ㅂ니다');
@@ -147,16 +169,7 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
                 loadPagingList(currentPage);
               },
             ),
-
-            
-
-
           ],
         ));
-        
   }
-  
-  
 }
-
-

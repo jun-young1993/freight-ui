@@ -32,19 +32,26 @@ class ExpenditureService extends ExpenditureBase {
       print('URL : ${getExpenditureListUri}');
       final response = await http.get(getExpenditureListUri,
           headers: ExpenditureBase.headers);
-      final resultData = jsonDecode(utf8.decode(response.bodyBytes));
 
-      final List<Map<String, dynamic>> data =
-          List<Map<String, dynamic>>.from(resultData['data']);
-      expenditureList =
-          data.map((json) => ExpenditureDto.fromJson(json)).toList();
+      if (response.statusCode==204) {
+        return PagingDto.optional(
+          datas: [],
+          totalMount: 0,
+          totalCount: 0);
+      } else {
+        final resultData = jsonDecode(utf8.decode(response.bodyBytes));
+        final List<Map<String, dynamic>> data =
+            List<Map<String, dynamic>>.from(resultData['data']);
+        expenditureList =
+            data.map((json) => ExpenditureDto.fromJson(json)).toList();
 
-      PagingDto<ExpenditureDto> result = PagingDto.optional(
-          datas: expenditureList,
-          totalMount: resultData['totalMount'],
-          totalCount: resultData['totalCount']);
-      print('result data : ${result.datas}');
-      return result;
+        PagingDto<ExpenditureDto> result = PagingDto.optional(
+            datas: expenditureList,
+            totalMount: resultData['totalMount'],
+            totalCount: resultData['totalCount']);
+        // print('result data : ${result.datas}');
+        return result;
+      }
     } catch (e) {
       print(e.toString());
       throw Exception('Error: $e');

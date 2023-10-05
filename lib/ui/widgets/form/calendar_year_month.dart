@@ -1,19 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:freight_ui/ui/screen/expenditure/expenditure.dart';
 import 'package:simple_month_year_picker/custom.dialog.dart';
 import 'package:simple_month_year_picker/month.container.dart';
 import 'package:simple_month_year_picker/month.model.dart';
-import 'package:intl/intl.dart'; 
+import 'package:intl/intl.dart';
 
 class SimpleCalendar extends StatefulWidget {
   @override
-  _SimpleCalendarState createState() => _SimpleCalendarState();
+  SimpleMonthYearPicker createState() => SimpleMonthYearPicker();
 }
 
-class _SimpleCalendarState extends State<SimpleCalendar> {
-  bool _showCalendar = false;
-  String selectedDate = DateFormat('yyyy-MM').format(DateTime.now());
-
+bool _showCalendar = false;
+String selectedDate = DateFormat('yyyy-MM').format(DateTime.now());
+class SimpleMonthYearPicker extends State<SimpleCalendar> {
+  ExpenditureScreenState expenditureScreenState = ExpenditureScreenState();
   @override
   void initState() {
     super.initState(); 
@@ -25,31 +26,35 @@ class _SimpleCalendarState extends State<SimpleCalendar> {
       child: Text('$selectedDate'),
       onPressed: () {
         setState(() {
-          _showCalendar = !_showCalendar; // 버튼을 누를 때마다 토글
-          
-        });
+          _showCalendar = !_showCalendar;
+        }); 
 
         if (_showCalendar) {
-          SimpleMonthYearPicker.showMonthYearPickerDialog(
+          showMonthYearPickerDialog(
               context: context,
               titleTextStyle: TextStyle(),
               monthTextStyle: TextStyle(),
               yearTextStyle: TextStyle(),
-              disableFuture:
-                  false // This will disable future years. it is false by default.
-              );
-          print('Selected date: $selectedDate');
-              // Use the selected date as needed
+              disableFuture: false // This will disable future years. it is false by default.
+          );
         }
       },
     );
   }
-}
 
+  void changeDate(int selectedYear, int selectedMonth) {
+    DateTime dateTime = DateTime(selectedYear, selectedMonth, 1);
+    String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+    print(" selected Date : ${formattedDate}" );  
+    
+    selectedDate = DateFormat('yyyy-MM').format(dateTime);
+    expenditureScreenState.changeDate(formattedDate);
+    expenditureScreenState.refreshPagingList(1);
 
-class SimpleMonthYearPicker {
+    setState(() => {});
+  }
 
- static final List<MonthModel> _monthModelList = [
+  static final List<MonthModel> _monthModelList = [
     MonthModel(index: 1, name: '1월'),
     MonthModel(index: 2, name: '2월'),
     MonthModel(index: 3, name: '3월'),
@@ -64,7 +69,7 @@ class SimpleMonthYearPicker {
     MonthModel(index: 12, name: '12월'),
   ];
 
-  static Future<DateTime> showMonthYearPickerDialog({
+  Future<DateTime> showMonthYearPickerDialog({
     required BuildContext context,
     TextStyle? titleTextStyle,
     TextStyle? yearTextStyle,
@@ -77,13 +82,9 @@ class SimpleMonthYearPicker {
     final ThemeData theme = Theme.of(context);
     var primaryColor = selectionColor ?? theme.primaryColor;
     var bgColor = backgroundColor ?? theme.scaffoldBackgroundColor;
-    // var textTheme = theme.textTheme;
 
-    /// to get current year
     int selectedYear = DateTime.now().year;
-
-    /// to get index corresponding to current month (1- Jan, 2- Feb,..)
-    var selectedMonth = DateTime.now().month;
+    int selectedMonth = DateTime.now().month;
 
     await showDialog<DateTime>(
       context: context,
@@ -135,7 +136,11 @@ class SimpleMonthYearPicker {
                                 onTap: () {
                                   setState(() {
                                     selectedMonth = index + 1;
+                                    _showCalendar = !_showCalendar;
+                                    Navigator.pop(context);
+                                    changeDate(selectedYear, selectedMonth);
                                   });
+
                                 },
                                 onHover: (val) {},
                                 child: MonthContainer(
@@ -159,71 +164,6 @@ class SimpleMonthYearPicker {
                       const SizedBox(
                         height: 20,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: 30,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                color: bgColor,
-                                border: Border.all(
-                                  color: primaryColor,
-                                ),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Cancel',
-                                  style: TextStyle(
-                                    color: primaryColor,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              String selectedMonthString = selectedMonth < 10
-                                  ? "0$selectedMonth"
-                                  : "$selectedMonth";
-                              var selectedDate = DateTime.parse(
-                                  '$selectedYear-$selectedMonthString-01');
-
-                              Navigator.pop(context, selectedDate);
-                            },
-                            child: Container(
-                              height: 30,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                color: primaryColor,
-                                border: Border.all(
-                                  color: primaryColor,
-                                ),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'OK',
-                                  style: TextStyle(
-                                    color: bgColor,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 50,
-                          ),
-                        ],
-                      )
                     ],
                   ),
                 ),
