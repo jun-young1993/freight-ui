@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:freight_ui/app.dart';
+import 'package:freight_ui/main_form.dart';
 import 'package:freight_ui/repositories/drive_repository.dart';
 import 'package:freight_ui/repositories/user_repository.dart';
 import 'package:freight_ui/states/drive/drive_bloc.dart';
+import 'package:freight_ui/states/drive/drive_form_bloc.dart';
 import 'package:freight_ui/states/user/user_bloc.dart';
+import 'package:freight_ui/ui/screen/drive/sections/drive_form.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -30,6 +33,9 @@ void main() async {
             create: (context) => UserBloc(
               context.read<UserRepository>()
             )
+        ),
+        BlocProvider<DriveFormBloc>(
+          create: (context) => DriveFormBloc(),
         )
       ],
       child: const FreightApp(),
