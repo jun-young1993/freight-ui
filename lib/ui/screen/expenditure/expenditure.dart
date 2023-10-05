@@ -3,7 +3,6 @@ import 'package:freight_ui/domain/dto/expenditure.dart';
 import 'package:freight_ui/domain/dto/paging.dart';
 import 'package:freight_ui/services/expenditure_service.dart';
 import 'package:freight_ui/ui/widgets/form/calendar_year_month.dart';
-import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
 
 class ExpenditureScreen extends StatefulWidget {
@@ -13,7 +12,7 @@ class ExpenditureScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _ExpenditureScreenState();
 }
 
-class _ExpenditureScreenState extends State<ExpenditureScreen> {
+class _ExpenditureScreenState extends State<ExpenditureScreen> { 
   /*
     1. 메인 화면 달력 선택 appBar
     2. 달 선택에 따른 검색 초기화.
@@ -26,6 +25,7 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
   PagingDto<ExpenditureDto> pagingDto = PagingDto();
   int itemsPerPage = 10; // 페이지 당 아이템 수
   int currentPage = 1;
+  int allPages = 1;
 
   final NumberPaginatorController _controller = NumberPaginatorController();
   final expenditureService = ExpenditureService();
@@ -46,10 +46,11 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
     print(' current page : ${currentPage}');
     try {
       var result = await expenditureService.getExpenditureList(currentPage, itemsPerPage, targetDate);
-      double _itemsPerpage = (result.totalCount/itemsPerPage);
-      itemsPerPage = _itemsPerpage.ceil();
+      double _allPages =  ((result.totalCount-1) / itemsPerPage) +1;
+      allPages = _allPages.ceil();
+
       setState(() {
-        pagingDto.datas = result.datas;
+        pagingDto.datas = result.datas; 
         pagingDto.totalCount = result.totalCount;
         pagingDto.totalMount = result.totalMount;
       });
@@ -64,7 +65,6 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text('지출 내역'),
-          // 햄버거 버튼 추가
           leading: Builder(
             builder: (BuildContext context) {
               return (Text(''));
@@ -79,10 +79,12 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
                   IconButton(onPressed: () {
                     print('추가 버튼 눌렀습니다.');
                   }, icon: Icon(Icons.add),),
-                  
-                  // 달력으로 선택해서 날짜 변경시. 
-                  // 요청 날짜도 변경되도록..
+                  /* Todo
+                   달력으로 선택해서 날짜 변경시. 
+                   요청 날짜도 변경되도록..
+                  */
                   SimpleCalendar(),
+
                   InkWell(
                     onTap: () {
                       print(' 엑셀 버튼 눌러씃ㅂ니다');
@@ -97,7 +99,7 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
                   .map((e) => Card(
                         child: Text(e.paymentDetail),
                       ))
-                  .toList(),
+                  .toList(), 
               )
             ),
             // Todo 
@@ -136,7 +138,7 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
             //페이징
             NumberPaginator(
               controller: _controller, 
-              numberPages: itemsPerPage,
+              numberPages: allPages,
               onPageChange: (int index) {
                 setState(() {
                   currentPage = index+1; 
@@ -145,6 +147,10 @@ class _ExpenditureScreenState extends State<ExpenditureScreen> {
                 loadPagingList(currentPage);
               },
             ),
+
+            
+
+
           ],
         ));
         
