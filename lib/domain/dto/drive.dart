@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 class DriveDto {
   final DateTime loadingDate;
   final String loadingPlace;
@@ -38,5 +40,21 @@ class DriveDto {
       unitCost: int.parse(json['unitCost']), 
       extra: json['extra'], 
     );
+  }
+
+  String toJson() {
+    final Map<String, dynamic> data = {
+      'loadingDate': loadingDate.toIso8601String(),
+      'loadingPlace': loadingPlace,
+      'unLoadingDate': unLoadingDate.toIso8601String(),
+      'unLoadingPlace': unLoadingPlace,
+      'loadingRatio': loadingRatio,
+      'transportationCosts': transportationCosts,
+      'transportationDate': transportationDate.toIso8601String(),
+      'transportationType': transportationType,
+      'unitCost': unitCost,
+      'extra': extra,
+    };
+    return jsonEncode(data);
   }
 }

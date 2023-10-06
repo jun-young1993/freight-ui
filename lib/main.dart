@@ -35,7 +35,9 @@ void main() async {
             )
         ),
         BlocProvider<DriveFormBloc>(
-          create: (context) => DriveFormBloc(),
+          create: (context) => DriveFormBloc(
+            context.read<DriveRepository>()
+          ),
         )
       ],
       child: const FreightApp(),

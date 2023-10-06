@@ -12,7 +12,7 @@ import 'package:path_provider/path_provider.dart';
 abstract class DriveRepository {
   Future<List<Drive>> get();
   // Future<Drive> update(Drive drive);
-  // Future<Drive> create(DriveDto dto);
+  Future<DriveDto> create(DriveDto dto);
   Future<bool> downExcel(
     // List<Drive>? drives
     );
@@ -54,6 +54,24 @@ class DriveDefaultRepository extends DriveRepository {
     };
 
     return result;
+  }
+
+  @override
+  Future<DriveDto> create(DriveDto dto) async {
+    print(dto.toJson());
+    final response =
+    await _freightClient.post(
+      '/api/v1/operate',
+      body: dto.toJson()
+    );
+    final int statusCode = response.statusCode;
+    if(statusCode == HttpStatus.created){
+
+    }else{
+       throw Exception('Failed to create DriveDto: HTTP $statusCode');
+    }
+
+    return dto;
   }
 
   // @override

@@ -45,10 +45,6 @@ class FreightClient {
 
 
   Future<http.Response> get(String endpoint, { Map<String, dynamic>? queryParameters }) async {
-
-
-
-
       http.Response res =
       await http.get(
           getUri(
@@ -59,7 +55,18 @@ class FreightClient {
       );
 
       return res;
+  }
 
+  Future<http.Response> post(String endpoint, {Object? body}) async {
+    http.Response res = 
+    await http.post(
+      getUri(
+        endpoint,
+      ),
+      headers: await headers(),
+      body: body
+    );
+    return res;
   }
   
   

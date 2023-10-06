@@ -1,28 +1,59 @@
 // part of '../drive.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:freight_ui/config/colors.dart';
 import 'package:freight_ui/config/constant.dart';
 import 'package:freight_ui/domain/entities/drive.dart';
+import 'package:freight_ui/routes.dart';
 import 'package:freight_ui/states/drive/drive_bloc.dart';
 import 'package:freight_ui/states/drive/drive_form_bloc.dart';
 import 'package:freight_ui/ui/widgets/container_title.dart';
+import 'package:freight_ui/ui/widgets/loader.dart';
 import 'package:freight_ui/utills/date.dart';
 
 class DriveForm extends StatelessWidget {
   final Drive? drive;
-  const DriveForm({super.key, 
-    this.drive
+  final bool editable;
+  const DriveForm({
+    super.key, 
+    this.drive,
+    this.editable = false
   });
   
   @override
   Widget build(BuildContext context) {
-            final _formBloc = BlocProvider.of<DriveFormBloc>(context);
+        final _formBloc = BlocProvider.of<DriveFormBloc>(context);
+        _formBloc.setValues(drive);
+        
+        
+
         double screenHeight = MediaQuery.of(context).size.height;
         double screenWidth = MediaQuery.of(context).size.width;
-          return Scaffold(
+
+
+        return Scaffold(
             body: FormBlocListener<DriveFormBloc, String, String>(
+              onSubmitting: (context, state) {
+                if(state.isValid()){
+                  LoadingDialog.show(context);
+                }
+              },
+              onSuccess: (context, state) {
+                LoadingDialog.hide(context);
+                AppNavigator.pop();
+              
+              },
+              onFailure: (context, state) {
+                LoadingDialog.hide(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: AppColors.red,
+                      content: Text(state.failureResponse!))
+                    );
+              },
               child: ScrollableFormBlocManager(
                 formBloc: _formBloc,
                 child: SingleChildScrollView(
@@ -66,18 +97,63 @@ class DriveForm extends StatelessWidget {
                           ],
                         ),
                         _buildTextField(
+                          _formBloc.loadingRatio,
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.number,
+                          label: '요율'
+                        ),
+                        _buildTextField(
                           _formBloc.transportationType,
                           label: '운송품목'
                         ),
-                        
                         _buildTextField(
                           _formBloc.unitCost,
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.number,
                           label: '품목단가'
                         ),
                         _buildTextField(
                           _formBloc.transportationCosts,
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.number,
                           label: '운반비'
+                        ),
+                        (
+                        editable
+                        ?
+                          Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton(
+                              onPressed: _formBloc.submit, 
+                              child: const Text('수정하기')
+                            ),
+                            const TextButton(
+                              onPressed: AppNavigator.pop, 
+                              child: Text('삭제')
+                            ),
+                            const TextButton(
+                              onPressed: AppNavigator.pop, 
+                              child: Text('목록으로')
+                            )
+                          ],
                         )
+                        : 
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton(
+                              onPressed: _formBloc.submit, 
+                              child: const Text('등록하기')
+                            ),
+                            const TextButton(
+                              onPressed: AppNavigator.pop, 
+                              child: Text('뒤로가기')
+                            )
+                          ],
+                        )
+                      )
+                        
                     ],
                   )
                 ),
@@ -86,10 +162,14 @@ class DriveForm extends StatelessWidget {
           );
   }
 
-  Widget _buildTextField(TextFieldBloc<dynamic> textFieldBloc,  {double? width, String? label}){
+  Widget _buildTextField(TextFieldBloc<dynamic> textFieldBloc,  {double? width, String? label, TextInputType? keyboardType, List<TextInputFormatter>? inputFormatters}){
     return SizedBox(
       width: width,
       child: TextFieldBlocBuilder(
+        readOnly: editable,
+        isEnabled: !editable,
+        inputFormatters: inputFormatters,
+        keyboardType: keyboardType,
         textFieldBloc: textFieldBloc,
         decoration: InputDecoration(
           labelText: label
@@ -102,6 +182,8 @@ class DriveForm extends StatelessWidget {
     return SizedBox(
       width: width,
       child: DateTimeFieldBlocBuilder(
+        showClearIcon: false,
+        isEnabled: !editable,
         dateTimeFieldBloc: dateTimeFieldBloc,
         format: DateFormat(AppConstant.publicDateFormat),
         initialDate: DateTime.now(),

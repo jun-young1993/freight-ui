@@ -176,7 +176,11 @@ class _DriveGridState extends State<_DriveGrid> {
         showDialog(
           context: context, 
           builder: (BuildContext context) {
-            return DriveDetail(drive: drive);
+            // return DriveDetail(drive: drive);
+            return DriveForm(
+              drive: drive,
+              editable: true,
+            );
           }
         );
   }
