@@ -118,41 +118,7 @@ class DriveForm extends StatelessWidget {
                           keyboardType: TextInputType.number,
                           label: '운반비'
                         ),
-                        (
-                        editable
-                        ?
-                          Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                              onPressed: _formBloc.submit, 
-                              child: const Text('수정하기')
-                            ),
-                            const TextButton(
-                              onPressed: AppNavigator.pop, 
-                              child: Text('삭제')
-                            ),
-                            const TextButton(
-                              onPressed: AppNavigator.pop, 
-                              child: Text('목록으로')
-                            )
-                          ],
-                        )
-                        : 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                              onPressed: _formBloc.submit, 
-                              child: const Text('등록하기')
-                            ),
-                            const TextButton(
-                              onPressed: AppNavigator.pop, 
-                              child: Text('뒤로가기')
-                            )
-                          ],
-                        )
-                      )
+                        _buildFooter(_formBloc)
                         
                     ],
                   )
@@ -160,6 +126,45 @@ class DriveForm extends StatelessWidget {
               )
             ),
           );
+  }
+
+  Widget _buildFooter(DriveFormBloc formBloc){
+    
+    return (
+        editable
+            ?
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+                onPressed: formBloc.submit,
+                child: const Text('수정하기')
+            ),
+            const TextButton(
+                onPressed: AppNavigator.pop,
+                child: Text('삭제')
+            ),
+            const TextButton(
+                onPressed: AppNavigator.pop,
+                child: Text('목록으로')
+            )
+          ],
+        )
+            :
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+                onPressed: formBloc.submit,
+                child: const Text('등록하기')
+            ),
+            const TextButton(
+                onPressed: AppNavigator.pop,
+                child: Text('뒤로가기')
+            )
+          ],
+        )
+    );
   }
 
   Widget _buildTextField(TextFieldBloc<dynamic> textFieldBloc,  {double? width, String? label, TextInputType? keyboardType, List<TextInputFormatter>? inputFormatters}){

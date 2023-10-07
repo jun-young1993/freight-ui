@@ -7,10 +7,12 @@ import 'package:freight_ui/domain/entities/drive.dart';
 import 'package:freight_ui/repositories/drive_repository.dart';
 import 'package:freight_ui/utills/date.dart';
 
+
+
 class DriveFormBloc extends FormBloc<String, String> {
 
   final DriveRepository _driveRepository;
-  
+
   
 
   final loadingDate = InputFieldBloc<DateTime?, Object>(initialValue: DateTime.now());
@@ -61,7 +63,8 @@ class DriveFormBloc extends FormBloc<String, String> {
 
 
 
-  DriveFormBloc(this._driveRepository) : super(autoValidate: true) {
+  DriveFormBloc(this._driveRepository) :
+  super(autoValidate: true) {
     addFieldBlocs(fieldBlocs: [
       loadingDate,
       loadingPlace,
@@ -93,6 +96,7 @@ class DriveFormBloc extends FormBloc<String, String> {
     if(drive == null){
       clearValues();
     }else{
+
       loadingDate.changeValue(drive.loadingDate);
       loadingPlace.changeValue(drive.loadingPlace);
       unLoadingDate.changeValue(drive.unLoadingDate);
@@ -122,10 +126,11 @@ class DriveFormBloc extends FormBloc<String, String> {
     extra.addFieldError('Awesome Error!');
   }
 
+
   @override
   void onSubmitting() async {
     try {
-      
+
       // await Future<void>.delayed(const Duration(milliseconds: 500));
       await _driveRepository.create(
         DriveDto(
@@ -147,3 +152,4 @@ class DriveFormBloc extends FormBloc<String, String> {
     }
   }
 }
+
