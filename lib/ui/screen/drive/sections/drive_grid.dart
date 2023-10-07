@@ -45,6 +45,7 @@ class _DriveGridState extends State<_DriveGrid> {
                 return Column(
                   children: [
                     _buildGrid(),
+                    _buildFooter(),
                     _buildPagenation()
                   ],
                 );
@@ -85,6 +86,26 @@ class _DriveGridState extends State<_DriveGrid> {
           );
   }
 
+  Widget _buildFooter() {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            width:screenWidth * 0.6 ,
+            child: Text('총 1건'),
+          ),
+          Container(
+            width:screenWidth * 0.3 ,
+            child:           TextButton(
+                onPressed: AppNavigator.pop,
+                child: Text('처음으로')
+            ),
+          )
+        ],
+    );
+  }
 
   Widget _buildHeaderButton(Widget icon, VoidCallback callback){
     double screenHeight = MediaQuery.of(context).size.height;
@@ -208,7 +229,7 @@ class _DriveGridState extends State<_DriveGrid> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return SizedBox(
-            height: screenHeight * 0.7,
+            height: screenHeight * 0.6,
             width: screenWidth * 0.97,
             child: CustomScrollView(
                 slivers : [
