@@ -42,7 +42,14 @@ class _DriveGridState extends State<_DriveGrid> {
               case DriveStateStatus.loading:
                 return const Loader();
               case DriveStateStatus.loadSuccess:
-                return _buildGrid();
+                return Column(
+                  children: [
+                    _buildGrid(),
+                    _buildPagenation()
+                  ],
+                );
+
+
               default:
                 return Container();
             }
@@ -185,48 +192,59 @@ class _DriveGridState extends State<_DriveGrid> {
         );
   }
 
+  _buildPagenation(){
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    return NumberPaginator(
+      numberPages: 10,
+      onPageChange: (int index) {
+
+        // handle page change...
+      },
+    );
+  }
+
   Widget _buildGrid() {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return SizedBox(
-      height: screenHeight * 0.7,
-      width: screenWidth * 0.97,
-      child: CustomScrollView(
-        slivers : [
-          SliverPadding(
-            padding: const EdgeInsets.all(2),
-            sliver: DriveCountSelector((driveCount) {
-              return SliverGrid(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    mainAxisSpacing: 10.0,
-                    crossAxisSpacing: 10.0,
-                    childAspectRatio: 4.0,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (_, index) {
-                    
-                    return DriveSelector(index, (drive, _) {
-                      return Container(
-                        alignment: Alignment.center,
-                        // color: Colors.teal[100 * (index % 9)],
-                        child: DriveCard(
-                          drive: drive,
-                          onPress: () => _onCardPress(drive,context),
-                        )
-                        // Text('grid item $index ${drive.extra} ${drive.loadingDate} - ${drive.unLoadingDate}'),
-                      );
-                    });
-                  },
-                  childCount : driveCount
-                )
-              );
-            })
-          )
-        ]
-      ),
-    );
+            height: screenHeight * 0.7,
+            width: screenWidth * 0.97,
+            child: CustomScrollView(
+                slivers : [
+                  SliverPadding(
+                      padding: const EdgeInsets.all(2),
+                      sliver: DriveCountSelector((driveCount) {
+                        return SliverGrid(
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 1,
+                              mainAxisSpacing: 10.0,
+                              crossAxisSpacing: 10.0,
+                              childAspectRatio: 4.0,
+                            ),
+                            delegate: SliverChildBuilderDelegate(
+                                    (_, index) {
 
+                                  return DriveSelector(index, (drive, _) {
+                                    return Container(
+                                        alignment: Alignment.center,
+                                        // color: Colors.teal[100 * (index % 9)],
+                                        child: DriveCard(
+                                          drive: drive,
+                                          onPress: () => _onCardPress(drive,context),
+                                        )
+                                      // Text('grid item $index ${drive.extra} ${drive.loadingDate} - ${drive.unLoadingDate}'),
+                                    );
+                                  });
+                                },
+                                childCount : driveCount
+                            )
+                        );
+                      })
+                  )
+                ],
+            ),
+    );
   }
   
 }
