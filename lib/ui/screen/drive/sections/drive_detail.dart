@@ -3,7 +3,7 @@ import 'package:freight_ui/config/colors.dart';
 import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/domain/entities/drive.dart';
 import 'package:freight_ui/routes.dart';
-import 'package:freight_ui/ui/screen/drive/sections/drive_form.dart';
+// import 'package:freight_ui/ui/screen/drive/sections/drive_form.dart';
 import 'package:freight_ui/ui/widgets/container_title.dart';
 import 'package:freight_ui/ui/widgets/main_app_bar.dart';
 // import 'package:freight_ui/ui/screen/drive/sections/drive_form.dart';
@@ -100,7 +100,7 @@ class _DriveDetailState extends State<DriveDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("상차 날짜: ${CurrentDate("yyyy-MM-dd", dateTime: drive.loadingDate)}"),
-                    Text("하차 날짜: ${CurrentDate("yyyy-MM-dd", dateTime: drive.unLoadingDate)}"),
+                    Text("하차 날짜: ${CurrentDate("yyyy-MM-dd", dateTime: drive.unloadingDate)}"),
                   ]
                 ),
               ),
@@ -110,7 +110,7 @@ class _DriveDetailState extends State<DriveDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("*상차지: ${drive.loadingPlace}"),
-                    Text("*하차 날짜: ${drive.unLoadingPlace}"),
+                    Text("*하차 날짜: ${drive.unloadingPlace}"),
                   ]
                 ),
               ),

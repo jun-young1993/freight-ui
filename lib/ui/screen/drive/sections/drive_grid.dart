@@ -37,7 +37,7 @@ class _DriveGridState extends State<_DriveGrid> {
 
           _buildHeader(),
           DriveStateStatusSelector((status) {
-            print(status);
+
             switch(status) {
               case DriveStateStatus.loading:
                 return const Loader();
@@ -49,9 +49,8 @@ class _DriveGridState extends State<_DriveGrid> {
                     _buildPagenation()
                   ],
                 );
-
-
               default:
+
                 return Container();
             }
           }),
@@ -59,6 +58,8 @@ class _DriveGridState extends State<_DriveGrid> {
       ),
     );
   }
+
+
 
   Widget _buildHeader(){
     double screenHeight = MediaQuery.of(context).size.height;
@@ -92,13 +93,16 @@ class _DriveGridState extends State<_DriveGrid> {
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
-            width:screenWidth * 0.6 ,
-            child: Text('총 1건'),
-          ),
+          DriveCountSelector((driveCount){
+            return Container(
+              padding: EdgeInsets.only(left: screenWidth * 0.1),
+              width:screenWidth * 0.6 ,
+              child: Text("총 ${driveCount}건"),
+            );
+          }),
           Container(
             width:screenWidth * 0.3 ,
-            child:           TextButton(
+            child: TextButton(
                 onPressed: AppNavigator.pop,
                 child: Text('처음으로')
             ),
@@ -130,13 +134,17 @@ class _DriveGridState extends State<_DriveGrid> {
           onPressed: () {
             _showDatePicker();
           },
-          child: Text(
-            style: TextStyle(
-              color: AppColors.black,
-              fontSize: screenHeight * 0.03
-            ),
-            CurrentDate('yyyy-MM')
-          )
+          child:
+          DriveDateSelector((selectedDate){
+            return Text(
+                style: TextStyle(
+                    color: AppColors.black,
+                    fontSize: screenHeight * 0.03
+                ),
+                CurrentDate('yyyy-MM',dateTime: selectedDate)
+            );
+          })
+
       ),
     );
     // SfDateRangePicker();
@@ -154,9 +162,15 @@ class _DriveGridState extends State<_DriveGrid> {
               showNavigationArrow: true,
               onViewChanged: (DateRangePickerViewChangedArgs rageDate) {
                 // print(rageDate.view);
-                print(rageDate.visibleDateRange);
+
                 if(rageDate.view == DateRangePickerView.month){
                   AppNavigator.pop();
+
+                  if(rageDate.visibleDateRange.startDate != null){
+                    driveBloc.add(DriveSelectedDateChanged(DateTime.parse(rageDate.visibleDateRange.startDate.toString())));
+                  }
+
+
                 }
               },
             );     
@@ -195,7 +209,7 @@ class _DriveGridState extends State<_DriveGrid> {
     showDialog(
           context: context, 
           builder: (BuildContext context) {
-            return const DriveForm();
+            return DriveForm();
           }
         );
   }
@@ -204,6 +218,7 @@ class _DriveGridState extends State<_DriveGrid> {
         showDialog(
           context: context, 
           builder: (BuildContext context) {
+            // return Container();
             // return DriveDetail(drive: drive);
             return DriveForm(
               drive: drive,
@@ -216,13 +231,18 @@ class _DriveGridState extends State<_DriveGrid> {
   _buildPagenation(){
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    return NumberPaginator(
-      numberPages: 10,
-      onPageChange: (int index) {
+    return DrivePageSelector((currentPage){
+      return NumberPaginator(
+        numberPages: 10,
+        initialPage: currentPage - 1,
+        onPageChange: (int index) {
+          print("page ${index}");
+          driveBloc.add(DrivePageChanged(index+1));
+          // handle page change...
+        },
+      );
+    });
 
-        // handle page change...
-      },
-    );
   }
 
   Widget _buildGrid() {
@@ -254,7 +274,7 @@ class _DriveGridState extends State<_DriveGrid> {
                                           drive: drive,
                                           onPress: () => _onCardPress(drive,context),
                                         )
-                                      // Text('grid item $index ${drive.extra} ${drive.loadingDate} - ${drive.unLoadingDate}'),
+                                      // Text('grid item $index ${drive.extra} ${drive.loadingDate} - ${drive.unloadingDate}'),
                                     );
                                   });
                                 },

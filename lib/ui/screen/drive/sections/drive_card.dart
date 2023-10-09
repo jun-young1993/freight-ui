@@ -87,7 +87,7 @@ class _DriveCard extends StatelessWidget {
           children: <Widget>[
             _buildDateText(drive.loadingDate),
             const Text('/', textAlign: TextAlign.center,),
-            _buildDateText(drive.unLoadingDate),
+            _buildDateText(drive.unloadingDate),
           ],
         ),
         Column(
@@ -95,7 +95,7 @@ class _DriveCard extends StatelessWidget {
           children: <Widget>[
             Text(drive.loadingPlace),
             const Text('/', textAlign: TextAlign.center,),
-            Text(drive.unLoadingPlace),
+            Text(drive.unloadingPlace),
           ],
         ),
         _buildDateText(drive.transportationDate),

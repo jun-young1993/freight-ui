@@ -7,8 +7,8 @@ class Drive {
   final String userId;
   final DateTime loadingDate;
   final String loadingPlace;
-  final DateTime unLoadingDate;
-  final String unLoadingPlace;
+  final DateTime unloadingDate;
+  final String unloadingPlace;
   final int loadingRatio;
   final int transportationCosts;
   final DateTime transportationDate;
@@ -23,8 +23,8 @@ class Drive {
     required this.userId,
     required this.loadingDate,
     required this.loadingPlace,
-    required this.unLoadingDate,
-    required this.unLoadingPlace,
+    required this.unloadingDate,
+    required this.unloadingPlace,
     required this.loadingRatio,
     required this.transportationCosts, 
     required this.transportationDate,
@@ -43,8 +43,8 @@ class Drive {
       userId: json['userId'],
       loadingDate: DateTime.parse(json['loadingDate']),
       loadingPlace: json['loadingPlace'],
-      unLoadingDate: DateTime.parse(json['unloadingDate']),
-      unLoadingPlace: json['unloadingPlace'],
+      unloadingDate: DateTime.parse(json['unloadingDate']),
+      unloadingPlace: json['unloadingPlace'],
       loadingRatio: json['loadingRatio'],
       transportationCosts: json['transportationCosts'],
       transportationDate: DateTime.parse(json['transportationDate']),

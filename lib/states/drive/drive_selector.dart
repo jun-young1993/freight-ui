@@ -22,11 +22,27 @@ class DriveStateStatusSelector extends DriveStateSelector<DriveStateStatus> {
   );
 }
 
+class DriveDateSelector extends DriveStateSelector<DateTime> {
+  DriveDateSelector(Widget Function(DateTime) builder)
+      : super(
+      selector: (state) => state.selectedDate,
+      builder: builder
+  );
+}
+
 class DriveCountSelector extends DriveStateSelector<int> {
   DriveCountSelector(Widget Function(int) builder)
   : super(
     selector: (state) => state.data.length,
     builder: builder
+  );
+}
+
+class DrivePageSelector extends DriveStateSelector<int> {
+  DrivePageSelector(Widget Function(int) builder)
+      : super(
+      selector: (state) => state.page,
+      builder: builder
   );
 }
 

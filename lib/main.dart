@@ -7,7 +7,7 @@ import 'package:freight_ui/repositories/user_repository.dart';
 import 'package:freight_ui/states/drive/drive_bloc.dart';
 import 'package:freight_ui/states/drive/drive_form_bloc.dart';
 import 'package:freight_ui/states/user/user_bloc.dart';
-import 'package:freight_ui/ui/screen/drive/sections/drive_form.dart';
+
 
 void main() async {
   await dotenv.load(fileName: '.env');

@@ -68,6 +68,29 @@ class FreightClient {
     );
     return res;
   }
-  
+
+  Future<http.Response> put(String endpoint, {Object? body}) async {
+    http.Response res =
+    await http.put(
+        getUri(
+          endpoint,
+        ),
+        headers: await headers(),
+        body: body
+    );
+    return res;
+  }
+
+  Future<http.Response> delete(String endpoint, {Object? body}) async {
+    http.Response res =
+    await http.delete(
+        getUri(
+          endpoint,
+        ),
+        headers: await headers(),
+        body: body
+    );
+    return res;
+  }
   
 }

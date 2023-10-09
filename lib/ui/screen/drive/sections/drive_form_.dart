@@ -26,8 +26,8 @@ class _DriveFormState extends State<DriveForm> {
   final Map<String,TextEditingController> _formController = {
     "loadingDate": TextEditingController(text: CurrentDate('yyyy-MM-dd')),
     "loadingPlace": TextEditingController(),
-    "unLoadingDate": TextEditingController(text: CurrentDate('yyyy-MM-dd')),
-    "unLoadingPlace": TextEditingController(),
+    "unloadingDate": TextEditingController(text: CurrentDate('yyyy-MM-dd')),
+    "unloadingPlace": TextEditingController(),
     "loadingRatio": TextEditingController(),
     "transportationCosts": TextEditingController(),
     "transportationDate": TextEditingController(text: CurrentDate('yyyy-MM-dd')),
@@ -151,8 +151,8 @@ class _DriveFormState extends State<DriveForm> {
 //   final Map<String,TextEditingController> _formController = {
 //     "loadingDate": TextEditingController(text: CurrentDate('yyyy-MM-dd')),
 //     "loadingPlace": TextEditingController(),
-//     "unLoadingDate": TextEditingController(text: CurrentDate('yyyy-MM-dd')),
-//     "unLoadingPlace": TextEditingController(),
+//     "unloadingDate": TextEditingController(text: CurrentDate('yyyy-MM-dd')),
+//     "unloadingPlace": TextEditingController(),
 //     "loadingRatio": TextEditingController(),
 //     "transportationCosts": TextEditingController(),
 //     "transportationDate": TextEditingController(text: CurrentDate('yyyy-MM-dd')),
@@ -208,7 +208,7 @@ class _DriveFormState extends State<DriveForm> {
 //                   ),
 //                 ),
 //                 DatePickerField(
-//                   controller: _formController['unLoadingDate'],
+//                   controller: _formController['unloadingDate'],
 //                   context: context,
 //                   labelText: "하차일",
 //                   onSelected: (selectedDate){
@@ -218,7 +218,7 @@ class _DriveFormState extends State<DriveForm> {
 //                   },
 //                 ),
 //                 TextFormField(
-//                   controller: _formController['unLoadingPlace'],
+//                   controller: _formController['unloadingPlace'],
 //                   decoration: const InputDecoration(
 //                       labelText: '하차지'
 //                   ),
