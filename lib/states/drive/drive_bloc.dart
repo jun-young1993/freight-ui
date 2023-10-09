@@ -33,9 +33,10 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
           "size" : state.size.toString()
         }
       );
-
+      print(data['data']);
       emit(state.asLoadSuccess(
-          data,
+          data['data'],
+          totalCount: data['totalCount'],
           canLoadMore: false,
       ));
       
@@ -57,7 +58,7 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
           }
       );
 
-      emit(state.asLoadSuccess(data, canLoadMore: false, selectedDate: event.selectedDate));
+      emit(state.asLoadSuccess(data['data'], canLoadMore: false, selectedDate: event.selectedDate));
 
     } on Exception catch (e) {
       print(e);
@@ -78,7 +79,7 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
           }
       );
 
-      emit(state.asLoadSuccess(data, canLoadMore: false, page: event.page));
+      emit(state.asLoadSuccess(data['data'], canLoadMore: false, page: event.page, totalCount: data['totalCount'],));
 
     } on Exception catch (e) {
       print(e);

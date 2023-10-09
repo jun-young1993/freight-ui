@@ -38,11 +38,23 @@ class DriveCountSelector extends DriveStateSelector<int> {
   );
 }
 
-class DrivePageSelector extends DriveStateSelector<int> {
-  DrivePageSelector(Widget Function(int) builder)
+class DriveTotalCountSelector extends DriveStateSelector<int> {
+  DriveTotalCountSelector(Widget Function(int) builder)
       : super(
-      selector: (state) => state.page,
+      selector: (state) => state.totalCount,
       builder: builder
+  );
+}
+
+
+class DrivePageSelector extends DriveStateSelector<DriveSelectorPageState> {
+  DrivePageSelector(Widget Function(int, int) builder)
+      : super(
+      selector: (state) => DriveSelectorPageState(
+          state.page,
+          state.totalCount~/state.size
+      ),
+      builder: (value) => builder(value.page, value.totalPage)
   );
 }
 
@@ -55,6 +67,15 @@ class DriveSelector extends DriveStateSelector<DriveSelectorState>{
     ),
     builder: (value) => builder(value.drive, value.selected)
   );
+}
+
+class DriveSelectorPageState {
+  final int page;
+  final int totalPage;
+  DriveSelectorPageState(this.page, this.totalPage);
+  // @override
+  // bool operator == (Object other) =>
+  //     other is DriveSelectorPageState && page == other.page && totalPage == other.totalPage;
 }
 
 

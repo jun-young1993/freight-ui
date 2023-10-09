@@ -93,7 +93,7 @@ class _DriveGridState extends State<_DriveGrid> {
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          DriveCountSelector((driveCount){
+          DriveTotalCountSelector((driveCount){
             return Container(
               padding: EdgeInsets.only(left: screenWidth * 0.1),
               width:screenWidth * 0.6 ,
@@ -231,16 +231,18 @@ class _DriveGridState extends State<_DriveGrid> {
   _buildPagenation(){
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    return DrivePageSelector((currentPage){
-      return NumberPaginator(
-        numberPages: 10,
-        initialPage: currentPage - 1,
-        onPageChange: (int index) {
-          print("page ${index}");
-          driveBloc.add(DrivePageChanged(index+1));
-          // handle page change...
-        },
-      );
+    return DrivePageSelector((currentPage,totalPage){
+
+        return NumberPaginator(
+          numberPages: totalPage + 1,
+          initialPage: currentPage -1,
+          onPageChange: (int index) {
+            print("page ${index}");
+            driveBloc.add(DrivePageChanged(index+1));
+            // handle page change...
+          },
+        );
+
     });
 
   }

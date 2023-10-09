@@ -10,7 +10,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 abstract class DriveRepository {
-  Future<List<Drive>> get({Map<String, dynamic>? queryParameters});
+  Future<Map<String, dynamic>> get({Map<String, dynamic>? queryParameters});
   Future<Drive> update(int id, DriveDto dto);
   Future<Drive> create(DriveDto dto);
   Future<bool> delete(int id);
@@ -30,7 +30,7 @@ class DriveDefaultRepository extends DriveRepository {
   // }
 
   @override
-  Future<List<Drive>> get( {Map<String, dynamic>? queryParameters}) async {
+  Future<Map<String, dynamic>> get( {Map<String, dynamic>? queryParameters}) async {
 
     final response =
     await _freightClient.get('/api/v1/operate',
@@ -38,7 +38,12 @@ class DriveDefaultRepository extends DriveRepository {
     );
 
     final int statusCode = response.statusCode;
-    final List<Drive> result = [];
+
+    late int totalCount = 0;
+    final Map<String, dynamic> result = {
+      'data' : <Drive>[],
+      'totalCount' : totalCount
+    };
 
     if((statusCode == HttpStatus.ok) || (statusCode == HttpStatus.noContent)){
       final String decodeUtf8 = utf8.decode(response.bodyBytes);
@@ -47,10 +52,14 @@ class DriveDefaultRepository extends DriveRepository {
             decodeUtf8
         );
 
-        final List<dynamic> data = body['data'];
-        for(var item in data){
-          result.add(Drive.fromJson(item));
+        final List<dynamic> driveData = body['data'];
+        totalCount = body['totalCount'];
+
+        for(var item in driveData){
+
+          result['data'].add(Drive.fromJson(item));
         }
+        result['totalCount'] = body['totalCount'];
       }
 
     };
