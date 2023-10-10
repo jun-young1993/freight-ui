@@ -11,4 +11,22 @@ $ flutter pub get
 ```
 $ flutter upgrade
 ```
+
+key-store config
+```
+// https://github.com/mogol/flutter_secure_storage/issues/350 (키체인 공유)
+// url : https://pub.dev/packages/flutter_secure_storage
+// mac os
+// macos/Runner/DebugProfile.entitlements
+// macos/Runner/Release.entitlements
+<key>keychain-access-groups</key>
+```
+
+http request
+```
+// https://stackoverflow.com/questions/65458903/socketexception-connection-failed-os-error-operation-not-permitted-errno-1
+// macos
+	<key>com.apple.security.network.client</key>
+    <true/>
+```
  

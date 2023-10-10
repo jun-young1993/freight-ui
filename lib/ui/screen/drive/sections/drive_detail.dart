@@ -3,61 +3,126 @@ import 'package:freight_ui/config/colors.dart';
 import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/domain/entities/drive.dart';
 import 'package:freight_ui/routes.dart';
+// import 'package:freight_ui/ui/screen/drive/sections/drive_form.dart';
+import 'package:freight_ui/ui/widgets/container_title.dart';
 import 'package:freight_ui/ui/widgets/main_app_bar.dart';
+// import 'package:freight_ui/ui/screen/drive/sections/drive_form.dart';
+import 'package:freight_ui/utills/date.dart';
 
-class DriveDetail extends StatelessWidget {
+class DriveDetail extends StatefulWidget {
   final Drive drive;
 
-  DriveDetail({super.key, required this.drive});
+  const DriveDetail({super.key, required this.drive});
 
+  @override
+  State<StatefulWidget> createState() => _DriveDetailState();
+  
+
+}
+
+class _DriveDetailState extends State<DriveDetail> {
+  // final Drive drive;
+
+  // _DriveDetail({super.key, required this.drive});
+  Drive get drive => widget.drive;
 
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
 
+  
+
   @override
   Widget build(BuildContext context) {
-      return Container(
-        color: AppColors.white,
-        child: NestedScrollView(
-          key: _scrollKey,
-          headerSliverBuilder: (_, __) => [
-              MainSliverAppBar(
-                // color: AppColors.white,
-                // height: 200.0,
-                // Text(AppRouteMap.getName(Routes.drive)),
-                title : "${AppRouteMap.getName(Routes.drive)} 상세보기",
-                context: context,
+      double screenHeight = MediaQuery.of(context).size.height;
+      return Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              _buildDetail(),
+              Center(
+                child: Row(
+                  children: [
+                    _buildActionButton('수정', () { }),
+                    _buildActionButton('삭제', () { }),
+                  ]
+                ),
               ),
-          ],
-          body: Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("상차 날짜: ${drive.loadingDate}"),
-                    Text("하차 날짜: ${drive.unLoadingDate}")
-                  ],
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("상차지: ${drive.loadingPlace}"),
-                    Text("하차지: ${drive.unLoadingPlace}")
-                  ],
-                ),
-
-              ],
-            ),
-
-
+              _buildActionButton('목록으로', () => AppNavigator.pop()),
+            ],
           ),
         ),
       );
-      
-        
   }
 
+  Widget _buildActionButton( String title, VoidCallback onPressed) {
+    return TextButton(
+      onPressed: onPressed,
+      child: Text(title)
+    );
+  }
+
+  Widget _buildBorderText( String title, String text ) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Padding(
+      padding: EdgeInsets.all(screenHeight * 0.01),
+      child: Container(
+        padding: EdgeInsets.all(screenHeight * 0.05),
+        // height: screenHeight * 0.05,
+        decoration: BoxDecoration(
+          border: Border.all(width: 2.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title),
+            Text(text)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetail() {
+     
+
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    return Container(
+      child: Column(
+        children: [
+          const ContainerTitle(title: '상세조회'),
+              Container(
+                padding: EdgeInsets.all(screenHeight * 0.02),
+                child: Text("TODAY: ${CurrentDate("yyyy-MM-dd", dateTime: drive.createdAt)}"),
+              ),
+              Container(
+                padding: EdgeInsets.all(screenHeight * 0.02),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("상차 날짜: ${CurrentDate("yyyy-MM-dd", dateTime: drive.loadingDate)}"),
+                    Text("하차 날짜: ${CurrentDate("yyyy-MM-dd", dateTime: drive.unloadingDate)}"),
+                  ]
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(screenHeight * 0.02),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("*상차지: ${drive.loadingPlace}"),
+                    Text("*하차 날짜: ${drive.unloadingPlace}"),
+                  ]
+                ),
+              ),
+              _buildBorderText('운송 품목:', drive.transportationType),
+              _buildBorderText('품목 단가:', drive.transportationCosts.toString()),
+              _buildBorderText('운반비:', drive.unitCost.toString()),
+        ]
+      ),
+    );
+  
+  }
+  
+
 }
+

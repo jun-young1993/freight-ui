@@ -13,3 +13,7 @@ class GuestLogin extends UserEvent {
 class SignUp extends UserEvent {
   const SignUp();
 }
+
+class UserStateEvent extends UserEvent {
+  const UserStateEvent();
+}

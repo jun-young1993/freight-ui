@@ -12,4 +12,6 @@ class _Image extends AssetImage {
 class AppImages {
   static const main = _Image('main.png');
   static const truck = _Image('truck.png');
+  static const excel = _Image('excel.png');
+  static const loader = _Image('loader.gif');
 }
