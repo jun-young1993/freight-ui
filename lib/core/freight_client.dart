@@ -24,7 +24,7 @@ class FreightClient {
   // });
 
   Uri getUri(String unencodedPath, { Map<String, dynamic>? queryParameters } ){
-
+    
     return Uri.http(
         host,
         unencodedPath,

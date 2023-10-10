@@ -53,7 +53,7 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
       final data = await _driveRepository.get(
           queryParameters: {
             "date": CurrentDate('yyyy-MM-dd',dateTime: event.selectedDate),
-            "page" : 1,
+            "page" : 1.toString(),
             "size" : state.size.toString()
           }
       );
