@@ -1,101 +1,101 @@
-part of '../drive.dart';
+// // part of '../drive.dart';
 
-class _DriveFabMenu extends StatefulWidget {
-  const _DriveFabMenu();
+// class _DriveFabMenu extends StatefulWidget {
+//   const _DriveFabMenu();
 
-  @override
-  State<_DriveFabMenu> createState() => _DriveFabMenuState();
-}
+//   @override
+//   State<_DriveFabMenu> createState() => _DriveFabMenuState();
+// }
 
-class _DriveFabMenuState extends State<_DriveFabMenu> with SingleTickerProviderStateMixin {
-  late AnimationController _fabController;
-  late Animation<double> _fabAnimation;
+// class _DriveFabMenuState extends State<_DriveFabMenu> with SingleTickerProviderStateMixin {
+//   late AnimationController _fabController;
+//   late Animation<double> _fabAnimation;
 
-  bool _isFabMenuVisible = false;
+//   bool _isFabMenuVisible = false;
 
-  DriveBloc get driveBloc => context.read<DriveBloc>();
+//   DriveBloc get driveBloc => context.read<DriveBloc>();
 
-  @override
-  void initState() {
-    _fabController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 260),
-    );
-    _fabAnimation = _fabController.curvedTweenAnimation(
-      begin: 0.0,
-      end: 1.0,
-    );
+//   @override
+//   void initState() {
+//     _fabController = AnimationController(
+//       vsync: this,
+//       duration: const Duration(milliseconds: 260),
+//     );
+//     _fabAnimation = _fabController.curvedTweenAnimation(
+//       begin: 0.0,
+//       end: 1.0,
+//     );
 
-    super.initState();
-  }
+//     super.initState();
+//   }
 
-  @override
-  void dispose() {
-      _fabController.dispose();
+//   @override
+//   void dispose() {
+//       _fabController.dispose();
 
-      super.dispose();
-  }
+//       super.dispose();
+//   }
 
-  void _toggleFabMenu() {
-    _isFabMenuVisible = !_isFabMenuVisible;
+//   void _toggleFabMenu() {
+//     _isFabMenuVisible = !_isFabMenuVisible;
 
-    if (_isFabMenuVisible) {
-      _fabController.forward();
-    } else {
-      _fabController.reverse();
-    }
-  }
+//     if (_isFabMenuVisible) {
+//       _fabController.forward();
+//     } else {
+//       _fabController.reverse();
+//     }
+//   }
 
-  void onPress([Function? callback]) {
-    _toggleFabMenu();
+//   void onPress([Function? callback]) {
+//     _toggleFabMenu();
 
-    callback?.call();
-  }
+//     callback?.call();
+//   }
 
 
-  @override
-  Widget build(BuildContext context){
-    final safeAreaBottom = MediaQuery.of(context).padding.bottom;
+//   @override
+//   Widget build(BuildContext context){
+//     final safeAreaBottom = MediaQuery.of(context).padding.bottom;
     
-    return AnimatedOverlay(
-      animation: _fabAnimation, 
-      color: Colors.black,
-      onPress: _toggleFabMenu,
-              child: Container(
-              alignment: Alignment.bottomRight,
-              padding: EdgeInsets.only(right: 26, bottom: 26 + safeAreaBottom),
-              child: ExpandedAnimationFab(
-                animation: _fabAnimation,
-                onPress: _toggleFabMenu,  
-                items : [
-                  FabItemData(
-                    '추가하기',
-                    Icons.add,
-                    onPress: () => onPress((){
-                      showDialog(
-                        context: context,
-                        builder: (_){
-                          return _buildFrom();
-                        }
-                      );
+//     return AnimatedOverlay(
+//       animation: _fabAnimation, 
+//       color: Colors.black,
+//       onPress: _toggleFabMenu,
+//               child: Container(
+//               alignment: Alignment.bottomRight,
+//               padding: EdgeInsets.only(right: 26, bottom: 26 + safeAreaBottom),
+//               child: ExpandedAnimationFab(
+//                 animation: _fabAnimation,
+//                 onPress: _toggleFabMenu,  
+//                 items : [
+//                   FabItemData(
+//                     '추가하기',
+//                     Icons.add,
+//                     onPress: () => onPress((){
+//                       showDialog(
+//                         context: context,
+//                         builder: (_){
+//                           return _buildFrom();
+//                         }
+//                       );
                       
-                    }),
-                  ),
-                  FabItemData(
-                    '엑셀 다운로드',
-                    Icons.add,
-                    onPress: () => onPress((){
-                      driveBloc.add(const DriveExcelDownload());
-                    }),
-                  )
+//                     }),
+//                   ),
+//                   FabItemData(
+//                     '엑셀 다운로드',
+//                     Icons.add,
+//                     onPress: () => onPress((){
+//                       driveBloc.add(const DriveExcelDownload());
+//                     }),
+//                   )
 
-                ]
-              )
-        )
-    );
-  }
+//                 ]
+//               )
+//         )
+//     );
+//   }
 
-  Widget _buildFrom(){
-    return const _DriveForm();
-  }
-}
+//   Widget _buildFrom(){
+//     // return const _DriveForm();
+//   }
+// }
