@@ -84,3 +84,4 @@ app.*.map.json
 
 
 .env
+native_add/LICENSE
