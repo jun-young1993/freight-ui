@@ -14,9 +14,6 @@ abstract class DriveRepository {
   Future<Drive> update(int id, DriveDto dto);
   Future<Drive> create(DriveDto dto);
   Future<bool> delete(int id);
-  Future<bool> downExcel(
-    // List<Drive>? drives
-    );
 }
 
 class DriveDefaultRepository extends DriveRepository {
@@ -138,22 +135,4 @@ class DriveDefaultRepository extends DriveRepository {
 
   }
 
-  @override
-  Future<bool> downExcel(
-    // List<Drive> drives
-    ) async {
-    final excelService = ExcelService();
-          final Excel excel = excelService.create();
-      final Sheet sheet = excel['Sheet1'];
-      
-      sheet.appendRow(['Flutter', 'till', 'Eternity']);
-      var fileBytes = excel.save();
-      Directory directory = await getApplicationDocumentsDirectory();
-      
-      print(join(directory.path,'output_file_name.xlsx'));
-      File(join(directory.path,'output_file_name.xlsx'))
-        ..createSync(recursive: true)
-        ..writeAsBytesSync(fileBytes!);
-    return true;
-  }
 }

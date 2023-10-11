@@ -153,11 +153,25 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
     try{
       emit(state.asLoading());
       print('drive download');
-      final drive = await _driveRepository.downExcel();
 
+    final excelService = ExcelService();
+          final Excel excel = excelService.create();
+      final Sheet sheet = excel['Sheet1'];
+      
+      sheet.appendRow(['Flutter', 'till', 'Eternity']);
+      var fileBytes = excel.save();
+      Directory directory = await getApplicationDocumentsDirectory();
+  //     var storageStatus = await Permission.storage.status;
+  // if (!storageStatus.isGranted) {
+  //   await Permission.storage.request();
+  // }
+      print(join(directory.path,'output_file_name.xlsx'));
+      File(join(directory.path,'output_file_name.xlsx'))
+        ..createSync(recursive: true)
+        ..writeAsBytesSync(fileBytes!);
       emit(state.asLoadSuccess(state.data, canLoadMore: false));
     } on Exception catch (e) {
-      
+      print(e);
       emit(state.asLoadFailure(e));
     }
   }

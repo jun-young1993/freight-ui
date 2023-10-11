@@ -79,7 +79,9 @@ class _DriveGridState extends State<_DriveGrid> {
                   SizedBox(width: screenWidth * 0.07),
                   _buildHeaderButton(
                     const Image(image: AppImages.excel,),
-                    (){}
+                    (){
+                      driveBloc.add(const DriveExcelDownload());
+                    }
                   )
                 ],
               ),
