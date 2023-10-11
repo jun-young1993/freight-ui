@@ -7,6 +7,7 @@ import 'package:freight_ui/repositories/user_repository.dart';
 import 'package:freight_ui/states/drive/drive_bloc.dart';
 import 'package:freight_ui/states/drive/drive_form_bloc.dart';
 import 'package:freight_ui/states/user/user_bloc.dart';
+import 'package:freight_ui/states/user/user_form_bloc.dart';
 
 
 void main() async {
@@ -34,10 +35,9 @@ void main() async {
             )
         ),
         BlocProvider<DriveFormBloc>(
-          create: (context) => DriveFormBloc(
-            context.read<DriveRepository>()
-          ),
-        )
+          create: (context) => DriveFormBloc(),
+        ),
+        BlocProvider<UserFormBloc>(create: (context) => UserFormBloc())
       ],
       child: const FreightApp(),
     ),

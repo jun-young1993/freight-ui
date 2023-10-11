@@ -12,7 +12,7 @@ import 'package:freight_ui/utills/date.dart';
 
 class DriveFormBloc extends FormBloc<String, String> {
 
-  final DriveRepository _driveRepository;
+
 
   
 
@@ -64,7 +64,7 @@ class DriveFormBloc extends FormBloc<String, String> {
 
 
 
-  DriveFormBloc(this._driveRepository) :
+  DriveFormBloc() :
   super(autoValidate: true) {
     addFieldBlocs(fieldBlocs: [
       loadingDate,

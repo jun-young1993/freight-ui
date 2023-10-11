@@ -1,4 +1,11 @@
 part of '../user.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+// import 'package:freight_ui/config/colors.dart';
+// import 'package:freight_ui/states/user/user_bloc.dart';
+// import 'package:freight_ui/ui/widgets/main_back_image.dart';
+// import 'package:freight_ui/ui/widgets/user_input_field.dart';
+
 class UserAuthLogin extends StatefulWidget {
   const UserAuthLogin();
 

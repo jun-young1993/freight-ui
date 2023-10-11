@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:freight_ui/config/colors.dart';
 import 'package:freight_ui/config/images.dart';
 import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/routes.dart';
 import 'package:freight_ui/states/user/user_bloc.dart';
 import 'package:freight_ui/states/user/user_event.dart';
+import 'package:freight_ui/states/user/user_form_bloc.dart';
 import 'package:freight_ui/ui/widgets/main_back_image.dart';
 import 'package:freight_ui/ui/widgets/user_input_field.dart';
 

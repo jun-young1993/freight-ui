@@ -1,6 +1,14 @@
+
+
 part of '../user.dart';
 
-
+// import 'package:flutter/material.dart';
+// import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+// import 'package:freight_ui/config/colors.dart';
+// import 'package:freight_ui/states/user/user_bloc.dart';
+// import 'package:freight_ui/states/user/user_event.dart';
+// import 'package:freight_ui/states/user/user_form_bloc.dart';
+// import 'package:freight_ui/ui/widgets/main_back_image.dart';
 
 class UserSignUp extends StatefulWidget {
   const UserSignUp();
@@ -13,6 +21,7 @@ class UserSignUp extends StatefulWidget {
 class _UserSignUpState extends State<UserSignUp> {
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
   UserBloc get userBloc => context.read<UserBloc>();
+  UserFormBloc get userFormBloc => context.read<UserFormBloc>();
   @override
   Widget build(BuildContext context) {
 
@@ -78,17 +87,40 @@ class _UserSignUpState extends State<UserSignUp> {
   }
 
   Widget _buildSignForm() {
-    return Form(
-      child: Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          UserInputField(label: 'ID', labelSize: 0.02,),
-          UserInputField(label: 'CONTACT', labelSize: 0.02),
-          UserInputField(label: 'E-MAIL', labelSize: 0.02),
-          UserInputField(label: 'NAME', labelSize: 0.02),
+          // UserInputField(label: 'ID', labelSize: 0.02,),
+          // UserInputField(label: 'CONTACT', labelSize: 0.02),
+          // UserInputField(label: 'E-MAIL', labelSize: 0.02),
+          // UserInputField(label: 'NAME', labelSize: 0.02),
+          TextFieldBlocBuilder(
+              textFieldBloc: userFormBloc.userId,
+              decoration: const InputDecoration(
+                  labelText: 'ID'
+
+              )
+          ),
+          TextFieldBlocBuilder(
+              textFieldBloc: userFormBloc.contact,
+              decoration: InputDecoration(
+                  labelText: 'CONTACT'
+              )
+          ),
+          TextFieldBlocBuilder(
+              textFieldBloc: userFormBloc.email,
+              decoration: InputDecoration(
+                  labelText: 'E-MAIL'
+              )
+          ),
+          TextFieldBlocBuilder(
+              textFieldBloc: userFormBloc.name,
+              decoration: InputDecoration(
+                  labelText: 'NAME'
+              )
+          ),
         ],
-      ),
-    );
+      );
   }
 
   Widget _buildMainBackImage() {
