@@ -38,7 +38,7 @@ class _UserLoginState extends State<_UserLogin> {
   }
 
   void signUp() {
-    userBloc.add(const SignUp());
+    AppNavigator.push(Routes.signUp);
   }
 
   @override

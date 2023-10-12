@@ -37,10 +37,9 @@ class _UserSignUpState extends State<UserSignUp> {
                 _buildSignForm(),
                 _buildButton(
                     'OK',
-                    () {
-
-                    }
+                    () => userFormBloc.submit()
                 ),
+                SizedBox(height: 20,),
                 _buildButton(
                     'GUEST',
                     () {
@@ -61,66 +60,87 @@ class _UserSignUpState extends State<UserSignUp> {
   ){
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    return Padding(
-        padding: EdgeInsets.only(
-            left: screenWidth * 0.1 ,
-            right: screenWidth * 0.1,
-            top: screenHeight * 0.1
+    
+    return Container(
+        margin: EdgeInsets.only(left: screenHeight * 0.02, right: screenHeight * 0.02),
+        padding: EdgeInsets.all(screenHeight * 0.008),
+        decoration: BoxDecoration(
+            border: Border.all(color: AppColors.black),
+            color: AppColors.white
         ),
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              border: Border.all()
+        child: TextButton(
+          onPressed: onPressed,
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.black,
+            textStyle: TextStyle(fontSize: screenHeight * 0.05),
           ),
-          child: GestureDetector(
-            onTap: onPressed,
-            child: Text(
-                style: TextStyle(
-                    fontSize: screenHeight * 0.05,
-                    color: AppColors.black
-                ),
-                label
-            ),
-          ),
+          child: Text(label),
         )
     );
+     
   }
 
   Widget _buildSignForm() {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // UserInputField(label: 'ID', labelSize: 0.02,),
-          // UserInputField(label: 'CONTACT', labelSize: 0.02),
-          // UserInputField(label: 'E-MAIL', labelSize: 0.02),
-          // UserInputField(label: 'NAME', labelSize: 0.02),
-          TextFieldBlocBuilder(
-              textFieldBloc: userFormBloc.userId,
-              decoration: const InputDecoration(
-                  labelText: 'ID'
+    return FormBlocListener<UserFormBloc, String, String>(
+       onSubmitting: (context, state) {
+          if(state.isValid()){
+            LoadingDialog.show(context);
+          }
+        },
+        onSuccess: (context, state){
+          LoadingDialog.hide(context);
+          final Map<String, dynamic> jsonData = json.decode(state.successResponse as String);
+          final UserDto dto = UserDto.fromJson(jsonData);
+          userBloc.add(SignUp(dto));
 
-              )
-          ),
-          TextFieldBlocBuilder(
-              textFieldBloc: userFormBloc.contact,
-              decoration: InputDecoration(
-                  labelText: 'CONTACT'
-              )
-          ),
-          TextFieldBlocBuilder(
-              textFieldBloc: userFormBloc.email,
-              decoration: InputDecoration(
-                  labelText: 'E-MAIL'
-              )
-          ),
-          TextFieldBlocBuilder(
-              textFieldBloc: userFormBloc.name,
-              decoration: InputDecoration(
-                  labelText: 'NAME'
-              )
-          ),
-        ],
-      );
+        },
+        onFailure: (context, state) {
+          LoadingDialog.hide(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: AppColors.red,
+                content: Text(state.failureResponse!))
+              );
+        },
+        child: ScrollableFormBlocManager(
+          formBloc: userFormBloc, 
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            padding: const EdgeInsets.all(24.0),
+            child:         Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFieldBlocBuilder(
+                  textFieldBloc: userFormBloc.userId,
+                  decoration: const InputDecoration(
+                      labelText: 'ID'
+
+                  )
+              ),
+              TextFieldBlocBuilder(
+                  textFieldBloc: userFormBloc.contact,
+                  decoration: InputDecoration(
+                      labelText: 'CONTACT'
+                  )
+              ),
+              TextFieldBlocBuilder(
+                  textFieldBloc: userFormBloc.email,
+                  decoration: InputDecoration(
+                      labelText: 'E-MAIL'
+                  )
+              ),
+              TextFieldBlocBuilder(
+                  textFieldBloc: userFormBloc.name,
+                  decoration: InputDecoration(
+                      labelText: 'NAME'
+                  )
+              ),
+            ],
+          )
+        ),
+      ),
+    );
+    
   }
 
   Widget _buildMainBackImage() {

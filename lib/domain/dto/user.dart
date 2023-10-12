@@ -15,6 +15,16 @@ class UserDto {
     this.extra
   });
 
+  factory UserDto.fromJson(Map<String, dynamic> json) {
+    return UserDto(
+      id: "${json['id']}",
+      contact: "${json['contact']}",
+      email: "${json['email']}",
+      name: "${json['name']}",
+      extra: "${json['extra']}",
+    );
+  }
+
   String toJson(){
     final Map<String, dynamic> data = {
       'id': id,

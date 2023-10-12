@@ -1,3 +1,5 @@
+import 'package:freight_ui/domain/dto/user.dart';
+
 abstract class UserEvent {
   const UserEvent();
 }
@@ -11,7 +13,8 @@ class GuestLogin extends UserEvent {
 }
 
 class SignUp extends UserEvent {
-  const SignUp();
+  final UserDto dto;
+  const SignUp(this.dto);
 }
 
 class UserStateEvent extends UserEvent {
