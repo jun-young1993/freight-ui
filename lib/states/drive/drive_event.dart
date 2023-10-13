@@ -36,7 +36,12 @@ class DrivePageChanged extends DriveEvent {
   DrivePageChanged(this.page);
 }
 
+enum DriveExcelDownloadType {
+  YEAR, MONTH
+}
+
 class DriveExcelDownload extends DriveEvent {
-  const DriveExcelDownload();
+  final DriveExcelDownloadType type;
+  const DriveExcelDownload(this.type);
 }
 

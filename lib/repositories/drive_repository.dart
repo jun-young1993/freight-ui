@@ -6,6 +6,7 @@ import 'package:freight_ui/core/freight_client.dart';
 import 'package:freight_ui/domain/dto/drive.dart';
 import 'package:freight_ui/domain/entities/drive.dart';
 import 'package:freight_ui/services/excel_service.dart';
+import 'package:freight_ui/states/drive/drive_event.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -14,6 +15,7 @@ abstract class DriveRepository {
   Future<Drive> update(int id, DriveDto dto);
   Future<Drive> create(DriveDto dto);
   Future<bool> delete(int id);
+
 }
 
 class DriveDefaultRepository extends DriveRepository {
@@ -134,5 +136,8 @@ class DriveDefaultRepository extends DriveRepository {
     }
 
   }
+
+  
+
 
 }

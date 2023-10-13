@@ -77,12 +77,31 @@ class _DriveGridState extends State<_DriveGrid> {
                   SizedBox(width: screenWidth * 0.07),
                   _buildDatePicker(),
                   SizedBox(width: screenWidth * 0.07),
-                  _buildHeaderButton(
-                    const Image(image: AppImages.excel,),
-                    (){
-                      driveBloc.add(const DriveExcelDownload());
-                    }
-                  )
+                  PopupMenuButton<String>(
+                    position: PopupMenuPosition.under,
+                    icon: Image(image: AppImages.excel),
+                    onSelected: (String choice) {
+
+                      driveBloc.add(DriveExcelDownload(
+                        (ExcelDownloadItems.YearItem == choice) ? DriveExcelDownloadType.YEAR : DriveExcelDownloadType.MONTH
+                      ));
+                      
+                    },
+                    itemBuilder: (BuildContext context) {
+                      return ExcelDownloadItems.choices.map((String choice) {
+                        return PopupMenuItem<String>(
+                          value: choice,
+                          child: Text(choice),
+                        );
+                      }).toList();
+                    },
+                  ),
+                  // _buildHeaderButton(
+                  //   const Image(image: AppImages.excel,),
+                  //   (){
+                  //     driveBloc.add(const DriveExcelDownload());
+                  //   }
+                  // )
                 ],
               ),
             )

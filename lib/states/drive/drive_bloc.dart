@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:excel/excel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freight_ui/domain/dto/drive.dart';
+import 'package:freight_ui/domain/entities/drive.dart';
+import 'package:freight_ui/domain/excel.dart';
+import 'package:freight_ui/repositories/common_repository.dart';
 import 'package:freight_ui/repositories/drive_repository.dart';
 import 'package:freight_ui/services/excel_service.dart';
 import 'package:freight_ui/states/drive/drive_event.dart';
@@ -17,7 +20,8 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 class DriveBloc extends Bloc<DriveEvent, DriveState> {
   final DriveRepository _driveRepository;
-  DriveBloc(this._driveRepository) : super(DriveState.initial()) {
+  final CommonRepository _commonRepository;
+  DriveBloc(this._driveRepository,this._commonRepository) : super(DriveState.initial()) {
     on<DriveLoadStarted>(_onLoadStarted);
     on<DriveCreated>(_onCreated);
     on<DriveExcelDownload>(_onExcelDownload);
@@ -159,12 +163,37 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
       emit(state.asLoading());
       print('drive download');
 
-    final excelService = ExcelService();
-          final Excel excel = excelService.create();
+      final List<Drive> drives  =await _commonRepository.getExcelDataByDrive(
+        CurrentDate(
+          (event.type == ExcelDownloadItems.YearItem) ? 'yyyy' : 'yyyy-MM',
+        state.selectedDate)
+      );
+
+  
+
+      final Excel excel = Excel.createExcel();
       final Sheet sheet = excel['Sheet1'];
       
-      sheet.appendRow(['Flutter', 'till', 'Eternity']);
+      sheet.appendRow([
+        '상차일',
+        '상차지',
+        '하차일',
+        '하차지'
+      ]);
+      for(var item in drives){
+        sheet.appendRow([
+          item.loadingDate,
+          item.loadingPlace,
+          item.unloadingDate,
+          item.unloadingPlace,
+        ]);
+      }
+
       var fileBytes = excel.save();
+
+
+
+
       Directory directory = await getApplicationDocumentsDirectory();
   //     var storageStatus = await Permission.storage.status;
   // if (!storageStatus.isGranted) {
