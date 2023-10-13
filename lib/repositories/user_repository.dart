@@ -7,7 +7,7 @@ import 'package:freight_ui/services/key_store_service.dart';
 
 abstract class UserRepository {
   Future<void> guestLogin();
-  Future<void> registration(UserDto userDto);
+  Future<bool> registration(UserDto userDto);
 }
 
 class UserDefaultRepository extends UserRepository {
@@ -23,7 +23,7 @@ class UserDefaultRepository extends UserRepository {
   }
 
   @override
-  Future<void> registration(UserDto userDto) async {
+  Future<bool> registration(UserDto userDto) async {
     
     final response = await _freightClient.post(
       '/api/v1/user/registration',
@@ -36,8 +36,9 @@ class UserDefaultRepository extends UserRepository {
       final Map<String, dynamic> body = json.decode(
           utf8.decode(response.bodyBytes)
       );
+      return true;
     }
 
-      
+    return false;
   }
 }

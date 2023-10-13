@@ -37,7 +37,9 @@ void main() async {
         BlocProvider<DriveFormBloc>(
           create: (context) => DriveFormBloc(),
         ),
-        BlocProvider<UserFormBloc>(create: (context) => UserFormBloc())
+        BlocProvider<UserFormBloc>(
+          create: (context) => UserFormBloc()
+        )
       ],
       child: const FreightApp(),
     ),

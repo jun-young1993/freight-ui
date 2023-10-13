@@ -12,9 +12,9 @@ class GuestLogin extends UserEvent {
   const GuestLogin();
 }
 
-class SignUp extends UserEvent {
+class Registration extends UserEvent {
   final UserDto dto;
-  const SignUp(this.dto);
+  Registration(this.dto);
 }
 
 class UserStateEvent extends UserEvent {

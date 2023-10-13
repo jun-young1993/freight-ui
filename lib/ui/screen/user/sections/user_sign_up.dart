@@ -91,7 +91,7 @@ class _UserSignUpState extends State<UserSignUp> {
           LoadingDialog.hide(context);
           final Map<String, dynamic> jsonData = json.decode(state.successResponse as String);
           final UserDto dto = UserDto.fromJson(jsonData);
-          userBloc.add(SignUp(dto));
+          userBloc.add(Registration(dto));
 
         },
         onFailure: (context, state) {

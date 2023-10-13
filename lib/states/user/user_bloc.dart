@@ -1,3 +1,5 @@
+
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freight_ui/domain/dto/user.dart';
 import 'package:freight_ui/domain/entities/user.dart';
@@ -11,7 +13,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(this._userRepository) : super(UserState.initial()) {
     on<UserLogin>(_onUserLogin);
     on<GuestLogin>(_onGuestLogin);
-    on<SignUp>(_onSignUp);
+    on<Registration>(_onRegistration);
     on<UserStateEvent>(_onUser);
   }
 
@@ -38,12 +40,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  void _onSignUp(SignUp envet, Emitter<UserState> emit) async {
+  void _onRegistration(Registration event, Emitter<UserState> emit) async {
     try{
       
-      // final UserDto dto = event.dto;
-      // await _userRepository.registration(event.dto);
-        
+      final UserDto dto = event.dto;
+      final bool created = await _userRepository.registration(dto);
+      if(created){
+        await AppNavigator.push(Routes.home);
+      }
+
     } on Exception catch (e) {
       emit(state.asLoginFailure(e));
     }
@@ -57,4 +62,5 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 }
+
 
