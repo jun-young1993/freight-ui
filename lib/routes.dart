@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:freight_ui/ui/screen/expenditure/expenditure.dart';
 import 'package:freight_ui/ui/screen/home/home.dart';
+import 'package:freight_ui/ui/screen/settings/setting.dart';
 // import 'package:freight_ui/ui/screen/user/sections/user_sign_up.dart';
 import 'package:freight_ui/ui/screen/user/user.dart';
 import 'core/fade_page_route.dart';
@@ -17,7 +18,8 @@ enum Routes {
   maintenance,
   simpleLogin,
   authLogin,
-  signUp
+  signUp,
+  settings
 }
 
 class _Paths {
@@ -29,6 +31,7 @@ class _Paths {
   static const String simpleLogin = 'simpleLogin';
   static const String authLogin = 'authLogin';
   static const String signUp = 'signUp';
+  static const String settings = 'settings';
 
   static const Map<Routes, String> _pathMap = {
     Routes.home: _Paths.home,
@@ -38,7 +41,8 @@ class _Paths {
     Routes.maintenance: _Paths.maintenance,
     Routes.simpleLogin: _Paths.simpleLogin,
     Routes.authLogin: _Paths.authLogin,
-    Routes.signUp: _Paths.signUp
+    Routes.signUp: _Paths.signUp,
+    Routes.settings: _Paths.settings
   };
 
   static String of(Routes route) => _pathMap[route] ?? home;
@@ -68,6 +72,8 @@ class AppNavigator {
         return FadeRoute(page: const UserAuthLogin());
       case _Paths.signUp:
         return FadeRoute(page: const UserSignUp());
+      case _Paths.settings:
+        return FadeRoute(page: const SettingScreen());
       default:
         return FadeRoute(page: const UserScreen());
     }

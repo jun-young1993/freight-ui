@@ -63,15 +63,24 @@ class _HomeScreenState extends State<HomeScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
     return UserEntityStateSelector(
       builder: (User user) {
-        print('[home.dart] user entity state selector');
+
         return Container(
-          padding: EdgeInsets.all(screenHeight * 0.03),
-          alignment: Alignment.topLeft,
-          child: Text(
-            style: TextStyle(fontSize: screenHeight * 0.03, color: AppColors.black),
-            user.name
+          padding: EdgeInsets.all(screenHeight * 0.05),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                  style: TextStyle(fontSize: screenHeight * 0.03, color: AppColors.black),
+                  user.name
+              ),
+              IconButton(
+                icon: const Icon(Icons.settings),
+                onPressed: () {
+                  AppNavigator.push(Routes.settings);
+                },
+              )            ],
           ),
-        );
+        ) ;
       }
     );
   }

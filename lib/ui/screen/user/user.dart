@@ -12,6 +12,7 @@ import 'package:freight_ui/states/user/user_event.dart';
 import 'package:freight_ui/states/user/user_form_bloc.dart';
 import 'package:freight_ui/ui/widgets/loader.dart';
 import 'package:freight_ui/ui/widgets/main_back_image.dart';
+import 'package:freight_ui/ui/widgets/main_freight_button.dart';
 import 'package:freight_ui/ui/widgets/user_input_field.dart';
 
 part 'sections/user_login.dart';

@@ -165,8 +165,7 @@ class DriveBloc extends Bloc<DriveEvent, DriveState> {
 
       final List<Drive> drives  =await _commonRepository.getExcelDataByDrive(
         CurrentDate(
-          (event.type == ExcelDownloadItems.YearItem) ? 'yyyy' : 'yyyy-MM',
-        state.selectedDate)
+          (event.type == ExcelDownloadItems.YearItem) ? 'yyyy' : 'yyyy-MM', dateTime: state.selectedDate)
       );
 
   
