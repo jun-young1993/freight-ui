@@ -69,7 +69,9 @@ class _SettingMenuState extends State<SettingMenu> {
         ButtonExpansionItem(
           MainFreightText(text: '사용자 정보 및 수정',fontSize: 0.045,),
         ),
-        ButtonExpansionItem(MainFreightText(text: '기존 계정 연동',fontSize: 0.045,),),
+        ButtonExpansionItem(
+          MainFreightText(text: '기존 계정 연동',fontSize: 0.045,),
+        ),
         ButtonExpansionItem(MainFreightText(text: '기기 변경',fontSize: 0.045,),)
       ],
     );
