@@ -6,6 +6,7 @@ import 'package:freight_ui/domain/dto/user.dart';
 import 'package:freight_ui/services/key_store_service.dart';
 
 abstract class UserRepository {
+  Future<String> getToken();
   Future<void> guestLogin();
   Future<bool> registration(UserDto userDto);
 }
@@ -15,7 +16,10 @@ class UserDefaultRepository extends UserRepository {
   final _freightClient = FreightClient();
   UserDefaultRepository();
 
-
+  @override
+  Future<String> getToken() async {
+    return await _keyStoreService.getAuthToken();
+  } 
 
   @override
   Future<void> guestLogin() async {

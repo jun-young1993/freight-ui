@@ -31,15 +31,13 @@ class MainFreightText extends StatelessWidget {
                 color: Colors.black,
                 fontSize: screenHeight * fontSize
               ),)
-              : Center(
-                  child: TextButton(
+              :TextButton(
                         onPressed: onPressed ?? () {},
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.black,
                           textStyle: TextStyle(fontSize: screenHeight * 0.05),
                         ),
                         child: Text(text, textAlign: TextAlign.center)
-                ),
           )
           )
       );

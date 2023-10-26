@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class ButtonExpansionItem {
   final Widget button;
+  final Widget context;
   const ButtonExpansionItem(
-      this.button
+      this.button, this.context
   );
 }
 
@@ -38,17 +39,26 @@ class _ButtonExpansionState extends State<ButtonExpansion> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ListView.builder(
           itemCount: items.length,
           itemBuilder: (context, index){
-            return _buildElevatedButton(items[index], index);
+            return Column(
+              children: [
+                _buildElevatedButton(items[index], index),
+                SizedBox(height: screenHeight * 0.01,)
+              ],
+            );
+              
           }
       )
     );
   }
 
   Widget _buildElevatedButton(ButtonExpansionItem item, int index){
+    
+    double screenHeight = MediaQuery.of(context).size.height;
     return Container(
       child: Column(
         children: [
@@ -60,7 +70,13 @@ class _ButtonExpansionState extends State<ButtonExpansion> {
             onPressed: () => expandButton(index),
             child: item.button,
           ),
-          if (expandedButtonContent == index) Text("버튼 1의 내용")
+          if (expandedButtonContent == index) Column(
+            children: [
+              SizedBox(height: screenHeight * 0.025,),
+              item.context,
+              SizedBox(height: screenHeight * 0.025,),
+            ],
+            )
         ],
       )
     );

@@ -7,6 +7,7 @@ class SettingMenu extends StatefulWidget {
 }
 
 class _SettingMenuState extends State<SettingMenu> {
+  
   @override
   Widget build(BuildContext context) {
     return
@@ -64,15 +65,32 @@ class _SettingMenuState extends State<SettingMenu> {
   }
 
   Widget _buildAnimationMenu(){
+    
     return  ButtonExpansion(
       items: <ButtonExpansionItem>[
-        ButtonExpansionItem(
+        ButtonExpansionItem( 
           MainFreightText(text: '사용자 정보 및 수정',fontSize: 0.045,),
+          UserEntityStateSelector(
+            builder: (User user) {
+              return Column(
+                children: [
+                  Text('아이디: ${user.id}'),
+                  Text('이름: ${user.name}'),
+                  Text('연락처: ${user.contact}'),
+                  Text('이메일: ${user.email}'),
+                ],
+              );
+            }
+          )
         ),
         ButtonExpansionItem(
           MainFreightText(text: '기존 계정 연동',fontSize: 0.045,),
+          Text('hi2')
         ),
-        ButtonExpansionItem(MainFreightText(text: '기기 변경',fontSize: 0.045,),)
+        ButtonExpansionItem(
+          MainFreightText(text: '기기 변경',fontSize: 0.045),
+          Text('hi3')
+        ),
       ],
     );
   }
