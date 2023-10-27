@@ -78,7 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   AppNavigator.push(Routes.settings);
                 },
-              )            ],
+              )            
+          ],  
           ),
         ) ;
       }

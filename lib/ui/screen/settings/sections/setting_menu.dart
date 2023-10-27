@@ -7,7 +7,15 @@ class SettingMenu extends StatefulWidget {
 }
 
 class _SettingMenuState extends State<SettingMenu> {
-  
+  UserFormBloc get userFormBloc => context.read<UserFormBloc>();
+  UserBloc get userBloc => context.read<UserBloc>();
+          
+    @override
+  void initState() {
+    super.initState();
+
+    userBloc.add(const UserStateEvent());
+  }
   @override
   Widget build(BuildContext context) {
     return
@@ -26,7 +34,7 @@ class _SettingMenuState extends State<SettingMenu> {
   Widget _buildTitle(){
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-        padding: EdgeInsets.only(left: screenHeight * 0.05, bottom: screenHeight * 0.1),
+        padding: EdgeInsets.only(left: screenHeight * 0.05, bottom: screenHeight * 0.05),
         // color: AppColors.white,
         alignment: Alignment.topLeft,
         child: Title(
@@ -40,6 +48,7 @@ class _SettingMenuState extends State<SettingMenu> {
   }
   Widget _buildUserTitle(){
     double screenHeight = MediaQuery.of(context).size.height;
+    
     return UserEntityStateSelector(
         builder: (User user) {
 
@@ -64,34 +73,72 @@ class _SettingMenuState extends State<SettingMenu> {
     );
   }
 
+  Widget _buildUserForm(){
+    
+    return FormBlocListener<UserFormBloc, String, String>(
+       onSubmitting: (context, state) {
+          if(state.isValid()){
+            LoadingDialog.show(context);
+          }
+        },
+        onSuccess: (context, state){
+          LoadingDialog.hide(context);
+          final Map<String, dynamic> jsonData = json.decode(state.successResponse as String);
+          final UserDto dto = UserDto.fromJson(jsonData);
+          // userBloc.add(Registration(dto));
+
+        },
+        onFailure: (context, state) {
+          LoadingDialog.hide(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: AppColors.red,
+                content: Text(state.failureResponse!))
+              );
+        },
+        child: UserEntityStateSelector(
+            builder: (User user) {
+              
+                userFormBloc.setValues(user);
+              
+              
+              return UserForm(
+                formBloc : userFormBloc,
+              );
+            }
+        )
+
+    );
+  }
+
   Widget _buildAnimationMenu(){
     
     return  ButtonExpansion(
       items: <ButtonExpansionItem>[
         ButtonExpansionItem( 
           MainFreightText(text: '사용자 정보 및 수정',fontSize: 0.045,),
-          UserEntityStateSelector(
-            builder: (User user) {
-              return Column(
-                children: [
-                  Text('아이디: ${user.id}'),
-                  Text('이름: ${user.name}'),
-                  Text('연락처: ${user.contact}'),
-                  Text('이메일: ${user.email}'),
-                ],
-              );
-            }
-          )
+          _buildUserForm()
         ),
         ButtonExpansionItem(
           MainFreightText(text: '기존 계정 연동',fontSize: 0.045,),
-          Text('hi2')
+          Text('h2')
         ),
         ButtonExpansionItem(
           MainFreightText(text: '기기 변경',fontSize: 0.045),
-          Text('hi3')
+          userAuthTokenSelector(
+            builder: (token) {
+              print('user auth token selector ${token}');
+              return Column(
+                children: [
+                  Text('token: ${token}')
+                ],
+              );
+            },
+          )
         ),
       ],
     );
   }
+
+
 }

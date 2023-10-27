@@ -72,9 +72,9 @@ class _ButtonExpansionState extends State<ButtonExpansion> {
           ),
           if (expandedButtonContent == index) Column(
             children: [
-              SizedBox(height: screenHeight * 0.025,),
+              SizedBox(height: screenHeight * 0.005,),
               item.context,
-              SizedBox(height: screenHeight * 0.025,),
+              SizedBox(height: screenHeight * 0.005,),
             ],
             )
         ],

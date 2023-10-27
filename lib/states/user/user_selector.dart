@@ -35,3 +35,13 @@ class UserEntityStateSelector extends UserStateSelector<User> {
   );
   
 }
+
+class userAuthTokenSelector extends UserStateSelector<String?> {
+  userAuthTokenSelector({
+    super.key,
+    required Widget Function(String?) builder
+  }) : super(
+    selector: (state) => state.token,
+    builder: builder
+  );
+}

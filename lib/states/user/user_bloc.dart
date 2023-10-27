@@ -32,9 +32,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(state.asLogin());
   
       await _userRepository.guestLogin();
-      await AppNavigator.push(Routes.home);
+      final String token = await _userRepository.getToken();
       
-      emit(state.asLoginSuccess(User.guest()));
+      
+      
+      emit(state.asLoginSuccess(User.guest(), token));
+      
     } on Exception catch (e) {
       emit(state.asLoginFailure(e));
     }
@@ -56,9 +59,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   void _onUser(UserStateEvent event, Emitter<UserState> emit) async {
     try{
-
+      final String token = await _userRepository.getToken();
+      print('token s ${token}');
+      emit(state.asLoginSuccess(User.guest(), token));
     } on Exception catch (e) {
-
+      print(e);
     }
   }
 }

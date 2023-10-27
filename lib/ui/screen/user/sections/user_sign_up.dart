@@ -2,13 +2,6 @@
 
 part of '../user.dart';
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-// import 'package:freight_ui/config/colors.dart';
-// import 'package:freight_ui/states/user/user_bloc.dart';
-// import 'package:freight_ui/states/user/user_event.dart';
-// import 'package:freight_ui/states/user/user_form_bloc.dart';
-// import 'package:freight_ui/ui/widgets/main_back_image.dart';
 
 class UserSignUp extends StatefulWidget {
   const UserSignUp();
@@ -44,6 +37,7 @@ class _UserSignUpState extends State<UserSignUp> {
                     'GUEST',
                     () {
                       userBloc.add(const GuestLogin());
+                      AppNavigator.push(Routes.home);
                     }
                 )
               ],
@@ -102,43 +96,9 @@ class _UserSignUpState extends State<UserSignUp> {
                 content: Text(state.failureResponse!))
               );
         },
-        child: ScrollableFormBlocManager(
-          formBloc: userFormBloc, 
-          child: SingleChildScrollView(
-            physics: const ClampingScrollPhysics(),
-            padding: const EdgeInsets.all(24.0),
-            child:         Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFieldBlocBuilder(
-                  textFieldBloc: userFormBloc.userId,
-                  decoration: const InputDecoration(
-                      labelText: 'ID'
-
-                  )
-              ),
-              TextFieldBlocBuilder(
-                  textFieldBloc: userFormBloc.contact,
-                  decoration: InputDecoration(
-                      labelText: 'CONTACT'
-                  )
-              ),
-              TextFieldBlocBuilder(
-                  textFieldBloc: userFormBloc.email,
-                  decoration: InputDecoration(
-                      labelText: 'E-MAIL'
-                  )
-              ),
-              TextFieldBlocBuilder(
-                  textFieldBloc: userFormBloc.name,
-                  decoration: InputDecoration(
-                      labelText: 'NAME'
-                  )
-              ),
-            ],
-          )
-        ),
-      ),
+        child: UserForm(
+          formBloc : userFormBloc
+        )
     );
     
   }

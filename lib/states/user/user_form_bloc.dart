@@ -1,5 +1,6 @@
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 import 'package:freight_ui/domain/dto/user.dart';
+import 'package:freight_ui/domain/entities/user.dart';
 
 class UserFormBloc extends FormBloc<String, String> {
   // {
@@ -33,6 +34,13 @@ class UserFormBloc extends FormBloc<String, String> {
           email,
         ]
     );
+  }
+
+  void setValues(User user) async {
+    userId.changeValue(user.id);
+    contact.changeValue(user.contact);
+    name.changeValue(user.name);
+    email.changeValue(user.email);
   }
 
   @override

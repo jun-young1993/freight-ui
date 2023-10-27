@@ -33,8 +33,9 @@ class _UserLoginState extends State<_UserLogin> {
     userBloc.add(const UserLogin());
   }
 
-  void guestLogin() {
+  void guestLogin() async  {
     userBloc.add(const GuestLogin());
+    await AppNavigator.push(Routes.home);
   }
 
   void signUp() {
