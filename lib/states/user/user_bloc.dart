@@ -3,6 +3,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freight_ui/domain/dto/user.dart';
 import 'package:freight_ui/domain/entities/user.dart';
+import 'package:freight_ui/domain/entities/user/CreateUser.dart';
 import 'package:freight_ui/repositories/user_repository.dart';
 import 'package:freight_ui/routes.dart';
 import 'package:freight_ui/states/user/user_event.dart';
@@ -47,9 +48,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try{
       
       final UserDto dto = event.dto;
-      await _userRepository.registration(dto);
+      final CreateUser userCreate = await _userRepository.registration(dto);
+
       
-        await AppNavigator.push(Routes.home);
+      
+      await AppNavigator.push(Routes.home);
       
 
     } on Exception catch (e) {

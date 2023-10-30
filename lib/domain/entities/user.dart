@@ -1,3 +1,5 @@
+import 'package:freight_ui/domain/dto/user.dart';
+
 class User {
   final String id;
   final String contact;
@@ -17,6 +19,15 @@ class User {
       contact: "GUEST",
       email: "GUEST",
       name: "GUEST"
+    );
+  }
+
+  factory User.fromDto(UserDto userDto){
+    return User(
+      contact: userDto.contact,
+      id: userDto.id, 
+      email: userDto.email, 
+      name: userDto.name
     );
   }
 

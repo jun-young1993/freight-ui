@@ -27,7 +27,7 @@ class UserDto {
 
   String toJson(){
     final Map<String, dynamic> data = {
-      'id': id,
+      'userId': id,
       'contact': contact,
       'email': email,
       'name': name,

@@ -16,25 +16,33 @@ class KeyStoreService {
   });
 
   final String userAuthToken = "${AppConstant.name}-auth-token";
+  final String userInfo = "${AppConstant.name}-user-info";
   Future<void> loginGuest() async {
     try{
       
-      setAuthTOken(dotenv.get('GUEST_TOKEN'));
+      setAuthToken(dotenv.get('GUEST_TOKEN'));
     }catch(e){
       print('Error while writing to secure storage: $e');
     }
 
   }
 
-  Future<void> setAuthTOken(String value) async {
-    try{
+  Future<void> setAuthToken(String value) async {
+
       await storage.write(
           key: userAuthToken,
           value: value
       );
-    } catch (e) {
-      print('Error while writing to secure storage: $e');
-    }
+
+  }
+
+  Future<void> setUserInfo(String value) async {
+
+      await storage.write(
+          key: userInfo,
+          value: value
+      );
+  
   }
 
   Future<String> getAuthToken() async {

@@ -3,12 +3,14 @@ import 'dart:io';
 
 import 'package:freight_ui/core/freight_client.dart';
 import 'package:freight_ui/domain/dto/user.dart';
+import 'package:freight_ui/domain/entities/user.dart';
+import 'package:freight_ui/domain/entities/user/CreateUser.dart';
 import 'package:freight_ui/services/key_store_service.dart';
 
 abstract class UserRepository {
   Future<String> getToken();
   Future<void> guestLogin();
-  Future<UserDto> registration(UserDto userDto);
+  Future<CreateUser> registration(UserDto userDto);
 }
 
 class UserDefaultRepository extends UserRepository {
@@ -37,20 +39,38 @@ class UserDefaultRepository extends UserRepository {
   }
 
   @override
-  Future<UserDto> registration(UserDto userDto) async {
+  Future<CreateUser> registration(UserDto userDto) async {
     
     final response = await _freightClient.post(
       '/api/v1/user/registration',
       body: userDto.toJson()
     );
     final int statusCode = response.statusCode;
-    print(statusCode);
+    final headers = response.headers;
     if((statusCode == HttpStatus.created) || (statusCode == HttpStatus.ok)){
-
+      final String bodyString = utf8.decode(response.bodyBytes);
       final Map<String, dynamic> body = json.decode(
-          utf8.decode(response.bodyBytes)
+          bodyString
       );
-      return userDto;
+      body['id'] = body['userId'];
+      if(headers.containsKey('authorization') && (headers['authorization'] is String)){
+          final String authToken = headers['authorization'] as String;
+          final CreateUser createUser = CreateUser(
+            user: User.fromDto(
+              UserDto.fromJson(body)
+            ), 
+            token: authToken
+          );
+          
+          await _keyStoreService.setAuthToken(authToken);
+          await _keyStoreService.setUserInfo(bodyString);
+          return createUser;
+        
+      }else{
+        throw Exception('Failed to create user token empty');
+      }
+
+      
     }else{
       throw Exception('Failed to create user: HTTP $statusCode');
     }
