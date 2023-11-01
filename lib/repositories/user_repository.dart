@@ -53,6 +53,7 @@ class UserDefaultRepository extends UserRepository {
           bodyString
       );
       body['id'] = body['userId'];
+      
       if(headers.containsKey('authorization') && (headers['authorization'] is String)){
           final String authToken = headers['authorization'] as String;
           final CreateUser createUser = CreateUser(
@@ -64,6 +65,8 @@ class UserDefaultRepository extends UserRepository {
           
           await _keyStoreService.setAuthToken(authToken);
           await _keyStoreService.setUserInfo(bodyString);
+
+          print(await _keyStoreService.getuserInfo());
           return createUser;
         
       }else{

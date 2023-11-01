@@ -49,13 +49,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       
       final UserDto dto = event.dto;
       final CreateUser userCreate = await _userRepository.registration(dto);
-
+      
+      print(userCreate);
       
       
       await AppNavigator.push(Routes.home);
       
 
     } on Exception catch (e) {
+      print(e);
       emit(state.asLoginFailure(e));
     }
   }

@@ -17,7 +17,7 @@ class UserDto {
 
   factory UserDto.fromJson(Map<String, dynamic> json) {
     return UserDto(
-      id: "${json['id']}",
+      id: json['userId'] != null ? "${json['userId']}" : "${json['id']}",
       contact: "${json['contact']}",
       email: "${json['email']}",
       name: "${json['name']}",
@@ -27,6 +27,7 @@ class UserDto {
 
   String toJson(){
     final Map<String, dynamic> data = {
+      'id': id,
       'userId': id,
       'contact': contact,
       'email': email,
