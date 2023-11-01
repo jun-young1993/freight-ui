@@ -65,8 +65,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   void _onUser(UserStateEvent event, Emitter<UserState> emit) async {
     try{
       final String token = await _userRepository.getToken();
+      final User? user = await _userRepository.getUser();
       print('token s ${token}');
-      emit(state.asLoginSuccess(User.guest(), token));
+      emit(state.asLoginSuccess(user ?? User.guest(), token));
     } on Exception catch (e) {
       print(e);
     }

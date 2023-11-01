@@ -9,6 +9,7 @@ import 'package:freight_ui/services/key_store_service.dart';
 
 abstract class UserRepository {
   Future<String> getToken();
+  Future<User?> getUser();
   Future<void> guestLogin();
   Future<CreateUser> registration(UserDto userDto);
 }
@@ -22,6 +23,11 @@ class UserDefaultRepository extends UserRepository {
   Future<String> getToken() async {
     return await _keyStoreService.getAuthToken();
   } 
+
+  @override
+  Future<User?> getUser() async {
+    return await _keyStoreService.getuserInfo();
+  }
 
   @override
   Future<void> guestLogin() async {
@@ -57,16 +63,14 @@ class UserDefaultRepository extends UserRepository {
       if(headers.containsKey('authorization') && (headers['authorization'] is String)){
           final String authToken = headers['authorization'] as String;
           final CreateUser createUser = CreateUser(
-            user: User.fromDto(
-              UserDto.fromJson(body)
-            ), 
+            user: User.fromJson(body), 
             token: authToken
           );
           
           await _keyStoreService.setAuthToken(authToken);
           await _keyStoreService.setUserInfo(bodyString);
 
-          print(await _keyStoreService.getuserInfo());
+          
           return createUser;
         
       }else{

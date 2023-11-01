@@ -31,5 +31,11 @@ class User {
     );
   }
 
+  factory User.fromJson(Map<String, dynamic> json){
+    return User.fromDto(
+      UserDto.fromJson(json)
+    );
+  }
+
 
 }

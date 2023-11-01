@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freight_ui/config/constant.dart';
+import 'package:freight_ui/domain/entities/user.dart';
 
 abstract class KeyStoreImplement {
   // late FlutterSecureStorage storage;
@@ -50,9 +53,12 @@ class KeyStoreService {
     return authToken;
   }
 
-  Future<String> getuserInfo() async {
+  Future<User?> getuserInfo() async {
     String? userData = await storage.read(key: userInfo);
-    return userData ?? '';
+    if(userData != null){
+      return User.fromJson(json.decode(userData));
+    }
+    return null;
   }
 
   getReadAll() {

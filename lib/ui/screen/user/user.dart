@@ -30,11 +30,12 @@ class UserScreen extends StatefulWidget {
 class _UserScreenState extends State<UserScreen> {
 
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
-
+  UserBloc get userBloc => context.read<UserBloc>();  
 
   @override
   void initState() {
     super.initState();
+    userBloc.add(const UserStateEvent());
   }
 
   @override
