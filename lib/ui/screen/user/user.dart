@@ -6,10 +6,12 @@ import 'package:freight_ui/config/colors.dart';
 import 'package:freight_ui/config/images.dart';
 import 'package:freight_ui/config/route_map.dart';
 import 'package:freight_ui/domain/dto/user.dart';
+import 'package:freight_ui/domain/entities/user.dart';
 import 'package:freight_ui/routes.dart';
 import 'package:freight_ui/states/user/user_bloc.dart';
 import 'package:freight_ui/states/user/user_event.dart';
 import 'package:freight_ui/states/user/user_form_bloc.dart';
+import 'package:freight_ui/states/user/user_selector.dart';
 import 'package:freight_ui/ui/widgets/loader.dart';
 import 'package:freight_ui/ui/widgets/main_back_image.dart';
 import 'package:freight_ui/ui/widgets/main_freight_button.dart';
@@ -40,11 +42,20 @@ class _UserScreenState extends State<UserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
-          _UserLogin()
+        userAuthTokenSelector(
+            builder: (String? token) {
+              print('user.dart 51');
+              print(token);
+              return _UserLogin(
+                token: token
+              );
+            }
+        ),
+          
         ],
       )
     );

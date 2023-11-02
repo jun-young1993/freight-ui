@@ -1,6 +1,7 @@
 // import 'dart:core';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:freight_ui/exceptions/token_available_exception.dart';
 import 'package:freight_ui/services/key_store_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,7 +34,10 @@ class FreightClient {
   }
 
   Future<Map<String, String>> headers() async {
-    final String token = await _keyStoreService.getAuthToken();
+    final String? token = await _keyStoreService.getAuthToken();
+    if(token == null){
+      throw TokenAvailableException('user token is not available');
+    }
 
     return {
       'Authorization': token,

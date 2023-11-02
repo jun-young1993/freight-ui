@@ -47,8 +47,8 @@ class KeyStoreService {
       );
   }
 
-  Future<String> getAuthToken() async {
-    String authToken = await storage.read(key: userAuthToken) ?? dotenv.get('GUEST_TOKEN');
+  Future<String?> getAuthToken() async {
+    String? authToken = await storage.read(key: userAuthToken);
 
     return authToken;
   }

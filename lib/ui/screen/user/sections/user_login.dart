@@ -10,23 +10,28 @@ part of '../user.dart';
 // import 'package:freight_ui/states/user/user_event.dart';
 
 class _UserLogin extends StatefulWidget {
-  const _UserLogin();
-
+  final String? token;
+  const _UserLogin({this.token});
+  
   @override
-  State<StatefulWidget> createState() => _UserLoginState();
+  State<StatefulWidget> createState() => _UserLoginState(token: token);
 }
 
 class _UserLoginState extends State<_UserLogin> {
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
-
+  final String? token;
   @override
   BuildContext get context => super.context;
   UserBloc get userBloc => context.read<UserBloc>();
-
-
+  _UserLoginState({this.token});
+  
   @override
   void initState() {
     super.initState();
+    print(token);
+    if(token != null){
+      AppNavigator.push(Routes.home);
+    }
   }
 
   void userLogin() {

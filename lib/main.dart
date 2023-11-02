@@ -13,7 +13,7 @@ import 'package:freight_ui/states/user/user_form_bloc.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
-
+  onError();
   runApp(MultiRepositoryProvider(
     providers: [
       RepositoryProvider<DriveRepository>(
@@ -50,4 +50,15 @@ void main() async {
     ),
   ));
   // runApp(const FreightApp());
+}
+
+
+void onError() {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    // 글로벌 예외
+
+    print('error detail:');
+    print(details.exceptionAsString());
+
+  };
 }

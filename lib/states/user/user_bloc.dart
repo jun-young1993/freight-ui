@@ -33,7 +33,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(state.asLogin());
   
       await _userRepository.guestLogin();
-      final String token = await _userRepository.getToken();
+      final String? token = await _userRepository.getToken();
       
       
       
@@ -64,10 +64,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   void _onUser(UserStateEvent event, Emitter<UserState> emit) async {
     try{
-      final String token = await _userRepository.getToken();
+      final String? token = await _userRepository.getToken();
       final User? user = await _userRepository.getUser();
       print('token s ${token}');
-      emit(state.asLoginSuccess(user ?? User.guest(), token));
+      emit(state.asLoginSuccess(user, token));
     } on Exception catch (e) {
       print(e);
     }

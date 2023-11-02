@@ -29,7 +29,7 @@ class UserState {
     );
   }
 
-  UserState asLoginSuccess(User user, String token){
+  UserState asLoginSuccess(User? user, String? token){
     return copyWith(
       user: user,
       token: token,
